@@ -1,0 +1,28 @@
+{
+  "$schema": "http://json.schemastore.org/ide.host",
+  "icon": "auth0.png",
+  "symbolInfo": [
+    {
+      "id": "domain",
+      "name": {
+        "text": "Auth0 Domain"
+      },
+      "isVisible": "true"
+    },
+    {
+      "id": "audience",
+      "name": {
+        "text": "API identifier (Audience)"
+      },
+      "isVisible": "true"
+    },
+    {
+      "id": "EnableOpenAPI",
+      "name": {
+        "text": "Enable OpenAPI support"
+      },
+      "isVisible": true,
+      "defaultValue": true
+    }
+  ]
+}

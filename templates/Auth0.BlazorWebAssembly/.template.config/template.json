@@ -1,0 +1,150 @@
+{
+  "$schema": "http://json.schemastore.org/template",
+  "author": "Andrea Chiarelli",
+  "classifications": [ "Web", "Blazor", "WebAssembly", "Auth0" ],
+  "groupIdentity": "Auth0.NET.BlazorWebAssembly",
+  "identity": "Auth0.NET.BlazorWebAssembly.CSharp",
+  "name": "Auth0 Blazor WebAssembly App",
+  "description": "A project template for creating a Blazor WebAssembly app hosted by an ASP.NET Core app and integrated with Auth0 authentication and authorization services.",
+  "shortName": "auth0blazorwasm",
+  "sourceName": "Auth0BlazorWasm",
+  "defaultName": "BlazorApplication1",
+  "preferNameDirectory": true,
+  "tags": {
+    "language": "C#",
+    "type": "solution"
+  },
+  "guids": [
+    "F408F25E-F1D6-4445-ACA1-D5AD4A96487D",
+    "0BCB890D-1CE9-4398-99CD-BF99024720E0",
+    "FB298A10-5275-4E85-94D8-F8500EE91EA9"
+  ],
+  "symbols":{
+    "domain": {
+        "type": "parameter",
+        "datatype": "string",
+        "description": "Your Auth0 domain.",
+        "defaultValue": "yourdomain.auth0.com",
+        "replaces":"{DOMAIN}"
+    },
+    "clientId": {
+        "type": "parameter",
+        "datatype": "string",
+        "description": "Your Auth0 client id.",
+        "defaultValue": "your-client-id",
+        "replaces":"{CLIENT_ID}"
+    },
+    "audience": {
+      "type": "parameter",
+      "datatype": "string",
+      "description": "Your API identifier (Audience).",
+      "defaultValue": "https://your-api-id.com",
+      "replaces":"{AUDIENCE}"
+    },
+    "Framework": {
+      "type": "parameter",
+      "description": "The target framework for the project.",
+      "datatype": "choice",
+      "choices": [
+        {
+          "choice": "net7.0",
+          "description": "Target .NET 7"
+        }
+      ],
+      "defaultValue": "net7.0",
+      "replaces": "net7.0"
+    },
+
+
+    // Port generation
+    "kestrelHttpPort": {
+      "type": "parameter",
+      "datatype": "integer",
+      "description": "Port number to use for the HTTP endpoint in launchSettings.json."
+    },
+    "kestrelHttpPortGenerated": {
+      "type": "generated",
+      "generator": "port",
+      "parameters": {
+        "low": 5000,
+        "high": 5300
+      }
+    },
+    "kestrelHttpPortReplacer": {
+      "type": "generated",
+      "generator": "coalesce",
+      "parameters": {
+        "sourceVariableName": "kestrelHttpPort",
+        "fallbackVariableName": "kestrelHttpPortGenerated"
+      },
+      "replaces": "5000"
+    },
+    "kestrelHttpsPort": {
+      "type": "parameter",
+      "datatype": "integer",
+      "description": "Port number to use for the HTTPS endpoint in launchSettings.json. This option is only applicable when the parameter no-https is not used (no-https will be ignored if either IndividualB2C or OrganizationalAuth is used)."
+    },
+    "kestrelHttpsPortGenerated": {
+      "type": "generated",
+      "generator": "port",
+      "parameters": {
+        "low": 7000,
+        "high": 7300
+      }
+    },
+    "kestrelHttpsPortReplacer": {
+      "type": "generated",
+      "generator": "coalesce",
+      "parameters": {
+        "sourceVariableName": "kestrelHttpsPort",
+        "fallbackVariableName": "kestrelHttpsPortGenerated"
+      },
+      "replaces": "5001"
+    },
+    "iisHttpPort": {
+      "type": "parameter",
+      "datatype": "integer",
+      "description": "Port number to use for the IIS Express HTTP endpoint in launchSettings.json."
+    },
+    "iisHttpPortGenerated": {
+      "type": "generated",
+      "generator": "port"
+    },
+    "iisHttpPortReplacer": {
+      "type": "generated",
+      "generator": "coalesce",
+      "parameters": {
+        "sourceVariableName": "iisHttpPort",
+        "fallbackVariableName": "iisHttpPortGenerated"
+      },
+      "replaces": "8080"
+    },
+    "iisHttpsPort": {
+      "type": "parameter",
+      "datatype": "integer",
+      "description": "Port number to use for the IIS Express HTTPS endpoint in launchSettings.json. This option is only applicable when the parameter no-https is not used (no-https will be ignored if either IndividualB2C or OrganizationalAuth is used)."
+    },
+    "iisHttpsPortGenerated": {
+      "type": "generated",
+      "generator": "port",
+      "parameters": {
+        "low": 44300,
+        "high": 44399
+      }
+    },
+    "iisHttpsPortReplacer": {
+      "type": "generated",
+      "generator": "coalesce",
+      "parameters": {
+        "sourceVariableName": "iisHttpsPort",
+        "fallbackVariableName": "iisHttpsPortGenerated"
+      },
+      "replaces": "44300"
+    }
+  },
+  "primaryOutputs": [
+    {
+      "path": "Auth0BlazorWasm.sln"
+    }
+  ]
+}

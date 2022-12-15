@@ -1,0 +1,25 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <PackageType>Template</PackageType>
+    <PackageVersion>2.0.0-alpha</PackageVersion>
+    <PackageId>Auth0.Templates</PackageId>
+    <Title>Auth0 Templates for .NET</Title>
+    <Authors>Auth0</Authors>
+    <Description>Template pack for creating .NET applications integrated with Auth0 authentication and authorization.</Description>
+    <PackageTags>dotnet-new;templates;auth0</PackageTags>
+
+    <TargetFramework>netstandard2.0</TargetFramework>
+    
+    <IncludeContentInPack>true</IncludeContentInPack>
+    <IncludeBuildOutput>false</IncludeBuildOutput>
+    <ContentTargetFolders>templates</ContentTargetFolders>
+    <NoWarn>$(NoWarn);NU5128</NoWarn>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Content Include="templates\**\*" Exclude="templates\**\bin\**;templates\**\obj\**" />
+    <Compile Remove="**\*" />
+  </ItemGroup>
+
+</Project>
