@@ -4,7 +4,7 @@ Please read [Auth0's contribution guidelines](https://github.com/auth0/open-sour
 
 ## Environment setup
 
-- Make sure you have the [.NET  SDK](https://dotnet.microsoft.com/download/dotnet/7.0) installed.
+- Make sure you have the [.NET 7 SDK](https://dotnet.microsoft.com/download/dotnet/7.0) installed.
 - Follow the local development steps below to get started.
 
 ## Local development
