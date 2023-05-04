@@ -7,15 +7,32 @@ The Auth0 Templates for .NET package allows you to quickly bootstrap a .NET appl
 
 * An Auth0 account. You can [sign up for a free one](https://auth0.com/signup) right now.
 * .NET Core 7.0 SDK or higher.
-* (Optional) Visual Studio 2022 for Windows (ver. 17.4)
+* (Optional) Visual Studio 2022 for Windows (ver. 17.4+)
+* (Optional) Visual Studio 2022 for Mac (ver. 17.5+)
+* (Optional) JetBrains Rider 2022.1+
 
 ### Installation
 
-You can install the Auth0 Templates from the NuGet repository or from the source code.
+You can install the Auth0 Templates from [NuGet](https://www.nuget.org/packages/Auth0.Templates/) by running the following command in your terminal window:
 
-> :warning: The current version of Auth0.Templates are not published on NuGet yet.
+```bash
+dotnet new install Auth0.Templates::2.0.0
+```
 
-To work locally with the Auth0 Templates, i.e., using the templates coming from the source code, execute the following steps:
+Once installed, the templates are available in .NET CLI, Visual Studio for Windows, Visual Studio for Mac, and JetBrains Rider.
+
+## Usage
+
+Currently, the following .NET templates are implemented:
+
+- [Auth0 MVC Application](docs/auth0webapp.md)
+- [Auth0 Web API Application](docs/auth0webapi.md)
+- [Auth0 Blazor Server Application](docs/auth0blazorserver.md)
+- [Auth0 Blazor WebAssembly Application](docs/auth0blazorwasm.md)
+
+## Installing from source code
+
+To work locally with the Auth0 Templates, i.e., using the templates from the source code, follow these steps:
 
 1. Clone this repository
 
@@ -35,22 +52,13 @@ To work locally with the Auth0 Templates, i.e., using the templates coming from 
 
 
 
-:information_source: If you have Node.js installed on your machine, you can create and install a local NuGet package by using the following command in the root folder of the project:
-
-```bash
-npm run pack-install
-```
-
-That command also works for updating a currently installed package.
-
-## Usage
-
-Currently, the following .NET templates are implemented:
-
-- [Auth0 MVC Application](docs/auth0webapp.md)
-- [Auth0 Web API Application](docs/auth0webapi.md)
-- [Auth0 Blazor Server Application](docs/auth0blazorserver.md)
-- [Auth0 Blazor WebAssembly Application](docs/auth0blazorwasm.md)
+> :information_source: If you have Node.js installed on your machine, you can create and install a local NuGet package by using the following command in the root folder of the project:
+>
+>```bash
+>npm run pack-install
+>```
+>
+> That command also works for updating a currently installed package.
 
 ## License
 
@@ -83,4 +91,3 @@ Please do not report security vulnerabilities on the public GitHub issue tracker
   </picture>
 </p>
 <p align="center">Auth0 is an easy to implement, adaptable authentication and authorization platform.<br> To learn more check out <a href="https://auth0.com/why-auth0">Why Auth0?</a></p>
-

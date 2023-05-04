@@ -25,13 +25,24 @@ This will create a new Web API application in the current folder. The following 
 
 #### Using Visual Studio for Windows
 
-To create a new Web API application with Visual Studio, select *Auth0* from the project types dropdown list and then *Auth0 ASP.NET Core Web API*:
+To create a new Web API application with Visual Studio for Windows, select *Auth0* from the project types dropdown list and then *Auth0 ASP.NET Core Web API*:
 
 ![Auth0 MVC Application from Visual Studio](assets/auth0-webapi-app-vs.png)
 
 Then, after inserting the name and the folder for the project, provide the required options:
 
 ![Auth0 MVC Application options from Visual Studio](assets/auth0-webapi-app-vs-options.png)
+
+#### Using Visual Studio for Mac
+
+To create a new Web API application with Visual Studio for Mac, select *Custom* from the *Other* project types list and then *Auth0 ASP.NET Core Web API*:
+
+![Auth0 MVC Application from Visual Studio](assets/auth0-webapi-app-vs-mac.png)
+
+Then, after inserting the name and the folder for the project, provide the required options:
+
+![Auth0 MVC Application options from Visual Studio](assets/auth0-webapi-app-vs-mac-options.png)
+
 
 ---
 
