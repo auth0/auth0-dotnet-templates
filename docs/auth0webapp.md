@@ -31,6 +31,16 @@ Then, after inserting the name and the folder for the project, provide the requi
 
 ![Auth0 MVC Application options from Visual Studio](assets/auth0-mvc-app-vs-options.png)
 
+#### Using Visual Studio for Mac
+
+To create a new MVC application with Visual Studio for Mac, select *Custom* from the *Other* project types list and then  *Auth0 ASP.NET Core Web App*:
+
+![Auth0 MVC Application from Visual Studio](assets/auth0-mvc-app-vs-mac.png)
+
+Then, after inserting the name and the folder for the project, provide the required options:
+
+![Auth0 MVC Application options from Visual Studio](assets/auth0-mvc-app-vs-mac-options.png)
+
 ---
 [Back to README](../README.md)
 

@@ -2,12 +2,18 @@
 
   <PropertyGroup>
     <PackageType>Template</PackageType>
-    <PackageVersion>2.0.0-alpha</PackageVersion>
+    <PackageVersion>2.0.0</PackageVersion>
     <PackageId>Auth0.Templates</PackageId>
     <Title>Auth0 Templates for .NET</Title>
     <Authors>Auth0</Authors>
+    <Copyright>Auth0® Inc.</Copyright>
     <Description>Template pack for creating .NET applications integrated with Auth0 authentication and authorization.</Description>
-    <PackageTags>dotnet-new;templates;auth0</PackageTags>
+    <PackageTags>dotnet-new;templates;auth0;authentication;openid connect;oidc;oauth2</PackageTags>
+    <PackageIcon>Auth0Icon.png</PackageIcon>
+    <PackageProjectUrl>https://github.com/auth0/auth0-dotnet-templates</PackageProjectUrl>
+    <PackageLicenseExpression>Apache-2.0</PackageLicenseExpression>
+    <RepositoryType>git</RepositoryType>
+    <RepositoryUrl>https://github.com/auth0/auth0-dotnet-templates</RepositoryUrl>
 
     <TargetFramework>netstandard2.0</TargetFramework>
     
@@ -18,6 +24,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Include="Auth0Icon.png" Pack="true" PackagePath="\"/>
     <Content Include="templates\**\*" Exclude="templates\**\bin\**;templates\**\obj\**" />
     <Compile Remove="**\*" />
   </ItemGroup>
