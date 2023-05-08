@@ -47,7 +47,7 @@ To work locally with the Auth0 Templates, i.e., using the templates from the sou
 3. Install the templates by running the following command:
 
    ```bash
-   dotnet new -i ./bin/Debug/Auth0.Templates.2.0.0-alpha.nupkg
+   dotnet new -i ./bin/Debug/Auth0.Templates.2.0.0.nupkg
    ```
 
 
