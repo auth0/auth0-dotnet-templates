@@ -9,7 +9,6 @@ The Auth0 Templates for .NET package allows you to quickly bootstrap a .NET appl
 * .NET Core 7.0 SDK or higher.
 * (Optional) Visual Studio 2022 for Windows (ver. 17.4+)
 * (Optional) Visual Studio 2022 for Mac (ver. 17.5+)
-* (Optional) JetBrains Rider 2022.1+
 
 ### Installation
 
@@ -19,7 +18,7 @@ You can install the Auth0 Templates from [NuGet](https://www.nuget.org/packages/
 dotnet new install Auth0.Templates::2.0.0
 ```
 
-Once installed, the templates are available in .NET CLI, Visual Studio for Windows, Visual Studio for Mac, and JetBrains Rider.
+Once installed, the templates are available in .NET CLI, Visual Studio for Windows, and Visual Studio for Mac.
 
 ## Usage
 
