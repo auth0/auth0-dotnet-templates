@@ -1,5 +1,4 @@
 ﻿@page "/"
-@inject AuthenticationStateProvider AuthState
 @attribute [Authorize]
 
 <PageTitle>Auth0 Blazor Server</PageTitle>
@@ -12,17 +11,22 @@ You can only see this content if you're authenticated.
 @code { 
   private string Username = "Anonymous User";
   private string Picture = "";
+  [CascadingParameter]
+  private Task<AuthenticationState>? authenticationState { get; set; }
 
   protected override async Task OnInitializedAsync()
   {
-    var state = await AuthState.GetAuthenticationStateAsync();
+    if (authenticationState is not null)
+    {
+      var state = await authenticationState;
 
-    Username = state.User.Identity.Name?? string.Empty;
+      Username = state?.User?.Identity?.Name?? string.Empty;
 
-    Picture = state.User.Claims
-                .Where(c => c.Type.Equals("picture"))
-                .Select(c => c.Value)
-                .FirstOrDefault() ?? string.Empty;
+      Picture = state?.User.Claims
+                  .Where(c => c.Type.Equals("picture"))
+                  .Select(c => c.Value)
+                  .FirstOrDefault() ?? string.Empty;
+    }
 
     await base.OnInitializedAsync();
   }
