@@ -1,6 +1,6 @@
 {
   "$schema": "http://json.schemastore.org/template",
-  "author": "Andrea Chiarelli",
+  "author": "Auth0 by Okta",
   "classifications": [ "Web", "Blazor", "Auth0" ],
   "groupIdentity": "Auth0.NET.BlazorServer",
   "identity": "Auth0.NET.BlazorServer.CSharp",
