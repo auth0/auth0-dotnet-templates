@@ -1,0 +1,8 @@
+﻿{
+  "AppName": "Auth0Mvc",
+  "AppDescription": "ASP.NET Core MVC application created and registered via Auth0 Templates for .NET",
+  "AppType": "regular",
+  "Callbacks": "https://localhost:5001/callback",
+  "LogoutUrls": "https://localhost:5001/",
+  "AppSettingsFiles": ["./appsettings.json"]
+}

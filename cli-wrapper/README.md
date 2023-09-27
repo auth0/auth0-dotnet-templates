@@ -12,7 +12,7 @@ It requires Auth0 CLI version 1.0.1 or later.
 
 - Each template must have a `registration` folder
 
--  The `registration` folder must contain:
+- The `registration` folder must contain:
 
   - a copy of `cli-wrapper.dll`
 
@@ -31,6 +31,7 @@ It requires Auth0 CLI version 1.0.1 or later.
     
 
     - `AppName` must be the same as the one used in the template (`sourceName` property in `template.config` file)
+    - `AppDescription` is the application description that will be stored in the Auth0 dashboard
     - `AppType` must contain the specific application type for the current project (see [type flag](https://auth0.github.io/auth0-cli/auth0_apps_create.html#flags) required by the `auth0 apps create` command of the Auth0 CLI)
     - `Callbacks` and `LogoutUrls` must use the same ports as in the templates (see `Properties/launchSettings.json`)
     - `AppSettingsFiles` must point to the project's configuration files to update

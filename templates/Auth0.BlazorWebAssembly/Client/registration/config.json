@@ -1,0 +1,8 @@
+﻿{
+  "AppName": "Auth0BlazorWasm",
+  "AppDescription": "Blazor WebAssembly application created and registered via Auth0 Templates for .NET",
+  "AppType": "spa",
+  "Callbacks": "https://localhost:5001/authentication/login-callback",
+  "LogoutUrls": "https://localhost:5001",
+  "AppSettingsFiles": ["./Client//wwwroot/appsettings.json"]
+}

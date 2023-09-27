@@ -29,4 +29,21 @@
     <Compile Remove="**\*" />
   </ItemGroup>
 
+    <Target Name="BuildCliWrapper" AfterTargets="BeforeBuild">
+        <!--<MSBuild Projects="cli-wrapper\cli-wrapper.sln" Properties="Configuration=Release"/>-->
+        <Exec Command="dotnet publish cli-wrapper/cli-wrapper.csproj -c Release -p:UseAppHost=false" />
+    </Target>
+
+  <Target Name="CopyCliWrapper" AfterTargets="BeforeBuild">
+    <ItemGroup>
+      <CliWrapperFiles Include="cli-wrapper\bin\Release\net7.0\publish\cli-wrapper.*"/>
+    </ItemGroup>
+
+    <Copy SourceFiles="@(CliWrapperFiles)" DestinationFolder="templates\Auth0.BlazorServer\registration" SkipUnchangedFiles="false" />
+    <Copy SourceFiles="@(CliWrapperFiles)" DestinationFolder="templates\Auth0.BlazorWebAssembly\Client\registration" SkipUnchangedFiles="false" />
+    <Copy SourceFiles="@(CliWrapperFiles)" DestinationFolder="templates\Auth0.BlazorWebAssembly\Server\registration" SkipUnchangedFiles="false" />
+    <Copy SourceFiles="@(CliWrapperFiles)" DestinationFolder="templates\Auth0.Mvc\registration" SkipUnchangedFiles="false" />
+    <!--<Copy SourceFiles="@(CliWrapperFiles)" DestinationFolder="templates\Auth0.WebAPI\registration" SkipUnchangedFiles="false" />-->
+  </Target>
+
 </Project>

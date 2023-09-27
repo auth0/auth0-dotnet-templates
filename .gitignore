@@ -305,3 +305,6 @@ __pycache__/
 !.vscode/tasks.json
 !.vscode/launch.json
 !.vscode/extensions.json
+
+# Binary content of template registration folders
+templates/*/registration/cli-wrapper.*

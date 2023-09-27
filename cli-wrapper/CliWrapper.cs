@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Diagnostics;
 using System.Text.Json;
+using System.Text.RegularExpressions;
 
 public class CliWrapper
 {
@@ -20,15 +21,24 @@ public class CliWrapper
 
   public async Task<RegistrationData> Register()
   {
-    var registrationData = new RegistrationData("", "", new SigningKeys[] {new SigningKeys("")});
+    var registrationData = new RegistrationData("", "", "", new SigningKeys[] {new SigningKeys("")});
 
     try
     {
-      string text = File.ReadAllText(@"./registration/config.json");
+      string text = File.ReadAllText($@"{Path.Combine(System.AppContext.BaseDirectory, "config.json")}");
       configData = JsonSerializer.Deserialize<ConfigData>(text);
+      string registrationOutputText = "";
 
-      string registrationOutputText = await RunCommand("auth0", $"apps create --name {configData.AppName} --description \"{configData.AppDescription}\" --type {configData.AppType} --callbacks \"{configData.Callbacks}\" --logout-urls \"{configData.LogoutUrls}\" --no-input --reveal-secrets --json");
-      Console.WriteLine("Application registered!");
+      if (configData.AppType.ToLower() == "api")
+      {
+        registrationOutputText = await RunCommand("auth0", $"apis create --name {configData.AppName} --identifier {CreateAudience(configData.AppName)} --no-input --json");
+        Console.WriteLine("API registered!");
+      }
+      else
+      {
+        registrationOutputText = await RunCommand("auth0", $"apps create --name {configData.AppName} --description \"{configData.AppDescription}\" --type {configData.AppType} --callbacks \"{configData.Callbacks}\" --logout-urls \"{configData.LogoutUrls}\" --no-input --reveal-secrets --json");
+        Console.WriteLine("Application registered!");
+      }
 
       registrationData = JsonSerializer.Deserialize<RegistrationData>(registrationOutputText)!;
     } catch (Exception ex)
@@ -45,8 +55,12 @@ public class CliWrapper
     {
       string text = File.ReadAllText($@"{settingsFile}");
 
-      text = text.Replace("yourdomain.auth0.com", registrationData.signing_keys[0].subject.Replace("/CN=", ""));
-      text = text.Replace("your-client-id", registrationData.client_id);
+      if (registrationData.signing_keys != null)
+      {
+        text = text.Replace("yourdomain.auth0.com", (registrationData.signing_keys[0].subject ?? "").Replace("/CN=", ""));
+      }
+      text = text.Replace("your-client-id", registrationData.client_id??"");
+      text = text.Replace("https://your-api-id.com", registrationData.identifier??"");
 
       File.WriteAllText($@"{settingsFile}", text);
     }
@@ -54,7 +68,7 @@ public class CliWrapper
 
   public void RemoveRegistrationFolder()
   {
-    Directory.Delete(@"./registration", true);
+    Directory.Delete($@"{Path.Combine(System.AppContext.BaseDirectory)}", true);
   }
 
   private async Task<string> RunCommand(string command, string args)
@@ -87,5 +101,15 @@ public class CliWrapper
 
     return result;
   }
+
+  private string CreateAudience(string appName)
+  {
+    Regex rgx = new Regex("[^a-zA-Z0-9 -]");
+    appName = rgx.Replace(appName, "-");
+
+    return $@"https://{appName.ToLower()}.com";
+  }
+
+
 }
 

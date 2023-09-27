@@ -305,3 +305,7 @@ __pycache__/
 !.vscode/tasks.json
 !.vscode/launch.json
 !.vscode/extensions.json
+
+# CLI wrapper test files
+appsettings.json
+config.json

@@ -1,0 +1,8 @@
+﻿{
+  "AppName": "Auth0BlazorWasm",
+  "AppDescription": "ASP.NET Core host for Blazor WebAssembly application created and registered via Auth0 Templates for .NET",
+  "AppType": "api",
+  "Callbacks": "",
+  "LogoutUrls": "",
+  "AppSettingsFiles": ["./Server/appsettings.json"]
+}

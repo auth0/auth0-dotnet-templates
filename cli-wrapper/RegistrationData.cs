@@ -1,6 +1,7 @@
 ﻿public record RegistrationData(
   string name,
   string client_id,
+  string identifier,
   SigningKeys[] signing_keys
 );
 
