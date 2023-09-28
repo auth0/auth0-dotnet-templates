@@ -4,5 +4,5 @@
   "AppType": "api",
   "Callbacks": "",
   "LogoutUrls": "",
-  "AppSettingsFiles": ["./Server/appsettings.json"]
+  "AppSettingsFiles": ["./Client//wwwroot/appsettings.json", "./Server/appsettings.json"]
 }

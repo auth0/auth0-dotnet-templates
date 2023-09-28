@@ -4,5 +4,5 @@
   "AppType": "spa",
   "Callbacks": "https://localhost:5001/authentication/login-callback",
   "LogoutUrls": "https://localhost:5001",
-  "AppSettingsFiles": ["./Client//wwwroot/appsettings.json"]
+  "AppSettingsFiles": ["./Client//wwwroot/appsettings.json", "./Server/appsettings.json"]
 }

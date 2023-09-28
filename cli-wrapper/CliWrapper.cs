@@ -6,9 +6,11 @@ using System.Text.RegularExpressions;
 public class CliWrapper
 {
   ConfigData configData = new ConfigData();
+
   public CliWrapper()
-  {
-  }
+  { }
+
+  public bool Verbose { get; set; }
 
   public async Task<bool> IsAuth0CliInstalled()
   {
@@ -16,18 +18,27 @@ public class CliWrapper
     string currentCliVersionString = cmdOutput.Split(" ")[2];
     Version currentCliVersion = new Version(currentCliVersionString);
 
+    Displayer.DisplayVerbose($@"Auth0 CLI version: {currentCliVersionString}");
+
     return currentCliVersion.CompareTo(new Version("1.0.1")) >= 0;
   }
 
   public async Task<RegistrationData> Register()
   {
     var registrationData = new RegistrationData("", "", "", new SigningKeys[] {new SigningKeys("")});
+    var registrationOutputText = "";
 
     try
     {
-      string text = File.ReadAllText($@"{Path.Combine(System.AppContext.BaseDirectory, "config.json")}");
+      string templateConfigurationFilePath = $@"{Path.Combine(System.AppContext.BaseDirectory, "config.json")}";
+
+      Displayer.DisplayVerbose($@"Reading template configuration from {templateConfigurationFilePath}");
+
+      string text = File.ReadAllText(templateConfigurationFilePath);
+
+      Displayer.DisplayTemplateConfiguration(text);
+
       configData = JsonSerializer.Deserialize<ConfigData>(text);
-      string registrationOutputText = "";
 
       if (configData.AppType.ToLower() == "api")
       {
@@ -39,11 +50,26 @@ public class CliWrapper
         registrationOutputText = await RunCommand("auth0", $"apps create --name {configData.AppName} --description \"{configData.AppDescription}\" --type {configData.AppType} --callbacks \"{configData.Callbacks}\" --logout-urls \"{configData.LogoutUrls}\" --no-input --reveal-secrets --json");
         Console.WriteLine("Application registered!");
       }
-
-      registrationData = JsonSerializer.Deserialize<RegistrationData>(registrationOutputText)!;
+      
     } catch (Exception ex)
     {
-      Console.WriteLine(ex.Message);
+      Console.WriteLine("ERROR: ************");
+      Console.WriteLine($@"{ex.Message}");
+      Console.WriteLine("*******************");
+    }
+
+    try
+    {
+      registrationData = JsonSerializer.Deserialize<RegistrationData>(registrationOutputText)!;
+    }
+    catch (Exception ex)
+    {
+      Console.WriteLine("ERROR: ************");
+      Console.WriteLine($@"{ex.Message}");
+      Console.WriteLine();
+      Console.WriteLine("Registration output: -------");
+      Console.WriteLine($@"{registrationOutputText}");
+      Console.WriteLine("*******************");
     }
 
     return registrationData;
@@ -53,14 +79,26 @@ public class CliWrapper
   {
     foreach (var settingsFile in configData.AppSettingsFiles)
     {
+      Displayer.DisplayVerbose($@"Reading settings from {settingsFile}");
+
       string text = File.ReadAllText($@"{settingsFile}");
 
-      if (registrationData.signing_keys != null)
+      Displayer.DisplayAppSettings(text);
+
+      if (registrationData.signing_keys != null && registrationData.signing_keys.Length >0 && registrationData.signing_keys[0].subject != null)
       {
-        text = text.Replace("yourdomain.auth0.com", (registrationData.signing_keys[0].subject ?? "").Replace("/CN=", ""));
+        text = text.Replace("yourdomain.auth0.com", (registrationData.signing_keys[0].subject).Replace("/CN=", ""));
       }
-      text = text.Replace("your-client-id", registrationData.client_id??"");
-      text = text.Replace("https://your-api-id.com", registrationData.identifier??"");
+      if (registrationData.client_id != null)
+      {
+        text = text.Replace("your-client-id", registrationData.client_id);
+      }
+      if (registrationData.identifier != null)
+      {
+        text = text.Replace("https://your-api-id.com", registrationData.identifier);
+      }
+
+      Displayer.DisplayNewAppSettings(text);
 
       File.WriteAllText($@"{settingsFile}", text);
     }
@@ -68,7 +106,11 @@ public class CliWrapper
 
   public void RemoveRegistrationFolder()
   {
-    Directory.Delete($@"{Path.Combine(System.AppContext.BaseDirectory)}", true);
+    string registrationFolderPath = $@"{Path.Combine(System.AppContext.BaseDirectory)}";
+
+    Displayer.DisplayVerbose($@"About to remove the folder {registrationFolderPath}");
+
+    Directory.Delete(registrationFolderPath, true);
   }
 
   private async Task<string> RunCommand(string command, string args)
@@ -81,35 +123,36 @@ public class CliWrapper
       RedirectStandardOutput = true,
       RedirectStandardError = true,
     };
-    string result = "";
 
-    try
+    Displayer.DisplayVerbose($@"About to run command: {command} {args}");
+
+    var proc = Process.Start(startInfo);
+    ArgumentNullException.ThrowIfNull(proc);
+    string output = proc.StandardOutput.ReadToEnd();
+    string errorText = proc.StandardError.ReadToEnd();
+    await proc.WaitForExitAsync();
+
+    if (!string.IsNullOrEmpty(errorText) && errorText.Contains("error"))
     {
-      var proc = Process.Start(startInfo);
-      ArgumentNullException.ThrowIfNull(proc);
-      string output = proc.StandardOutput.ReadToEnd();
-      await proc.WaitForExitAsync();
-
-      //TODO: Capture errors
-
-      result = output;
-    }
-    catch (SystemException ex)
-    {
-      Console.WriteLine(ex.Message);
+      throw new Exception(errorText);
     }
 
-    return result;
+    Displayer.DisplayCommandOutput(output);
+
+    return output;
   }
 
   private string CreateAudience(string appName)
   {
+    Displayer.DisplayVerbose($@"Application name to tranform into audience: {appName}");
+
     Regex rgx = new Regex("[^a-zA-Z0-9 -]");
     appName = rgx.Replace(appName, "-");
 
-    return $@"https://{appName.ToLower()}.com";
+    var audience = $@"https://{appName.ToLower()}.com";
+
+    Displayer.DisplayVerbose($@"Resulting audience: {audience}");
+
+    return audience;
   }
-
-
 }
-
