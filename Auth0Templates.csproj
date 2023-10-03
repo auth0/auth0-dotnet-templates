@@ -30,7 +30,6 @@
   </ItemGroup>
 
     <Target Name="BuildCliWrapper" AfterTargets="BeforeBuild">
-        <!--<MSBuild Projects="cli-wrapper\cli-wrapper.sln" Properties="Configuration=Release"/>-->
         <Exec Command="dotnet publish cli-wrapper/cli-wrapper.csproj -c Release -p:UseAppHost=false" />
     </Target>
 
@@ -43,7 +42,7 @@
     <Copy SourceFiles="@(CliWrapperFiles)" DestinationFolder="templates\Auth0.BlazorWebAssembly\Client\registration" SkipUnchangedFiles="false" />
     <Copy SourceFiles="@(CliWrapperFiles)" DestinationFolder="templates\Auth0.BlazorWebAssembly\Server\registration" SkipUnchangedFiles="false" />
     <Copy SourceFiles="@(CliWrapperFiles)" DestinationFolder="templates\Auth0.Mvc\registration" SkipUnchangedFiles="false" />
-    <!--<Copy SourceFiles="@(CliWrapperFiles)" DestinationFolder="templates\Auth0.WebAPI\registration" SkipUnchangedFiles="false" />-->
+    <Copy SourceFiles="@(CliWrapperFiles)" DestinationFolder="templates\Auth0.WebAPI\registration" SkipUnchangedFiles="false" />
   </Target>
 
 </Project>

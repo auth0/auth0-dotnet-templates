@@ -1,6 +1,6 @@
 ﻿var cliWrapper = new CliWrapper();
 
-//cliWrapper.Verbose = true;
+//Displayer.Verbose = true;
 
 if (await cliWrapper.IsAuth0CliInstalled())
 {
@@ -10,7 +10,7 @@ if (await cliWrapper.IsAuth0CliInstalled())
 
   Displayer.DisplayRegistrationData(registrationData);
   
-  cliWrapper.UpdateConfigFiles(registrationData);
+  await cliWrapper.UpdateConfigFiles(registrationData);
 } else
 {
   Console.WriteLine("Auth0 CLI is not installed or it's not the required version.");

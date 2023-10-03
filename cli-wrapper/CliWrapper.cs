@@ -1,5 +1,4 @@
-﻿using System;
-using System.Diagnostics;
+﻿using System.Diagnostics;
 using System.Text.Json;
 using System.Text.RegularExpressions;
 
@@ -9,8 +8,6 @@ public class CliWrapper
 
   public CliWrapper()
   { }
-
-  public bool Verbose { get; set; }
 
   public async Task<bool> IsAuth0CliInstalled()
   {
@@ -75,7 +72,7 @@ public class CliWrapper
     return registrationData;
   }
 
-  public void UpdateConfigFiles(RegistrationData registrationData)
+  public async Task UpdateConfigFiles(RegistrationData registrationData)
   {
     foreach (var settingsFile in configData.AppSettingsFiles)
     {
@@ -85,15 +82,18 @@ public class CliWrapper
 
       Displayer.DisplayAppSettings(text);
 
-      if (registrationData.signing_keys != null && registrationData.signing_keys.Length >0 && registrationData.signing_keys[0].subject != null)
+      string currentDomain = await GetCurrentDomain(registrationData);
+
+      if (!string.IsNullOrEmpty(currentDomain))
       {
-        text = text.Replace("yourdomain.auth0.com", (registrationData.signing_keys[0].subject).Replace("/CN=", ""));
+        text = text.Replace("yourdomain.auth0.com", currentDomain);
       }
-      if (registrationData.client_id != null)
+
+      if (!string.IsNullOrEmpty(registrationData.client_id))
       {
         text = text.Replace("your-client-id", registrationData.client_id);
       }
-      if (registrationData.identifier != null)
+      if (!string.IsNullOrEmpty(registrationData.identifier))
       {
         text = text.Replace("https://your-api-id.com", registrationData.identifier);
       }
@@ -154,5 +154,53 @@ public class CliWrapper
     Displayer.DisplayVerbose($@"Resulting audience: {audience}");
 
     return audience;
+  }
+
+  private async Task<string> GetCurrentDomain(RegistrationData registrationData)
+  {
+    string currentDomain = "";
+
+    if (registrationData.signing_keys != null && registrationData.signing_keys.Length > 0 && !string.IsNullOrEmpty(registrationData.signing_keys[0].subject))
+    {
+      Displayer.DisplayVerbose($@"Certificate subject: {registrationData.signing_keys[0].subject}");
+      currentDomain = registrationData.signing_keys[0].subject.Replace("/CN=", "");
+    } else
+    {
+      currentDomain = await GetCurrentDomain();
+    }
+
+    Displayer.DisplayVerbose($@"Current domain: {currentDomain}");
+
+    return currentDomain;
+  }
+
+  private async Task<string> GetCurrentDomain()
+  {
+    string currentDomain = "";
+    string registrationDataListText = await RunCommand("auth0", "apis list -n 1 --json");
+
+    try
+    {
+      var registrationDataList = JsonSerializer.Deserialize<RegistrationData[]>(registrationDataListText)!;
+
+      Displayer.DisplayVerbose($@"Found {registrationDataList.Length} registered APIs.");
+
+      if (registrationDataList.Length > 0)
+      {
+        var registrationData = registrationDataList[0];
+        if (!string.IsNullOrEmpty(registrationData.identifier))
+        {
+          Displayer.DisplayVerbose($@"System API identifier: {registrationData.identifier}");
+          currentDomain = new Uri(registrationData.identifier).Host;
+        }
+      }
+    }
+    catch (Exception ex)
+    {
+      Console.WriteLine("ERROR: ************");
+      Console.WriteLine($@"{ex.Message}");
+      Console.WriteLine("*******************");
+    }
+    return currentDomain;
   }
 }

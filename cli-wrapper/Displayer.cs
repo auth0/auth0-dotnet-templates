@@ -60,10 +60,9 @@
   {
     if (Verbose)
     {
-      Console.WriteLine("New appsettings content: ---------");
+      Console.WriteLine("Command output: ---------");
       Console.WriteLine($@"{text}");
       Console.WriteLine("---------------------------------");
     }
   }
 }
-
