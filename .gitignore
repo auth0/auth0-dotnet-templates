@@ -308,3 +308,4 @@ __pycache__/
 
 # Binary content of template registration folders
 **/registration/cli-wrapper.*
+**/registration/selfdel.bat

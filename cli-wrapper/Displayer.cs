@@ -66,6 +66,11 @@
     }
   }
 
+  public static void DisplayErrorVerbose(string text)
+  {
+    if (Verbose) DisplayError(text);
+  }
+
   public static void DisplayError(string text)
   {
     Console.WriteLine("ERROR: ************");

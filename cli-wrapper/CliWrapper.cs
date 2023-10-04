@@ -25,7 +25,7 @@ public class CliWrapper
     }
     catch (Exception ex)
     {
-      Displayer.DisplayError(ex.Message);
+      Displayer.DisplayErrorVerbose(ex.Message);
     }
 
     return result;
@@ -113,13 +113,24 @@ public class CliWrapper
     }
   }
 
-  public void RemoveRegistrationFolder()
+  public async Task RemoveRegistrationFolder()
   {
     string registrationFolderPath = $@"{Path.Combine(System.AppContext.BaseDirectory)}";
 
     Displayer.DisplayVerbose($@"About to remove the folder {registrationFolderPath}");
 
-    Directory.Delete(registrationFolderPath, true);
+    if (Environment.OSVersion.Platform == PlatformID.Unix ||
+          Environment.OSVersion.Platform == PlatformID.MacOSX)
+    {
+      Directory.Delete(registrationFolderPath, true);
+    } else
+    {
+      // Hack to bypass executable lock in Windows (https://andreasrohner.at/posts/Programming/C%23/A-platform-independent-way-for-a-C%23-program-to-update-itself/)
+      var pid = Process.GetCurrentProcess().Id;
+      var cmdOutput = await RunCommand(Path.Combine(registrationFolderPath, "selfdel.bat"), $@"{pid} ""{registrationFolderPath}""");
+
+      Environment.Exit(0);
+    }
   }
 
   private async Task<string> RunCommand(string command, string args)

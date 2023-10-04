@@ -31,7 +31,7 @@
 
     <Target Name="AddCliWrapper" AfterTargets="BeforeBuild">
       <ItemGroup>
-        <CliWrapperFiles Include="cli-wrapper\bin\Release\net7.0\publish\cli-wrapper.*"/>
+        <CliWrapperFiles Include="cli-wrapper\bin\Release\net7.0\publish\cli-wrapper.*;cli-wrapper\bin\Release\net7.0\publish\selfdel.bat"/>
       </ItemGroup>
 
       <Exec Command="dotnet publish cli-wrapper/cli-wrapper.csproj -c Release -p:UseAppHost=false" />

@@ -9,8 +9,16 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="selfdel.bat" />
+  </ItemGroup>
+  <ItemGroup>
     <None Update="config.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="selfdel.bat">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
 </Project>
