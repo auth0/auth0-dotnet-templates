@@ -65,4 +65,11 @@
       Console.WriteLine("---------------------------------");
     }
   }
+
+  public static void DisplayError(string text)
+  {
+    Console.WriteLine("ERROR: ************");
+    Console.WriteLine($@"{text}");
+    Console.WriteLine("*******************");
+  }
 }

@@ -11,13 +11,24 @@ public class CliWrapper
 
   public async Task<bool> IsAuth0CliInstalled()
   {
-    string cmdOutput = await RunCommand("auth0", "--version");
-    string currentCliVersionString = cmdOutput.Split(" ")[2];
-    Version currentCliVersion = new Version(currentCliVersionString);
+    bool result = false;
 
-    Displayer.DisplayVerbose($@"Auth0 CLI version: {currentCliVersionString}");
+    try
+    {
+      string cmdOutput = await RunCommand("auth0", "--version");
+      string currentCliVersionString = cmdOutput.Split(" ")[2];
+      Version currentCliVersion = new Version(currentCliVersionString);
 
-    return currentCliVersion.CompareTo(new Version("1.0.1")) >= 0;
+      Displayer.DisplayVerbose($@"Auth0 CLI version: {currentCliVersionString}");
+
+      result = currentCliVersion.CompareTo(new Version("1.0.1")) >= 0;
+    }
+    catch (Exception ex)
+    {
+      Displayer.DisplayError(ex.Message);
+    }
+
+    return result;
   }
 
   public async Task<RegistrationData> Register()
@@ -50,9 +61,7 @@ public class CliWrapper
       
     } catch (Exception ex)
     {
-      Console.WriteLine("ERROR: ************");
-      Console.WriteLine($@"{ex.Message}");
-      Console.WriteLine("*******************");
+      Displayer.DisplayError(ex.Message);
     }
 
     try
@@ -197,9 +206,7 @@ public class CliWrapper
     }
     catch (Exception ex)
     {
-      Console.WriteLine("ERROR: ************");
-      Console.WriteLine($@"{ex.Message}");
-      Console.WriteLine("*******************");
+      Displayer.DisplayError(ex.Message);
     }
     return currentDomain;
   }
