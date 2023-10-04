@@ -17,4 +17,4 @@ if (await cliWrapper.IsAuth0CliInstalled())
   Console.WriteLine("Please, install the Auth0 CLI ver. 1.0.1 or later (https://auth0.github.io/auth0-cli/).");
 }
 
-cliWrapper.RemoveRegistrationFolder();
+await cliWrapper.RemoveRegistrationFolder();
