@@ -306,6 +306,6 @@ __pycache__/
 !.vscode/launch.json
 !.vscode/extensions.json
 
-# Binary content of template registration folders
+# Binary content produced by the building process
 **/registration/cli-wrapper.*
-**/registration/selfdel.bat
+output

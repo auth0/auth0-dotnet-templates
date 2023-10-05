@@ -126,8 +126,15 @@ public class CliWrapper
     } else
     {
       // Hack to bypass executable lock in Windows (https://andreasrohner.at/posts/Programming/C%23/A-platform-independent-way-for-a-C%23-program-to-update-itself/)
-      var pid = Process.GetCurrentProcess().Id;
-      var cmdOutput = await RunCommand(Path.Combine(registrationFolderPath, "selfdel.bat"), $@"{pid} ""{registrationFolderPath}""");
+      var delScriptName = Path.Combine(registrationFolderPath, "selfdel.bat");
+
+      using (var batFile = new StreamWriter (File.Create (delScriptName))) {
+        batFile.WriteLine ("@ECHO OFF");
+        batFile.WriteLine ("TIMEOUT /t 5 /nobreak > NUL");
+        batFile.WriteLine ($@"RMDIR /S /Q {registrationFolderPath}");
+      }
+
+      RunCommandAndForget(delScriptName, "");
 
       Environment.Exit(0);
     }
@@ -160,6 +167,22 @@ public class CliWrapper
     Displayer.DisplayCommandOutput(output);
 
     return output;
+  }
+
+  private void RunCommandAndForget(string command, string args)
+  {
+    ProcessStartInfo startInfo = new()
+    {
+      FileName = command,
+      Arguments = args,
+      CreateNoWindow = true,
+      RedirectStandardOutput = true,
+      RedirectStandardError = true,
+    };
+
+    Displayer.DisplayVerbose($@"About to launch command: {command} {args}");
+
+    var proc = Process.Start(startInfo);
   }
 
   private string CreateAudience(string appName)
