@@ -132,6 +132,7 @@
   },
   "postActions": [{
     "actionId": "3A7C4B45-1F5D-4A30-959A-51B88E82B5D2",
+    "condition": "(domain == \"yourdomain.auth0.com\" && clientId == \"your-client-id\")",
     "args": {
       "executable": "dotnet",
       "args": "./registration/cli-wrapper.dll",
