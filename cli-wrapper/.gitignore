@@ -306,6 +306,6 @@ __pycache__/
 !.vscode/launch.json
 !.vscode/extensions.json
 
-# Binary content produced by the building process
-**/registration/cli-wrapper.*
-output
+# CLI wrapper test files
+appsettings.json
+config.json

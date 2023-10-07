@@ -42,6 +42,10 @@
       "defaultValue": "net7.0",
       "replaces": "net7.0"
     },
+    "autoregister": {
+      "type": "computed",
+      "value": "(domain == \"yourdomain.auth0.com\" && clientId == \"your-client-id\")"
+    },
 
 
     // Port generation
@@ -129,5 +133,30 @@
       },
       "replaces": "44300"
     }
-  }
+  },
+  "sources": [
+    {
+        "modifiers": [
+            {
+              "condition": "(!autoregister)",
+              "exclude": [ "registration/**/*" ]
+          }
+        ]
+    }
+  ],
+  "postActions": [{
+    "actionId": "3A7C4B45-1F5D-4A30-959A-51B88E82B5D2",
+    "condition": "(autoregister)",
+    "args": {
+      "executable": "dotnet",
+      "args": "./registration/cli-wrapper.dll",
+      "redirectStandardOutput": false,
+      "redirectStandardError": false
+    },
+    "manualInstructions": [{
+       "text": "Run 'dotnet ./registration/cli-wrapper.dll'"
+    }],
+    "continueOnError": false,
+    "description ": "Register your application with Auth0"
+  }]
 }
