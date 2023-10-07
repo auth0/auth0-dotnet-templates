@@ -38,15 +38,15 @@ To work locally with the Auth0 Templates, i.e., using the templates from the sou
 2. Create a local NuGet package by running the following command in the root folder of the project:
 
    ```bash
-   dotnet pack
+   dotnet pack -o ./output
    ```
 
-   Your NuGet package will be generated in the `./bin/Debug/` folder.
+   Your NuGet package will be generated in the `./output/` folder.
 
 3. Install the templates by running the following command:
 
    ```bash
-   dotnet new -i ./bin/Debug/Auth0.Templates.2.1.0.nupkg
+   dotnet new -i ./output/Auth0.Templates.*.nupkg
    ```
 
 
