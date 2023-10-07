@@ -10,7 +10,11 @@ To create a new MVC application with the .NET CLI, you can run the following com
 dotnet new auth0webapp [options]
 ```
 
-This will create a new MVC application in the current folder. The following template-specific options are available:
+This will create a new MVC application with Auth0 authentication in the current folder.
+
+##### Manual registration
+
+In addition to the usual options for the `dotnet new` command, the following template-specific options are available:
 
 - `--domain`<br>
   The Auth0 domain associated with your tenant. The default value is `yourdomain.auth0.com`.
@@ -19,7 +23,23 @@ This will create a new MVC application in the current folder. The following temp
 - `-f` or `--framework`<br>
   Defines the target framework to use for the .NET project. Currently, the only possible value is `net7.0`, which is also the default value.
 
+Example:
 
+```shell
+dotnet new auth0webapp -o MyWebApp --domain myapp.auth0.com --client-id uw63N1fx43yQUwD7Xp4eq9BjKhPeW0dK
+```
+
+##### Automatic registration
+
+If you have the [Auth0 CLI](https://github.com/auth0/auth0-cli) installed on your machine, you can run the template command without any options and it will automatically register and configure your application with Auth0.
+
+Example:
+
+```shell
+dotnet new auth0webapp -o MyWebApp
+```
+
+The template engine will ask for confirmation to perform the registration action.
 
 #### Using Visual Studio for Windows
 

@@ -15,7 +15,7 @@ The Auth0 Templates for .NET package allows you to quickly bootstrap a .NET appl
 You can install the Auth0 Templates from [NuGet](https://www.nuget.org/packages/Auth0.Templates/) by running the following command in your terminal window:
 
 ```bash
-dotnet new install Auth0.Templates::2.0.1
+dotnet new install Auth0.Templates
 ```
 
 Once installed, the templates are available in .NET CLI, Visual Studio for Windows, and Visual Studio for Mac.
@@ -38,15 +38,15 @@ To work locally with the Auth0 Templates, i.e., using the templates from the sou
 2. Create a local NuGet package by running the following command in the root folder of the project:
 
    ```bash
-   dotnet pack
+   dotnet pack -o ./output
    ```
 
-   Your NuGet package will be generated in the `./bin/Debug/` folder.
+   Your NuGet package will be generated in the `./output/` folder.
 
 3. Install the templates by running the following command:
 
    ```bash
-   dotnet new -i ./bin/Debug/Auth0.Templates.2.0.1.nupkg
+   dotnet new -i ./output/Auth0.Templates.*.nupkg
    ```
 
 

@@ -5,7 +5,7 @@
   "scripts": {
     "create": "dotnet pack -o ./output",
     "uninstall": "dotnet new uninstall Auth0.Templates",
-    "install": "dotnet new install ./output/Auth0.Templates.2.0.1.nupkg",
+    "install": "dotnet new install ./output/Auth0.Templates.*.nupkg",
     "pack-install": "npm run uninstall && npm run create && npm run install"
   }
 }
