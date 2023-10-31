@@ -1,0 +1,8 @@
+{
+  "AppName": "Auth0WebAPI",
+  "AppDescription": "ASP.NET Core Minimal Web API application created and registered via Auth0 Templates for .NET",
+  "AppType": "api",
+  "Callbacks": "",
+  "LogoutUrls": "",
+  "AppSettingsFiles": ["./appsettings.json"]
+}

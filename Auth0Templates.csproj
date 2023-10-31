@@ -41,6 +41,7 @@
       <Copy SourceFiles="@(CliWrapperFiles)" DestinationFolder="templates\Auth0.BlazorWebAssembly\Server\registration" SkipUnchangedFiles="false" />
       <Copy SourceFiles="@(CliWrapperFiles)" DestinationFolder="templates\Auth0.Mvc\registration" SkipUnchangedFiles="false" />
       <Copy SourceFiles="@(CliWrapperFiles)" DestinationFolder="templates\Auth0.WebAPI\registration" SkipUnchangedFiles="false" />
+      <Copy SourceFiles="@(CliWrapperFiles)" DestinationFolder="templates\Auth0.MinimalWebAPI\registration" SkipUnchangedFiles="false" />
     </Target>
 
 </Project>

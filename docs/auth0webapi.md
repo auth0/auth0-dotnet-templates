@@ -22,8 +22,10 @@ In addition to the usual options for the `dotnet new` command, the following tem
   The API identifier (audience) as defined in your Auth0 dashboard. The default value is `https://your-api-id.com`
 - `-f` or `--framework`<br>
   Defines the target framework to use for the .NET project. Currently, the only possible value is `net7.0`, which is also the default value.
-- `--no-openaPI`<br>
+- `--no-openapi`<br>
   It prevents OpenAPI documentation generation (`true`). The default value is `false`.
+- `--minimal`
+  It creates a project that uses the [ASP.NET Core minimal API](https://learn.microsoft.com/en-us/aspnet/core/fundamentals/minimal-apis). Default is `false`.
 
 Example:
 
