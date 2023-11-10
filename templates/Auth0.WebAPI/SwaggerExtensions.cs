@@ -13,7 +13,7 @@ public static class SwaggerExtensions
         Description = "Learn how to protect your .NET applications with Auth0",
         Contact = new OpenApiContact {
           Name = ".NET Identity with Auth0",
-          Url = new Uri("https://auth0.com/resources/ebooks/net-identity-with-auth0?utm_source=auth0_dotnet_template&utm_medium=sc&utm_campaign=webapi_dotnet_ebook")
+          Url = new Uri("https://a0.to/dotnet-templates/webapi")
         },
         Version = "v1.0.0" });
 
