@@ -12,8 +12,9 @@ var app = builder.Build();
 #if (!removeOpenAPI)
 if (app.Environment.IsDevelopment())
 {
-  app.UseSwagger();
-  app.UseSwaggerUI();
+    app.UseStaticFiles();
+    app.UseSwagger();
+    app.UseSwaggerUI();
 }
 #endif
 
@@ -39,6 +40,8 @@ app.MapGet("/weatherforecast", () =>
 .WithName("GetWeatherForecast")
 .RequireAuthorization()
 .WithOpenApi();
+
+app.MapFallbackToFile("index.html");
 
 app.Run();
 

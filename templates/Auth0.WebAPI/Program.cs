@@ -17,6 +17,7 @@ var app = builder.Build();
 #if (!removeOpenAPI)
 if (app.Environment.IsDevelopment())
 {
+  app.UseStaticFiles();
   app.UseSwagger();
   app.UseSwaggerUI();
 }
@@ -25,5 +26,6 @@ if (app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 
 app.MapControllers();
+app.MapFallbackToFile("index.html");
 
 app.Run();
