@@ -23,6 +23,14 @@
       },
       "isVisible": true,
       "defaultValue": true
+    },
+    {
+      "id": "minimal",
+      "name": {
+        "text": "Use minimal API"
+      },
+      "isVisible": true,
+      "defaultValue": false
     }
   ]
 }
