@@ -25,6 +25,7 @@
 
   <ItemGroup>
     <None Include="Auth0Icon.png" Pack="true" PackagePath="\"/>
+     <None Include="readme-pkg.md" Pack="true" PackagePath="\"/>
     <Content Include="templates\**\*" Exclude="templates\**\bin\**;templates\**\obj\**" />
     <Compile Remove="**\*" />
   </ItemGroup>
