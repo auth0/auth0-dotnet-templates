@@ -14,6 +14,9 @@
     "language": "C#",
     "type": "project"
   },
+  "guids": [
+    "F96B7B3C-7C7D-4789-A25F-1604A35F8453"
+  ],
   "symbols":{
     "domain": {
         "type": "parameter",
@@ -35,11 +38,15 @@
       "datatype": "choice",
       "choices": [
         {
+          "choice": "net8.0",
+          "description": "Target .NET 8"
+        },
+        {
           "choice": "net7.0",
           "description": "Target .NET 7"
         }
       ],
-      "defaultValue": "net7.0",
+      "defaultValue": "net8.0",
       "replaces": "net7.0"
     },
     "DisableOpenAPI": {
@@ -58,7 +65,16 @@
       "type": "computed",
       "value": "(DisableOpenAPI || !EnableOpenAPI)"
     },
-
+    "minimal": {
+      "type": "parameter",
+      "dataType":"bool",
+      "defaultValue": "false",
+      "description": "Create a project that uses the ASP.NET Core minimal API."
+    },
+    "autoregister": {
+      "type": "computed",
+      "value": "(domain == \"yourdomain.auth0.com\" && audience == \"https://your-api-id.com\")"
+    },
     
 
     // Port generation
@@ -149,12 +165,58 @@
   },
   "sources": [
     {
+        "condition": "(!minimal)",
+        "source": "./",
         "modifiers": [
             {
                 "condition": "(removeOpenAPI)",
-                "exclude": [ "Swagger/**/*" ]
-            }
+                "exclude": [ "SwaggerExtensions.cs" ]
+            },
+            {
+              "condition": "(!autoregister)",
+              "exclude": [ "registration/**/*" ]
+          }
         ]
-    }
-]
+    },
+    {
+      "condition": "(minimal)",
+      "source": "../Auth0.MinimalWebAPI/",
+      "modifiers": [
+          {
+              "condition": "(removeOpenAPI)",
+              "exclude": [ "SwaggerExtensions.cs" ]
+          },
+          {
+            "condition": "(!autoregister)",
+            "exclude": [ "registration/**/*" ]
+        }
+      ]
+  }
+  ],
+  "postActions": [{
+    "condition": "(OS != \"Windows_NT\")",
+    "description": "Make scripts executable",
+    "manualInstructions": [{
+      "text": "Run 'chmod +x register-with-auth0.cmd'"
+    }],
+    "actionId": "cb9a6cf3-4f5c-4860-b9d2-03a574959774",
+    "args": {
+      "+x": "register-with-auth0.cmd"
+    },
+    "continueOnError": true
+  },
+  {
+    "actionId": "3A7C4B45-1F5D-4A30-959A-51B88E82B5D2",
+    "condition": "(autoregister)",
+    "args": {
+      "executable": "register-with-auth0.cmd",
+      "redirectStandardOutput": false,
+      "redirectStandardError": false
+    },
+    "manualInstructions": [{
+       "text": "Run './register-with-auth0.cmd'"
+    }],
+    "continueOnError": false,
+    "description ": "Register your application with Auth0"
+  }]
 }
