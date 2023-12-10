@@ -4,5 +4,6 @@
   "AppType": "api",
   "Callbacks": "",
   "LogoutUrls": "",
-  "AppSettingsFiles": ["./appsettings.json"]
+  "AppSettingsFiles": ["./appsettings.json"],
+  "Verbose": false
 }
