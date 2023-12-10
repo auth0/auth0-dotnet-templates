@@ -7,7 +7,14 @@ public class CliWrapper
   ConfigData configData = new ConfigData();
 
   public CliWrapper()
-  { }
+  {
+    string templateConfigurationFilePath = $@"{Path.Combine(System.AppContext.BaseDirectory, "config.json")}";
+    string text = File.ReadAllText(templateConfigurationFilePath);
+
+    configData = JsonSerializer.Deserialize<ConfigData>(text);
+
+    Displayer.Verbose = configData.Verbose;
+  }
 
   public async Task<bool> IsAuth0CliInstalled()
   {
@@ -38,15 +45,15 @@ public class CliWrapper
 
     try
     {
-      string templateConfigurationFilePath = $@"{Path.Combine(System.AppContext.BaseDirectory, "config.json")}";
+      // string templateConfigurationFilePath = $@"{Path.Combine(System.AppContext.BaseDirectory, "config.json")}";
 
-      Displayer.DisplayVerbose($@"Reading template configuration from {templateConfigurationFilePath}");
+      // Displayer.DisplayVerbose($@"Reading template configuration from {templateConfigurationFilePath}");
 
-      string text = File.ReadAllText(templateConfigurationFilePath);
+      // string text = File.ReadAllText(templateConfigurationFilePath);
 
-      Displayer.DisplayTemplateConfiguration(text);
+      // Displayer.DisplayTemplateConfiguration(text);
 
-      configData = JsonSerializer.Deserialize<ConfigData>(text);
+      // configData = JsonSerializer.Deserialize<ConfigData>(text);
 
       if (configData.AppType.ToLower() == "api")
       {

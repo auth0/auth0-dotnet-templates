@@ -4,5 +4,6 @@
   "AppType": "regular",
   "Callbacks": "https://localhost:5001/callback",
   "LogoutUrls": "https://localhost:5001/",
-  "AppSettingsFiles": ["./appsettings.json"]
+  "AppSettingsFiles": ["./appsettings.json"],
+  "Verbose": false
 }

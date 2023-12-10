@@ -6,4 +6,6 @@
   public string? Callbacks { get; set; }
   public string? LogoutUrls { get; set; }
   public string[]? AppSettingsFiles {get; set;}
+
+  public bool Verbose {get; set;}
 }

@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <PackageType>Template</PackageType>
-    <PackageVersion>2.1.0</PackageVersion>
+    <PackageVersion>2.1.1</PackageVersion>
     <PackageId>Auth0.Templates</PackageId>
     <Title>Auth0 Templates for .NET</Title>
     <Authors>Auth0</Authors>
