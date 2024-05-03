@@ -1,4 +1,4 @@
-## Auth0 Blazor Server Application
+## Auth0 Blazor Web Application
 
 For more information about creating and securing a Blazor Web App with Auth0, check out the [Add Auth0 Authentication to Blazor Web Apps](https://auth0.com/blog/auth0-authentication-blazor-web-apps/) article.
 
@@ -21,7 +21,7 @@ If you have the [Auth0 CLI](https://github.com/auth0/auth0-cli) installed on you
 Example:
 
 ```shell
-dotnet new auth0blazor -o MyBlazorServer
+dotnet new auth0blazor -o MyBlazorWebApp
 ```
 
 The template engine will ask for confirmation to perform the registration action:
@@ -52,28 +52,28 @@ In addition to the usual options for the `dotnet new` command, the following tem
 Example:
 
 ```shell
-dotnet new auth0blazor -o MyBlazorServer --domain myapp.auth0.com --client-id uw63N1fx43yQUwD7Xp4eq9BjKhPeW0dK
+dotnet new auth0blazor -o MyBlazorWebApp --domain myapp.auth0.com --client-id uw63N1fx43yQUwD7Xp4eq9BjKhPeW0dK
 ```
 
 #### Using Visual Studio for Windows
 
 To create a new Blazor Web App with Visual Studio for Windows, select *Auth0* from the project types dropdown list and then *Auth0 Blazor Web App*:
 
-![Auth0 Blazor Server Application from Visual Studio](assets/auth0-blazor-web-app-vs.png)
+![Auth0 Blazor Web App from Visual Studio](assets/auth0-blazor-web-app-vs.png)
 
 Then, after inserting the name and the folder for the project, provide the required options:
 
-![Auth0 Blazor Server Application options from Visual Studio](assets/auth0-blazor-web-app-vs-options.png)
+![Auth0 Blazor Web App options from Visual Studio](assets/auth0-blazor-web-app-vs-options.png)
 
 #### Using Visual Studio for Mac
 
 To create a new Blazor Web App with Visual Studio for Mac, select *Custom* from the *Other* project types list and then *Auth0 Blazor Web App*:
 
-![Auth0 Blazor Server Application from Visual Studio](assets/auth0-blazor-web-app-vs-mac.png)
+![Auth0 Blazor Web App from Visual Studio](assets/auth0-blazor-web-app-vs-mac.png)
 
 Then, after inserting the name and the folder for the project, provide the required options:
 
-![Auth0 Blazor Server Application options from Visual Studio](assets/auth0-blazor-web-app-vs-mac-options.png)
+![Auth0 Blazor Web App options from Visual Studio](assets/auth0-blazor-web-app-vs-mac-options.png)
 
 ##### Automatic registration
 
