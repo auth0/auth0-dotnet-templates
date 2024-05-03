@@ -30,6 +30,7 @@ Currently, the following .NET templates are implemented:
 - [Auth0 Blazor Web App](docs/auth0blazor.md)
 - [Auth0 Blazor Server Application](docs/auth0blazorserver.md)
 - [Auth0 Blazor WebAssembly Application](docs/auth0blazorwasm.md)
+- [Auth0 MAUI Application](docs/auth0maui.md)
 
 ## Installing from source code
 
@@ -92,3 +93,4 @@ Please do not report security vulnerabilities on the public GitHub issue tracker
   </picture>
 </p>
 <p align="center">Auth0 is an easy to implement, adaptable authentication and authorization platform.<br> To learn more check out <a href="https://auth0.com/why-auth0">Why Auth0?</a></p>
+
