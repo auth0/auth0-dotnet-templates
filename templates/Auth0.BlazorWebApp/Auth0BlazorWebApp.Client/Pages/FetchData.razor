@@ -1,0 +1,38 @@
+@page "/fetchdata"
+@attribute [Authorize]
+@rendermode InteractiveAuto
+@inject HttpClient Http
+
+<PageTitle>Fetch Data</PageTitle>
+
+<h1>Fetch Data</h1>
+
+<p>Hello @Username!</p>
+
+<button class="btn btn-primary" @onclick="CallInternalApi">Call internal API</button>
+<p>@ApiResponse</p>
+
+@code {
+    [CascadingParameter]
+    private Task<AuthenticationState>? authenticationState { get; set; }
+    private string Username = "";
+    private string ApiResponse = "";
+
+    protected override async Task OnInitializedAsync()
+    {
+        if (authenticationState is not null)
+        {
+            var state = await authenticationState;
+
+            Username = state?.User?.Identity?.Name ?? string.Empty;
+        }
+        await base.OnInitializedAsync();
+    }
+
+    private async Task CallInternalApi()
+    {
+        var data = await Http.GetFromJsonAsync<int[]>("api/internalData");
+
+        ApiResponse = $"This data comes from an internal API: {string.Join(",", data)}";
+    }
+}

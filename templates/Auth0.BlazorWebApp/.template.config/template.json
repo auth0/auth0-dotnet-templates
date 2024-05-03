@@ -1,0 +1,177 @@
+{
+  "$schema": "http://json.schemastore.org/template",
+  "author": "Auth0 by Okta",
+  "classifications": [ "Web", "Blazor", "Auth0" ],
+  "groupIdentity": "Auth0.NET.Blazor",
+  "identity": "Auth0.NET.Blazor.CSharp",
+  "name": "Auth0 Blazor Web App",
+  "description": "A project template for creating a Blazor Web App integrated with Auth0 authentication and authorization services.",
+  "shortName": "auth0blazor",
+  "sourceName": "Auth0BlazorWebApp",
+  "defaultName": "BlazorWebApplication1",
+  "preferNameDirectory": true,
+  "tags": {
+    "language": "C#",
+    "type": "project"
+  },
+  "guids": [
+    "F0E5D9A9-3515-4964-AC5D-D223F8E7E8B0",
+    "425742CB-9094-4B37-971A-E35640CBDE9C"
+  ],
+  "symbols":{
+    "domain": {
+        "type": "parameter",
+        "datatype": "string",
+        "description": "Your Auth0 domain.",
+        "defaultValue": "yourdomain.auth0.com",
+        "replaces":"{DOMAIN}"
+    },
+    "clientId": {
+        "type": "parameter",
+        "datatype": "string",
+        "description": "Your Auth0 client id.",
+        "defaultValue": "your-client-id",
+        "replaces":"{CLIENT_ID}"
+    },
+    "Framework": {
+      "type": "parameter",
+      "description": "The target framework for the project.",
+      "datatype": "choice",
+      "choices": [
+        {
+          "choice": "net8.0",
+          "description": "Target .NET 8"
+        }
+      ],
+      "defaultValue": "net8.0",
+      "replaces": "net8.0"
+    },
+    "autoregister": {
+      "type": "computed",
+      "value": "(domain == \"yourdomain.auth0.com\" && clientId == \"your-client-id\")"
+    },
+
+
+    // Port generation
+    "kestrelHttpPort": {
+      "type": "parameter",
+      "datatype": "integer",
+      "description": "Port number to use for the HTTP endpoint in launchSettings.json."
+    },
+    "kestrelHttpPortGenerated": {
+      "type": "generated",
+      "generator": "port",
+      "parameters": {
+        "low": 5000,
+        "high": 5300
+      }
+    },
+    "kestrelHttpPortReplacer": {
+      "type": "generated",
+      "generator": "coalesce",
+      "parameters": {
+        "sourceVariableName": "kestrelHttpPort",
+        "fallbackVariableName": "kestrelHttpPortGenerated"
+      },
+      "replaces": "5000"
+    },
+    "kestrelHttpsPort": {
+      "type": "parameter",
+      "datatype": "integer",
+      "description": "Port number to use for the HTTPS endpoint in launchSettings.json. This option is only applicable when the parameter no-https is not used (no-https will be ignored if either IndividualB2C or OrganizationalAuth is used)."
+    },
+    "kestrelHttpsPortGenerated": {
+      "type": "generated",
+      "generator": "port",
+      "parameters": {
+        "low": 7000,
+        "high": 7300
+      }
+    },
+    "kestrelHttpsPortReplacer": {
+      "type": "generated",
+      "generator": "coalesce",
+      "parameters": {
+        "sourceVariableName": "kestrelHttpsPort",
+        "fallbackVariableName": "kestrelHttpsPortGenerated"
+      },
+      "replaces": "5001"
+    },
+    "iisHttpPort": {
+      "type": "parameter",
+      "datatype": "integer",
+      "description": "Port number to use for the IIS Express HTTP endpoint in launchSettings.json."
+    },
+    "iisHttpPortGenerated": {
+      "type": "generated",
+      "generator": "port"
+    },
+    "iisHttpPortReplacer": {
+      "type": "generated",
+      "generator": "coalesce",
+      "parameters": {
+        "sourceVariableName": "iisHttpPort",
+        "fallbackVariableName": "iisHttpPortGenerated"
+      },
+      "replaces": "8080"
+    },
+    "iisHttpsPort": {
+      "type": "parameter",
+      "datatype": "integer",
+      "description": "Port number to use for the IIS Express HTTPS endpoint in launchSettings.json. This option is only applicable when the parameter no-https is not used (no-https will be ignored if either IndividualB2C or OrganizationalAuth is used)."
+    },
+    "iisHttpsPortGenerated": {
+      "type": "generated",
+      "generator": "port",
+      "parameters": {
+        "low": 44300,
+        "high": 44399
+      }
+    },
+    "iisHttpsPortReplacer": {
+      "type": "generated",
+      "generator": "coalesce",
+      "parameters": {
+        "sourceVariableName": "iisHttpsPort",
+        "fallbackVariableName": "iisHttpsPortGenerated"
+      },
+      "replaces": "44300"
+    }
+  },
+  "sources": [
+    {
+        "modifiers": [
+            {
+              "condition": "(!autoregister)",
+              "exclude": [ "registration/**/*" ]
+          }
+        ]
+    }
+  ],
+  "postActions": [{
+    "condition": "(OS != \"Windows_NT\")",
+    "description": "Make scripts executable",
+    "manualInstructions": [{
+      "text": "Run 'chmod +x register-with-auth0.cmd'"
+    }],
+    "actionId": "cb9a6cf3-4f5c-4860-b9d2-03a574959774",
+    "args": {
+      "+x": "register-with-auth0.cmd"
+    },
+    "continueOnError": true
+  },
+    {
+    "actionId": "3A7C4B45-1F5D-4A30-959A-51B88E82B5D2",
+    "condition": "(autoregister)",
+    "args": {
+      "executable": "register-with-auth0.cmd",
+      "redirectStandardOutput": false,
+      "redirectStandardError": false
+    },
+    "manualInstructions": [{
+       "text": "Run './register-with-auth0.cmd'"
+    }],
+    "continueOnError": false,
+    "description ": "Register your application with Auth0"
+  }]
+}
