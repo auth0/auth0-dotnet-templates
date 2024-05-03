@@ -1,0 +1,89 @@
+{
+  "$schema": "http://json.schemastore.org/template",
+  "author": "Auth0 by Okta",
+  "classifications": [ "MAUI", "Android", "iOS", "macOS", "Mac Catalyst", "Windows", "Auth0" ],
+  "groupIdentity": "Auth0.NET.MAUI",
+  "identity": "Auth0.NET.MAUI.CSharp",
+  "name": "Auth0 .NET MAUI App",
+  "description": "A project template for creating a .NET MAUI App integrated with Auth0 authentication and authorization services.",
+  "shortName": "auth0maui",
+  "sourceName": "Auth0Maui",
+  "defaultName": "MauiApplication1",
+  "preferNameDirectory": true,
+  "tags": {
+    "language": "C#",
+    "type": "project"
+  },
+  "guids": [
+    "1EC7E150-3E67-4EB6-900F-F1957350728C"
+  ],
+  "symbols":{
+    "domain": {
+        "type": "parameter",
+        "datatype": "string",
+        "description": "Your Auth0 domain.",
+        "defaultValue": "yourdomain.auth0.com",
+        "replaces":"{DOMAIN}"
+    },
+    "clientId": {
+        "type": "parameter",
+        "datatype": "string",
+        "description": "Your Auth0 client id.",
+        "defaultValue": "your-client-id",
+        "replaces":"{CLIENT_ID}"
+    },
+    "Framework": {
+      "type": "parameter",
+      "description": "The target framework for the project.",
+      "datatype": "choice",
+      "choices": [
+        {
+          "choice": "net8.0",
+          "description": "Target .NET 8"
+        }
+      ],
+      "defaultValue": "net8.0",
+      "replaces": "net8.0"
+    },
+    "autoregister": {
+      "type": "computed",
+      "value": "(domain == \"yourdomain.auth0.com\" && clientId == \"your-client-id\")"
+    }
+  },
+  "sources": [
+    {
+        "modifiers": [
+            {
+              "condition": "(!autoregister)",
+              "exclude": [ "registration/**/*" ]
+          }
+        ]
+    }
+  ],
+  "postActions": [{
+    "condition": "(OS != \"Windows_NT\")",
+    "description": "Make scripts executable",
+    "manualInstructions": [{
+      "text": "Run 'chmod +x register-with-auth0.cmd'"
+    }],
+    "actionId": "cb9a6cf3-4f5c-4860-b9d2-03a574959774",
+    "args": {
+      "+x": "register-with-auth0.cmd"
+    },
+    "continueOnError": true
+  },
+    {
+    "actionId": "3A7C4B45-1F5D-4A30-959A-51B88E82B5D2",
+    "condition": "(autoregister)",
+    "args": {
+      "executable": "register-with-auth0.cmd",
+      "redirectStandardOutput": false,
+      "redirectStandardError": false
+    },
+    "manualInstructions": [{
+       "text": "Run './register-with-auth0.cmd'"
+    }],
+    "continueOnError": false,
+    "description ": "Register your application with Auth0"
+  }]
+}
