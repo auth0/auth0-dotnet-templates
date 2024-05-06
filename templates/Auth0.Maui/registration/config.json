@@ -1,0 +1,9 @@
+{
+    "AppName": "Auth0Maui",
+    "AppDescription": ".NET MAUI application created and registered via Auth0 Templates for .NET",
+    "AppType": "native",
+    "Callbacks": "myapp://callback/",
+    "LogoutUrls": "myapp://callback/",
+    "AppSettingsFiles": ["./MauiProgram.cs"],
+    "Verbose": false
+  }
