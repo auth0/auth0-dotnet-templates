@@ -38,21 +38,33 @@ In order to enable a template to automatic registration via the CLI Wrapper, app
 - Add the following `postAction` in the `template.config` file of the template:
   ```json
     "postActions": [{
-      "actionId": "3A7C4B45-1F5D-4A30-959A-51B88E82B5D2",
+      "condition": "(OS != \"Windows_NT\")",
+      "description": "Make scripts executable",
+      "manualInstructions": [{
+        "text": "Run 'chmod +x register-with-auth0.cmd'"
+      }],
+      "actionId": "cb9a6cf3-4f5c-4860-b9d2-03a574959774",
       "args": {
-        "executable": "dotnet",
-        "args": "./registration/cli-wrapper.dll",
+        "+x": "register-with-auth0.cmd"
+      },
+      "continueOnError": true
+    },
+      {
+      "actionId": "3A7C4B45-1F5D-4A30-959A-51B88E82B5D2",
+      "condition": "(autoregister)",
+      "args": {
+        "executable": "register-with-auth0.cmd",
         "redirectStandardOutput": false,
         "redirectStandardError": false
       },
       "manualInstructions": [{
-         "text": "Run 'dotnet ./registration/cli-wrapper.dll'"
+         "text": "Run './register-with-auth0.cmd'"
       }],
       "continueOnError": false,
       "description ": "Register your application with Auth0"
     }]
   ```
-
+  
 - Add a `<Copy>` element to the `Auth0Templates.csproj` file specifying the `registration` folder path, as in the following example:
 
   ```xml
@@ -60,17 +72,29 @@ In order to enable a template to automatic registration via the CLI Wrapper, app
   
     <!-- Other markup -->
     
-    <Target Name="CopyCliWrapper" AfterTargets="BeforeBuild">
+    <Target Name="AddCliWrapper" AfterTargets="BeforeBuild">
       <ItemGroup>
         <CliWrapperFiles Include="cli-wrapper\bin\Release\net7.0\publish\cli-wrapper.*"/>
       </ItemGroup>
   
+      <Exec Command="dotnet publish cli-wrapper/cli-wrapper.csproj -c Release -p:UseAppHost=false" />
+      
       <Copy SourceFiles="@(CliWrapperFiles)" DestinationFolder="templates\Auth0.BlazorServer\registration" SkipUnchangedFiles="false" />
       <Copy SourceFiles="@(CliWrapperFiles)" DestinationFolder="templates\Auth0.WebAPI\registration" SkipUnchangedFiles="false" />
     </Target>
   </Project>
   ```
-
+  
+- Add a file named `register-with-auth0.cmd` to the root folder of the template with the following content:
+  ```bash
+  rem #if (OS != "Windows_NT")
+  #!/bin/sh
+  dotnet ./registration/cli-wrapper.dll
+  rem #else
+  dotnet registration/cli-wrapper.dll
+  rem #endif
+  ```
+  
   
 
 ## Build-Time Behavior
