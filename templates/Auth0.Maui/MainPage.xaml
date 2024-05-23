@@ -8,6 +8,12 @@
             Padding="30,0"
             Spacing="25">
 
+            <Image Source="auth0_dotnet_ebook.png">
+		        <Image.GestureRecognizers>
+			        <TapGestureRecognizer Tapped="OnAuth0BookClicked"/>
+		        </Image.GestureRecognizers>
+            </Image>
+
             <StackLayout
                 x:Name="LoginView">
                 <Button 
@@ -21,12 +27,6 @@
             <StackLayout
                 x:Name="HomeView"
                 IsVisible="false">
-                <Image
-                    Source="dotnet_bot.png"
-                    HeightRequest="185"
-                    Aspect="AspectFit"
-                    SemanticProperties.Description="dot net bot in a race car number eight" />
-
                 <Label
                     Text="Hello, World!"
                     Style="{StaticResource Headline}"
