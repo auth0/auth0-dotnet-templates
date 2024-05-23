@@ -16,7 +16,7 @@ This will create a new Blazor Web App with Auth0 authentication in the current f
 
 ##### Automatic registration
 
-If you have the [Auth0 CLI](https://github.com/auth0/auth0-cli) installed on your machine and logged in to Auth0, you can run the template command without any options and it will automatically register and configure your application with Auth0.
+If you have the [Auth0 CLI](https://github.com/auth0/auth0-cli) installed on your machine and [logged in to Auth0](https://github.com/auth0/auth0-cli?tab=readme-ov-file#authenticating-to-your-tenant), you can run the template command without any options and it will automatically register and configure your application with Auth0.
 
 Example:
 
@@ -36,7 +36,7 @@ Actual command: register-with-auth0.cmd
 Do you want to run this action [Y(yes)|N(no)]?
 ```
 
-Once you confirm, you will get an entry for the application in your current Auth0 tenant and your application will be configured accordingly.
+Once you confirm, you will get an entry for the application **in your current Auth0 tenant** and your application will be configured accordingly.
 
 ##### Manual registration
 

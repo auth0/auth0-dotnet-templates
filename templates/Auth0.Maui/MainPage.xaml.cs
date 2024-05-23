@@ -1,4 +1,5 @@
-﻿using Auth0.OidcClient; 
+﻿using Auth0.OidcClient;
+using Microsoft.Maui.ApplicationModel;
 
 namespace Auth0Maui;
 
@@ -51,5 +52,9 @@ public partial class MainPage : ContentPage
 		HomeView.IsVisible = false;
 		LoginView.IsVisible = true;
 	}
-}
 
+    private async void OnAuth0BookClicked(System.Object sender, Microsoft.Maui.Controls.TappedEventArgs e)
+    {
+        await Launcher.OpenAsync("https://a0.to/dotnet-templates/maui");
+    }
+}
