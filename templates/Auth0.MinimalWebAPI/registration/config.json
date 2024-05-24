@@ -4,5 +4,7 @@
   "AppType": "api",
   "Callbacks": "",
   "LogoutUrls": "",
-  "AppSettingsFiles": ["./appsettings.json"]
+  "AppSettingsFiles": ["./appsettings.json"],
+  "RegistrationScriptFile": "../register-with-auth0.cmd",
+  "Verbose": false
 }

@@ -5,5 +5,6 @@
     "Callbacks": "myapp://callback/",
     "LogoutUrls": "myapp://callback/",
     "AppSettingsFiles": ["./MauiProgram.cs"],
+    "RegistrationScriptFile": "../register-with-auth0.cmd",
     "Verbose": false
   }
