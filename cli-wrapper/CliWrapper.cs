@@ -123,14 +123,12 @@ public class CliWrapper
   public async Task RemoveRegistrationFolder()
   {
     string registrationFolderPath = $@"{Path.Combine(System.AppContext.BaseDirectory)}";
-    string registrationParentFolderPath = Directory.GetParent(registrationFolderPath.TrimEnd(Path.DirectorySeparatorChar)).FullName;
-    string registeringScriptPath = Path.Combine(registrationParentFolderPath, "register-with-auth0.cmd");
 
     Displayer.DisplayVerbose($@"About to remove the folder {registrationFolderPath}");
 
-    Displayer.DisplayVerbose($@"Moving the registering script file {registeringScriptPath}");
+    Displayer.DisplayVerbose($@"Moving the registering script file {configData.RegistrationScriptFile}");
     try {
-      File.Move(registeringScriptPath, Path.Combine(registrationFolderPath, "register-with-auth0.cmd"));
+      File.Move(Path.Combine(registrationFolderPath, configData.RegistrationScriptFile), Path.Combine(registrationFolderPath, "register-with-auth0.cmd"));
     } catch (Exception ex)
     {
       Displayer.DisplayErrorVerbose(ex.Message);
