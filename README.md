@@ -10,6 +10,7 @@ The Auth0 Templates for .NET package allows you to quickly bootstrap a .NET appl
 * (Optional, but recommended) [Auth0 CLI](https://github.com/auth0/auth0-cli) version 1.0.1
 * (Optional) Visual Studio 2022 for Windows (ver. 17.4+)
 * (Optional) Visual Studio 2022 for Mac (ver. 17.5+)
+* (Optional) JetBrains Rider (ver. 2024.1+)
 
 ### Installation
 
@@ -93,4 +94,3 @@ Please do not report security vulnerabilities on the public GitHub issue tracker
   </picture>
 </p>
 <p align="center">Auth0 is an easy to implement, adaptable authentication and authorization platform.<br> To learn more check out <a href="https://auth0.com/why-auth0">Why Auth0?</a></p>
-
