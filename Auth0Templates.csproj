@@ -10,6 +10,7 @@
     <Description>Template pack for creating .NET applications integrated with Auth0 authentication and authorization.</Description>
     <PackageTags>dotnet-new;templates;auth0;authentication;openid connect;oidc;oauth2</PackageTags>
     <PackageIcon>Auth0Icon.png</PackageIcon>
+    <PackageReadmeFile>readme-pkg.md</PackageReadmeFile>
     <PackageProjectUrl>https://github.com/auth0/auth0-dotnet-templates</PackageProjectUrl>
     <PackageLicenseExpression>Apache-2.0</PackageLicenseExpression>
     <RepositoryType>git</RepositoryType>
@@ -25,7 +26,7 @@
 
   <ItemGroup>
     <None Include="Auth0Icon.png" Pack="true" PackagePath="\"/>
-     <None Include="readme-pkg.md" Pack="true" PackagePath="\"/>
+    <None Include="readme-pkg.md" Pack="true" PackagePath="\"/>
     <Content Include="templates\**\*" Exclude="templates\**\bin\**;templates\**\obj\**" />
     <Compile Remove="**\*" />
   </ItemGroup>

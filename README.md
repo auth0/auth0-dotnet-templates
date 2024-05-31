@@ -20,7 +20,7 @@ You can install the Auth0 Templates from [NuGet](https://www.nuget.org/packages/
 dotnet new install Auth0.Templates
 ```
 
-Once installed, the templates are available in .NET CLI, Visual Studio for Windows, and Visual Studio for Mac.
+Once installed, the templates are available in .NET CLI, Visual Studio for Windows, Visual Studio for Mac, and JetBrains Rider.
 
 ## Usage
 
@@ -94,3 +94,4 @@ Please do not report security vulnerabilities on the public GitHub issue tracker
   </picture>
 </p>
 <p align="center">Auth0 is an easy to implement, adaptable authentication and authorization platform.<br> To learn more check out <a href="https://auth0.com/why-auth0">Why Auth0?</a></p>
+
