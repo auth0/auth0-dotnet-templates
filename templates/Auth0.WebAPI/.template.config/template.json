@@ -38,6 +38,10 @@
       "datatype": "choice",
       "choices": [
         {
+          "choice": "net9.0",
+          "description": "Target .NET 9"
+        },
+        {
           "choice": "net8.0",
           "description": "Target .NET 8"
         },
@@ -46,7 +50,7 @@
           "description": "Target .NET 7"
         }
       ],
-      "defaultValue": "net8.0",
+      "defaultValue": "net9.0",
       "replaces": "net7.0"
     },
     "DisableOpenAPI": {
@@ -165,8 +169,22 @@
   },
   "sources": [
     {
-        "condition": "(!minimal)",
-        "source": "./",
+      "condition": "(!minimal) && ((Framework == \"net8.0\") || (Framework == \"net7.0\"))",
+      "source": "./version8/",
+      "modifiers": [
+          {
+              "condition": "(removeOpenAPI)",
+              "exclude": [ "SwaggerExtensions.cs" ]
+          },
+          {
+            "condition": "(!autoregister)",
+            "exclude": [ "registration/**/*" ]
+        }
+      ]
+    },
+    {
+        "condition": "(!minimal) && (Framework == \"net9.0\")",
+        "source": "./version9",
         "modifiers": [
             {
                 "condition": "(removeOpenAPI)",
@@ -179,8 +197,8 @@
         ]
     },
     {
-      "condition": "(minimal)",
-      "source": "../Auth0.MinimalWebAPI/",
+      "condition": "(minimal) && ((Framework == \"net8.0\") || (Framework == \"net7.0\"))",
+      "source": "../Auth0.MinimalWebAPI/version8/",
       "modifiers": [
           {
               "condition": "(removeOpenAPI)",
@@ -191,7 +209,21 @@
             "exclude": [ "registration/**/*" ]
         }
       ]
-  }
+    },
+    {
+      "condition": "(minimal) && (Framework == \"net9.0\")",
+      "source": "../Auth0.MinimalWebAPI/version9/",
+      "modifiers": [
+          {
+              "condition": "(removeOpenAPI)",
+              "exclude": [ "SwaggerExtensions.cs" ]
+          },
+          {
+            "condition": "(!autoregister)",
+            "exclude": [ "registration/**/*" ]
+        }
+      ]
+    }
   ],
   "postActions": [{
     "condition": "(OS != \"Windows_NT\")",

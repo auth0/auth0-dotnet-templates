@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <PackageType>Template</PackageType>
-    <PackageVersion>2.1.1</PackageVersion>
+    <PackageVersion>2.3.0</PackageVersion>
     <PackageId>Auth0.Templates</PackageId>
     <Title>Auth0 Templates for .NET</Title>
     <Authors>Auth0</Authors>
@@ -10,6 +10,7 @@
     <Description>Template pack for creating .NET applications integrated with Auth0 authentication and authorization.</Description>
     <PackageTags>dotnet-new;templates;auth0;authentication;openid connect;oidc;oauth2</PackageTags>
     <PackageIcon>Auth0Icon.png</PackageIcon>
+    <PackageReadmeFile>readme-pkg.md</PackageReadmeFile>
     <PackageProjectUrl>https://github.com/auth0/auth0-dotnet-templates</PackageProjectUrl>
     <PackageLicenseExpression>Apache-2.0</PackageLicenseExpression>
     <RepositoryType>git</RepositoryType>
@@ -25,24 +26,33 @@
 
   <ItemGroup>
     <None Include="Auth0Icon.png" Pack="true" PackagePath="\"/>
-     <None Include="readme-pkg.md" Pack="true" PackagePath="\"/>
+    <None Include="readme-pkg.md" Pack="true" PackagePath="\"/>
     <Content Include="templates\**\*" Exclude="templates\**\bin\**;templates\**\obj\**" />
     <Compile Remove="**\*" />
   </ItemGroup>
 
     <Target Name="AddCliWrapper" AfterTargets="BeforeBuild">
       <ItemGroup>
-        <CliWrapperFiles Include="cli-wrapper\bin\Release\net7.0\publish\cli-wrapper.*"/>
+        <CliWrapperFiles Include="cli-wrapper\bin\Release\net7.0\publish\cli-wrapper.*;"/>
       </ItemGroup>
 
       <Exec Command="dotnet publish cli-wrapper/cli-wrapper.csproj -c Release -p:UseAppHost=false" />
 
       <Copy SourceFiles="@(CliWrapperFiles)" DestinationFolder="templates\Auth0.BlazorServer\registration" SkipUnchangedFiles="false" />
-      <Copy SourceFiles="@(CliWrapperFiles)" DestinationFolder="templates\Auth0.BlazorWebAssembly\Client\registration" SkipUnchangedFiles="false" />
-      <Copy SourceFiles="@(CliWrapperFiles)" DestinationFolder="templates\Auth0.BlazorWebAssembly\Server\registration" SkipUnchangedFiles="false" />
-      <Copy SourceFiles="@(CliWrapperFiles)" DestinationFolder="templates\Auth0.Mvc\registration" SkipUnchangedFiles="false" />
-      <Copy SourceFiles="@(CliWrapperFiles)" DestinationFolder="templates\Auth0.WebAPI\registration" SkipUnchangedFiles="false" />
-      <Copy SourceFiles="@(CliWrapperFiles)" DestinationFolder="templates\Auth0.MinimalWebAPI\registration" SkipUnchangedFiles="false" />
+      <Copy SourceFiles="@(CliWrapperFiles)" DestinationFolder="templates\Auth0.BlazorWebAssembly\version8\Client\registration" SkipUnchangedFiles="false" />
+      <Copy SourceFiles="@(CliWrapperFiles)" DestinationFolder="templates\Auth0.BlazorWebAssembly\version8\Server\registration" SkipUnchangedFiles="false" />
+      <Copy SourceFiles="@(CliWrapperFiles)" DestinationFolder="templates\Auth0.BlazorWebAssembly\version9\Client\registration" SkipUnchangedFiles="false" />
+      <Copy SourceFiles="@(CliWrapperFiles)" DestinationFolder="templates\Auth0.BlazorWebAssembly\version9\Server\registration" SkipUnchangedFiles="false" />
+      <Copy SourceFiles="@(CliWrapperFiles)" DestinationFolder="templates\Auth0.Mvc\version8\registration" SkipUnchangedFiles="false" />
+      <Copy SourceFiles="@(CliWrapperFiles)" DestinationFolder="templates\Auth0.Mvc\version9\registration" SkipUnchangedFiles="false" />
+      <Copy SourceFiles="@(CliWrapperFiles)" DestinationFolder="templates\Auth0.WebAPI\version8\registration" SkipUnchangedFiles="false" />
+      <Copy SourceFiles="@(CliWrapperFiles)" DestinationFolder="templates\Auth0.WebAPI\version9\registration" SkipUnchangedFiles="false" />
+      <Copy SourceFiles="@(CliWrapperFiles)" DestinationFolder="templates\Auth0.MinimalWebAPI\version8\registration" SkipUnchangedFiles="false" />
+      <Copy SourceFiles="@(CliWrapperFiles)" DestinationFolder="templates\Auth0.MinimalWebAPI\version9\registration" SkipUnchangedFiles="false" />
+      <Copy SourceFiles="@(CliWrapperFiles)" DestinationFolder="templates\Auth0.BlazorWebApp\version8\Auth0BlazorWebApp\registration" SkipUnchangedFiles="false" />
+      <Copy SourceFiles="@(CliWrapperFiles)" DestinationFolder="templates\Auth0.BlazorWebApp\version9\Auth0BlazorWebApp\registration" SkipUnchangedFiles="false" />
+      <Copy SourceFiles="@(CliWrapperFiles)" DestinationFolder="templates\Auth0.Maui\version8\registration" SkipUnchangedFiles="false" />
+      <Copy SourceFiles="@(CliWrapperFiles)" DestinationFolder="templates\Auth0.Maui\version9\registration" SkipUnchangedFiles="false" />
     </Target>
 
 </Project>

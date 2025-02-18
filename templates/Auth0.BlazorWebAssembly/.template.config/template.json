@@ -47,11 +47,19 @@
       "datatype": "choice",
       "choices": [
         {
+          "choice": "net9.0",
+          "description": "Target .NET 9"
+        },
+        {
+          "choice": "net8.0",
+          "description": "Target .NET 8"
+        },
+        {
           "choice": "net7.0",
           "description": "Target .NET 7"
         }
       ],
-      "defaultValue": "net7.0",
+      "defaultValue": "net9.0",
       "replaces": "net7.0"
     },
     "autoregister": {
@@ -152,12 +160,24 @@
   ],
   "sources": [
     {
-        "modifiers": [
-            {
-              "condition": "(!autoregister)",
-              "exclude": [ "Client/registration/**/*", "Server/registration/**/*" ]
-          }
-        ]
+      "condition": "(Framework == \"net8.0\") || (Framework == \"net7.0\")",
+      "source": "./version8/",
+      "modifiers": [
+        {
+          "condition": "(!autoregister)",
+          "exclude": [ "Client/registration/**/*", "Server/registration/**/*" ]
+        }
+      ]
+    },
+    {
+      "condition": "(Framework == \"net9.0\")",
+      "source": "./version9/",
+      "modifiers": [
+        {
+          "condition": "(!autoregister)",
+          "exclude": [ "Client/registration/**/*", "Server/registration/**/*" ]
+        }
+      ]
     }
   ],
   "postActions": [{

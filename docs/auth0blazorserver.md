@@ -14,7 +14,7 @@ This will create a new Blazor Server application with Auth0 authentication in th
 
 ##### Automatic registration
 
-If you have the [Auth0 CLI](https://github.com/auth0/auth0-cli) installed on your machine and logged in to Auth0, you can run the template command without any options and it will automatically register and configure your application with Auth0.
+If you have the [Auth0 CLI](https://github.com/auth0/auth0-cli) installed on your machine and [logged in to Auth0](https://github.com/auth0/auth0-cli?tab=readme-ov-file#authenticating-to-your-tenant), you can run the template command without any options and it will automatically register and configure your application with Auth0.
 
 Example:
 
@@ -34,7 +34,7 @@ Actual command: register-with-auth0.cmd
 Do you want to run this action [Y(yes)|N(no)]?
 ```
 
-Once you confirm, you will get an entry for the application in your current Auth0 tenant and your application will be configured accordingly.
+Once you confirm, you will get an entry for the application **in your current Auth0 tenant** and your application will be configured accordingly.
 
 ##### Manual registration
 
@@ -63,19 +63,17 @@ Then, after inserting the name and the folder for the project, provide the requi
 
 ![Auth0 Blazor Server Application options from Visual Studio](assets/auth0-blazorserver-app-vs-options.png)
 
-#### Using Visual Studio for Mac
+#### Using JetBrains Rider
 
-To create a new Blazor Server application with Visual Studio for Mac, select *Custom* from the *Other* project types list and then *Auth0 Blazor Server App*:
+To create a new Blazor Server application with JetBrains Rider, select  *Auth0 Blazor Server App* from the *Custom Templates* list, expand the *Advanced Settings* section, and provide the required options:
 
-![Auth0 Blazor Server Application from Visual Studio](assets/auth0-blazorserver-app-vs-mac.png)
+![Auth0 Blazor Server Application from JetBrains Rider](assets/auth0-blazorserver-app-rider.png)
 
-Then, after inserting the name and the folder for the project, provide the required options:
 
-![Auth0 Blazor Server Application options from Visual Studio](assets/auth0-blazorserver-app-vs-mac-options.png)
 
 ##### Automatic registration
 
-Unfortunately, Visual Studio does not support template's post actions (see [this issue](https://github.com/dotnet/templating/issues/4575) and [this one](https://github.com/dotnet/templating/issues/3226)) so your application will not be automatically registered as it happens with .NET CLI. However, you can run the post action manually to get your application configured.
+Unfortunately, Visual Studio and Rider do not support template's post actions (see [this issue](https://github.com/dotnet/templating/issues/4575) and [this one](https://github.com/dotnet/templating/issues/3226)) so your application will not be automatically registered as it happens with .NET CLI. However, you can run the post action manually to get your application configured.
 
 To launch the automatic registration process, go to the folder of the newly created application and run the following command:
 
