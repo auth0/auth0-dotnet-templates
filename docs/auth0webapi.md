@@ -49,7 +49,9 @@ In addition to the usual options for the `dotnet new` command, the following tem
 - `--no-openapi`<br>
   It prevents OpenAPI documentation generation (`true`). The default value is `false`.
 - `--minimal`
-  It creates a project that uses the [ASP.NET Core minimal API](https://learn.microsoft.com/en-us/aspnet/core/fundamentals/minimal-apis). Default is `false`.
+  It creates a project that uses the [ASP.NET Core minimal API](https://learn.microsoft.com/en-us/aspnet/core/fundamentals/minimal-apis). Default is `false`. This option is overriden by `--controllers`.
+- `--controllers`
+  It creates a project that uses the [ASP.NET Core controller-based API](https://learn.microsoft.com/en-us/aspnet/core/web-api). Default is `false`. The `--controllers` option takes precedence over the `--minimal` option.
 
 Example:
 
