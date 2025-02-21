@@ -1,6 +1,6 @@
 {
   "$schema": "http://json.schemastore.org/template",
-  "author": "Auth0 by Okta",
+  "author": "Auth0",
   "classifications": [ "MAUI", "Android", "iOS", "macOS", "Mac Catalyst", "Windows", "Auth0" ],
   "groupIdentity": "Auth0.NET.MAUI",
   "identity": "Auth0.NET.MAUI.CSharp",

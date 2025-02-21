@@ -1,5 +1,5 @@
 # Auth0 Templates for .NET
-The Auth0 Templates for .NET package allows you to quickly bootstrap a .NET application secured with Auth0. You can use the Auth0 Templates with the .NET CLI and Visual Studio.
+The Auth0 Templates for .NET package allows you to quickly bootstrap a .NET application secured with Auth0. You can use the Auth0 Templates with the .NET CLI, Visual Studio, and JetBrains Rider.
 
 ## Getting started
 
@@ -94,4 +94,3 @@ Please do not report security vulnerabilities on the public GitHub issue tracker
   </picture>
 </p>
 <p align="center">Auth0 is an easy to implement, adaptable authentication and authorization platform.<br> To learn more check out <a href="https://auth0.com/why-auth0">Why Auth0?</a></p>
-
