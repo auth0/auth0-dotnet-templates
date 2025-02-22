@@ -41,19 +41,19 @@ app.UseHttpsRedirection();
 
 app.UseAntiforgery();
 
-app.MapGet("/account/login", async (HttpContext httpContext, string redirectUri = "/") =>
+app.MapGet("/account/login", async (HttpContext httpContext, string returnUrl = "/") =>
 {
   var authenticationProperties = new LoginAuthenticationPropertiesBuilder()
-          .WithRedirectUri(redirectUri)
+          .WithRedirectUri(returnUrl)
           .Build();
 
   await httpContext.ChallengeAsync(Auth0Constants.AuthenticationScheme, authenticationProperties);
 });
 
-app.MapGet("/account/logout", async (HttpContext httpContext, string redirectUri = "/") =>
+app.MapGet("/account/logout", async (HttpContext httpContext) =>
 {
   var authenticationProperties = new LogoutAuthenticationPropertiesBuilder()
-          .WithRedirectUri(redirectUri)
+          .WithRedirectUri("/")
           .Build();
 
   await httpContext.SignOutAsync(Auth0Constants.AuthenticationScheme, authenticationProperties);
