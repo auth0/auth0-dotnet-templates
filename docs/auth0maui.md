@@ -2,6 +2,8 @@
 
 For more information about creating and securing a MAUI application with Auth0, check out the [Add Authentication to .NET MAUI Apps with Auth0](https://auth0.com/blog/add-authentication-to-dotnet-maui-apps-with-auth0/) article.
 
+> ⚠️ Currently, authentication in MAUI does not work in .NET 9.0 for the Windows platform due to [an issue with the WebAuthenticator](https://github.com/microsoft/WindowsAppSDK/issues/441).
+
 #### Using the .NET CLI
 
 To create a new MAUI application with the .NET CLI, you can run the following command:
