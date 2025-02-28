@@ -1,6 +1,6 @@
 {
   "$schema": "http://json.schemastore.org/template",
-  "author": "Auth0 by Okta",
+  "author": "Auth0",
   "classifications": [ "Web", "WebAPI", "Auth0" ],
   "groupIdentity": "Auth0.NET.WebAPI",
   "identity": "Auth0.NET.WebAPI.CSharp",
@@ -38,6 +38,10 @@
       "datatype": "choice",
       "choices": [
         {
+          "choice": "net9.0",
+          "description": "Target .NET 9"
+        },
+        {
           "choice": "net8.0",
           "description": "Target .NET 8"
         },
@@ -46,7 +50,7 @@
           "description": "Target .NET 7"
         }
       ],
-      "defaultValue": "net8.0",
+      "defaultValue": "net9.0",
       "replaces": "net7.0"
     },
     "DisableOpenAPI": {
@@ -70,6 +74,12 @@
       "dataType":"bool",
       "defaultValue": "false",
       "description": "Create a project that uses the ASP.NET Core minimal API."
+    },
+    "controllers": {
+      "type": "parameter",
+      "dataType":"bool",
+      "defaultValue": "false",
+      "description": "Create a project that uses the controller-based ASP.NET Core Web API."
     },
     "autoregister": {
       "type": "computed",
@@ -165,8 +175,22 @@
   },
   "sources": [
     {
-        "condition": "(!minimal)",
-        "source": "./",
+      "condition": "(controllers) && ((Framework == \"net8.0\") || (Framework == \"net7.0\"))",
+      "source": "./version8/",
+      "modifiers": [
+          {
+              "condition": "(removeOpenAPI)",
+              "exclude": [ "SwaggerExtensions.cs" ]
+          },
+          {
+            "condition": "(!autoregister)",
+            "exclude": [ "registration/**/*" ]
+        }
+      ]
+    },
+    {
+        "condition": "(controllers) && (Framework == \"net9.0\")",
+        "source": "./version9",
         "modifiers": [
             {
                 "condition": "(removeOpenAPI)",
@@ -179,8 +203,8 @@
         ]
     },
     {
-      "condition": "(minimal)",
-      "source": "../Auth0.MinimalWebAPI/",
+      "condition": "(!controllers) && ((Framework == \"net8.0\") || (Framework == \"net7.0\"))",
+      "source": "../Auth0.MinimalWebAPI/version8/",
       "modifiers": [
           {
               "condition": "(removeOpenAPI)",
@@ -191,7 +215,21 @@
             "exclude": [ "registration/**/*" ]
         }
       ]
-  }
+    },
+    {
+      "condition": "(!controllers) && (Framework == \"net9.0\")",
+      "source": "../Auth0.MinimalWebAPI/version9/",
+      "modifiers": [
+          {
+              "condition": "(removeOpenAPI)",
+              "exclude": [ "SwaggerExtensions.cs" ]
+          },
+          {
+            "condition": "(!autoregister)",
+            "exclude": [ "registration/**/*" ]
+        }
+      ]
+    }
   ],
   "postActions": [{
     "condition": "(OS != \"Windows_NT\")",

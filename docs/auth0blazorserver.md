@@ -2,6 +2,8 @@
 
 For more information about creating and securing a Blazor Server application with Auth0, check out the [Auth0 Blazor Server Tutorial](https://auth0.com/blog/what-is-blazor-tutorial-on-building-webapp-with-authentication).
 
+> ⚠️ The Auth0 Blazor Server template has been discontinued, as is the corresponding builtin template (`blazorserver`) (see [here](https://learn.microsoft.com/en-us/dotnet/core/tools/dotnet-new)).
+
 #### Using the .NET CLI
 
 To create a new Blazor Server application with the .NET CLI, you can run the following command:

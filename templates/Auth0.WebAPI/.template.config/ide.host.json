@@ -25,9 +25,9 @@
       "defaultValue": true
     },
     {
-      "id": "minimal",
+      "id": "controllers",
       "name": {
-        "text": "Use minimal API"
+        "text": "Use controllers"
       },
       "isVisible": true,
       "defaultValue": false
