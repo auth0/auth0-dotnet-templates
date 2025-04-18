@@ -4,7 +4,8 @@ public partial class App : Application
 {
 	public App()
 	{
-		InitializeComponent();
+		if (!Auth0.OidcClient.Platforms.Windows.Activator.Default.CheckRedirectionActivation())
+			InitializeComponent();
 	}
 
 	protected override Window CreateWindow(IActivationState? activationState)
