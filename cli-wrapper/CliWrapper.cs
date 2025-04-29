@@ -45,16 +45,6 @@ public class CliWrapper
 
     try
     {
-      // string templateConfigurationFilePath = $@"{Path.Combine(System.AppContext.BaseDirectory, "config.json")}";
-
-      // Displayer.DisplayVerbose($@"Reading template configuration from {templateConfigurationFilePath}");
-
-      // string text = File.ReadAllText(templateConfigurationFilePath);
-
-      // Displayer.DisplayTemplateConfiguration(text);
-
-      // configData = JsonSerializer.Deserialize<ConfigData>(text);
-
       if (configData.AppType.ToLower() == "api")
       {
         registrationOutputText = await RunCommand("auth0", $"apis create --name {configData.AppName} --identifier {CreateAudience(configData.AppName)} --no-input --json");
@@ -126,14 +116,6 @@ public class CliWrapper
 
     Displayer.DisplayVerbose($@"About to remove the folder {registrationFolderPath}");
 
-    Displayer.DisplayVerbose($@"Moving the registering script file {configData.RegistrationScriptFile}");
-    try {
-      File.Move(Path.Combine(registrationFolderPath, configData.RegistrationScriptFile), Path.Combine(registrationFolderPath, "register-with-auth0.cmd"));
-    } catch (Exception ex)
-    {
-      Displayer.DisplayErrorVerbose(ex.Message);
-    }
-    
     if (Environment.OSVersion.Platform == PlatformID.Unix ||
           Environment.OSVersion.Platform == PlatformID.MacOSX)
     {
@@ -143,15 +125,13 @@ public class CliWrapper
       // Hack to bypass executable lock in Windows (https://andreasrohner.at/posts/Programming/C%23/A-platform-independent-way-for-a-C%23-program-to-update-itself/)
       var delScriptName = Path.Combine(registrationFolderPath, "selfdel.bat");
 
-      using (var batFile = new StreamWriter (File.Create (delScriptName))) {
+      using (var batFile = new StreamWriter (delScriptName)) {
         batFile.WriteLine ("@ECHO OFF");
         batFile.WriteLine ("TIMEOUT /t 5 /nobreak > NUL");
         batFile.WriteLine ($@"RMDIR /S /Q {registrationFolderPath}");
       }
 
       RunCommandAndForget(delScriptName, "");
-
-      Environment.Exit(0);
     }
   }
 
