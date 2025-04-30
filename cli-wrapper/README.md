@@ -60,7 +60,7 @@ In order to enable a template to automatic registration via the CLI Wrapper, app
         "redirectStandardError": false
       },
       "manualInstructions": [{
-         "text": "Run './register-with-auth0.cmd'"
+         "text": "To register your app with Auth0, run './register-with-auth0.cmd'"
       }],
       "continueOnError": false,
       "description ": "Register your application with Auth0"
