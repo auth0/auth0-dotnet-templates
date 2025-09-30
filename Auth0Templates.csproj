@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <PackageType>Template</PackageType>
-    <PackageVersion>2.3.1</PackageVersion>
+    <PackageVersion>2.4.0</PackageVersion>
     <PackageId>Auth0.Templates</PackageId>
     <Title>Auth0 Templates for .NET</Title>
     <Authors>Auth0</Authors>
@@ -33,7 +33,7 @@
 
     <Target Name="AddCliWrapper" AfterTargets="BeforeBuild">
       <ItemGroup>
-        <CliWrapperFiles Include="cli-wrapper\bin\Release\net7.0\publish\cli-wrapper.*;"/>
+        <CliWrapperFiles Include="cli-wrapper\bin\Release\netstandard2.0\publish\cli-wrapper.*;"/>
       </ItemGroup>
 
       <Exec Command="dotnet publish cli-wrapper/cli-wrapper.csproj -c Release -p:UseAppHost=false" />

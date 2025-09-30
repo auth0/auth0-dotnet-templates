@@ -1,6 +1,9 @@
-﻿using System.Diagnostics;
-using System.Text.Json;
+﻿using System;
+using System.Diagnostics;
+using System.IO;
 using System.Text.RegularExpressions;
+using System.Threading.Tasks;
+using Newtonsoft.Json;
 
 public class CliWrapper
 {
@@ -11,7 +14,7 @@ public class CliWrapper
     string templateConfigurationFilePath = $@"{Path.Combine(System.AppContext.BaseDirectory, "config.json")}";
     string text = File.ReadAllText(templateConfigurationFilePath);
 
-    configData = JsonSerializer.Deserialize<ConfigData>(text);
+    configData = JsonConvert.DeserializeObject<ConfigData>(text);
 
     Displayer.Verbose = configData.Verbose;
   }
@@ -23,7 +26,7 @@ public class CliWrapper
     try
     {
       string cmdOutput = await RunCommand("auth0", "--version");
-      string currentCliVersionString = cmdOutput.Split(" ")[2];
+      string currentCliVersionString = cmdOutput.Split(new[] { ' ' })[2];
       Version currentCliVersion = new Version(currentCliVersionString);
 
       Displayer.DisplayVerbose($@"Auth0 CLI version: {currentCliVersionString}");
@@ -63,7 +66,7 @@ public class CliWrapper
 
     try
     {
-      registrationData = JsonSerializer.Deserialize<RegistrationData>(registrationOutputText)!;
+      registrationData = JsonConvert.DeserializeObject<RegistrationData>(registrationOutputText);
     }
     catch (Exception ex)
     {
@@ -110,63 +113,70 @@ public class CliWrapper
     }
   }
 
-  public async Task RemoveRegistrationFolder()
+  public Task RemoveRegistrationFolder()
   {
-    string registrationFolderPath = $@"{Path.Combine(System.AppContext.BaseDirectory)}";
+    return Task.Run(() => {
+      string registrationFolderPath = $@"{Path.Combine(System.AppContext.BaseDirectory)}";
 
-    Displayer.DisplayVerbose($@"About to remove the folder {registrationFolderPath}");
+      Displayer.DisplayVerbose($@"About to remove the folder {registrationFolderPath}");
 
-    if (Environment.OSVersion.Platform == PlatformID.Unix ||
-          Environment.OSVersion.Platform == PlatformID.MacOSX)
-    {
-      Directory.Delete(registrationFolderPath, true);
-    } else
-    {
-      // Hack to bypass executable lock in Windows (https://andreasrohner.at/posts/Programming/C%23/A-platform-independent-way-for-a-C%23-program-to-update-itself/)
-      var delScriptName = Path.Combine(registrationFolderPath, "selfdel.bat");
+      if (Environment.OSVersion.Platform == PlatformID.Unix ||
+            Environment.OSVersion.Platform == PlatformID.MacOSX)
+      {
+        Directory.Delete(registrationFolderPath, true);
+      } 
+      else
+      {
+        // Hack to bypass executable lock in Windows (https://andreasrohner.at/posts/Programming/C%23/A-platform-independent-way-for-a-C%23-program-to-update-itself/)
+        var delScriptName = Path.Combine(registrationFolderPath, "selfdel.bat");
 
-      using (var batFile = new StreamWriter (delScriptName)) {
-        batFile.WriteLine ("@ECHO OFF");
-        batFile.WriteLine ("TIMEOUT /t 5 /nobreak > NUL");
-        batFile.WriteLine ($@"RMDIR /S /Q {registrationFolderPath}");
+        using (var batFile = new StreamWriter(delScriptName)) 
+        {
+          batFile.WriteLine("@ECHO OFF");
+          batFile.WriteLine("TIMEOUT /t 5 /nobreak > NUL");
+          batFile.WriteLine($@"RMDIR /S /Q {registrationFolderPath}");
+        }
+
+        RunCommandAndForget(delScriptName, "");
       }
-
-      RunCommandAndForget(delScriptName, "");
-    }
+    });
   }
 
-  private async Task<string> RunCommand(string command, string args)
+  private Task<string> RunCommand(string command, string args)
   {
-    ProcessStartInfo startInfo = new()
-    {
-      FileName = command,
-      Arguments = args,
-      CreateNoWindow = true,
-      RedirectStandardOutput = true,
-      RedirectStandardError = true,
-    };
+    return Task.Run(() => {
+      ProcessStartInfo startInfo = new ProcessStartInfo
+      {
+        FileName = command,
+        Arguments = args,
+        CreateNoWindow = true,
+        RedirectStandardOutput = true,
+        RedirectStandardError = true,
+      };
 
-    Displayer.DisplayVerbose($@"About to run command: {command} {args}");
+      Displayer.DisplayVerbose($@"About to run command: {command} {args}");
 
-    var proc = Process.Start(startInfo);
-    ArgumentNullException.ThrowIfNull(proc);
-    string output = proc.StandardOutput.ReadToEnd();
-    string errorText = proc.StandardError.ReadToEnd();
-    await proc.WaitForExitAsync();
+      var proc = Process.Start(startInfo);
+      if (proc == null)
+          throw new InvalidOperationException("Failed to start process");
+      string output = proc.StandardOutput.ReadToEnd();
+      string errorText = proc.StandardError.ReadToEnd();
+      proc.WaitForExit();
 
-    if (!string.IsNullOrEmpty(errorText) && errorText.Contains("error"))
-    {
-      throw new Exception(errorText);
-    }
+      if (!string.IsNullOrEmpty(errorText) && errorText.Contains("error"))
+      {
+        throw new Exception(errorText);
+      }
 
-    Displayer.DisplayCommandOutput(output);
+      Displayer.DisplayCommandOutput(output);
 
-    return output;
+      return output;
+    });
   }
 
   private void RunCommandAndForget(string command, string args)
   {
-    ProcessStartInfo startInfo = new()
+    ProcessStartInfo startInfo = new ProcessStartInfo
     {
       FileName = command,
       Arguments = args,
@@ -219,7 +229,7 @@ public class CliWrapper
 
     try
     {
-      var registrationDataList = JsonSerializer.Deserialize<RegistrationData[]>(registrationDataListText)!;
+      var registrationDataList = JsonConvert.DeserializeObject<RegistrationData[]>(registrationDataListText);
 
       Displayer.DisplayVerbose($@"Found {registrationDataList.Length} registered APIs.");
 

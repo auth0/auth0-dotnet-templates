@@ -1,4 +1,6 @@
-﻿public static class Displayer
+﻿using System;
+
+public static class Displayer
 {
   public static bool Verbose { get; set; }
 
