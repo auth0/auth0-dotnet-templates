@@ -307,5 +307,5 @@ __pycache__/
 !.vscode/extensions.json
 
 # Binary content produced by the building process
-**/registration/cli-wrapper.*
+**/registration/cli-wrapper*
 output

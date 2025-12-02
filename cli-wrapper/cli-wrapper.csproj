@@ -5,11 +5,8 @@
     <TargetFramework>net7.0</TargetFramework>
     <RootNamespace>CliWrapper</RootNamespace>
     <PathMap>$(MSBuildProjectDirectory)=$(MSBuildProjectName)</PathMap>
+    <Nullable>enable</Nullable>
   </PropertyGroup>
-
-  <ItemGroup>
-    <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
-  </ItemGroup>
 
   <ItemGroup>
     <None Update="config.json">

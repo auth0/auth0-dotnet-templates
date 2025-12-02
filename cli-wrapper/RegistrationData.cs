@@ -1,9 +1,13 @@
-﻿public class RegistrationData
+﻿using System;
+
+public class RegistrationData
 {
-    public string name { get; set; }
-    public string client_id { get; set; }
-    public string identifier { get; set; }
-    public SigningKeys[] signing_keys { get; set; }
+    public string name { get; set; } = string.Empty;
+    public string client_id { get; set; } = string.Empty;
+    public string identifier { get; set; } = string.Empty;
+    public SigningKeys[] signing_keys { get; set; } = Array.Empty<SigningKeys>();
+
+    public RegistrationData() { }
 
     public RegistrationData(string name, string client_id, string identifier, SigningKeys[] signing_keys)
     {
@@ -18,7 +22,9 @@
 
 public class SigningKeys
 {
-    public string subject { get; set; }
+    public string subject { get; set; } = string.Empty;
+
+    public SigningKeys() { }
 
     public SigningKeys(string subject)
     {

@@ -34,7 +34,25 @@
     <Target Name="AddCliWrapper" AfterTargets="BeforeBuild">
       <ItemGroup>
         <CliWrapperFiles Include="cli-wrapper\bin\Release\net7.0\publish\cli-wrapper.*;"/>
+        <RegistrationFolders Include="templates\Auth0.BlazorServer\registration;
+                                       templates\Auth0.BlazorWebAssembly\version8\Client\registration;
+                                       templates\Auth0.BlazorWebAssembly\version8\Server\registration;
+                                       templates\Auth0.BlazorWebAssembly\version9\Client\registration;
+                                       templates\Auth0.BlazorWebAssembly\version9\Server\registration;
+                                       templates\Auth0.Mvc\version8\registration;
+                                       templates\Auth0.Mvc\version9\registration;
+                                       templates\Auth0.WebAPI\version8\registration;
+                                       templates\Auth0.WebAPI\version9\registration;
+                                       templates\Auth0.MinimalWebAPI\version8\registration;
+                                       templates\Auth0.MinimalWebAPI\version9\registration;
+                                       templates\Auth0.BlazorWebApp\version8\Auth0BlazorWebApp\registration;
+                                       templates\Auth0.BlazorWebApp\version9\Auth0BlazorWebApp\registration;
+                                       templates\Auth0.Maui\version8\registration;
+                                       templates\Auth0.Maui\version9\registration"/>
       </ItemGroup>
+
+      <!-- Clean old cli-wrapper files from destination folders -->
+      <Delete Files="@(RegistrationFolders->'%(Identity)\cli-wrapper.*')" />
 
       <!-- <Exec Command="dotnet publish cli-wrapper/cli-wrapper.csproj -c Release -p:UseAppHost=false" /> -->
       <Exec Command="dotnet publish cli-wrapper/cli-wrapper.csproj -c Release" />
