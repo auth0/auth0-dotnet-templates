@@ -8,6 +8,7 @@ using Newtonsoft.Json;
 public class CliWrapper
 {
   ConfigData configData = new ConfigData();
+  Version cliVersion = null;
 
   public CliWrapper()
   {
@@ -27,11 +28,11 @@ public class CliWrapper
     {
       string cmdOutput = await RunCommand("auth0", "--version");
       string currentCliVersionString = cmdOutput.Split(new[] { ' ' })[2];
-      Version currentCliVersion = new Version(currentCliVersionString);
+      cliVersion = new Version(currentCliVersionString);
 
       Displayer.DisplayVerbose($@"Auth0 CLI version: {currentCliVersionString}");
 
-      result = currentCliVersion.CompareTo(new Version("1.0.1")) >= 0;
+      result = cliVersion.CompareTo(new Version("1.0.1")) >= 0;
     }
     catch (Exception ex)
     {
@@ -208,13 +209,44 @@ public class CliWrapper
   {
     string currentDomain = "";
 
-    if (registrationData.signing_keys != null && registrationData.signing_keys.Length > 0 && !string.IsNullOrEmpty(registrationData.signing_keys[0].subject))
+    // Use new tenant list command for CLI version 1.17.0 and above
+    if (cliVersion != null && cliVersion.CompareTo(new Version("1.17.0")) >= 0)
     {
-      Displayer.DisplayVerbose($@"Certificate subject: {registrationData.signing_keys[0].subject}");
-      currentDomain = registrationData.signing_keys[0].subject.Replace("/CN=", "");
-    } else
+      string tenantListText = await RunCommand("auth0", "tenant list --json");
+
+      try
+      {
+        var tenantList = JsonConvert.DeserializeObject<TenantData[]>(tenantListText);
+
+        Displayer.DisplayVerbose($@"Found {tenantList.Length} tenants.");
+
+        // Find the active tenant
+        var activeTenant = Array.Find(tenantList, tenant => tenant.active);
+        
+        if (activeTenant != null && !string.IsNullOrEmpty(activeTenant.name))
+        {
+          Displayer.DisplayVerbose($@"Active tenant: {activeTenant.name}");
+          currentDomain = activeTenant.name;
+        }
+      }
+      catch (Exception ex)
+      {
+        Displayer.DisplayError(ex.Message);
+      }
+    }
+    else
     {
-      currentDomain = await GetCurrentDomain();
+      // For older CLI versions, try to get domain from registration data first
+      if (registrationData.signing_keys != null && registrationData.signing_keys.Length > 0 && !string.IsNullOrEmpty(registrationData.signing_keys[0].subject))
+      {
+        Displayer.DisplayVerbose($@"Certificate subject: {registrationData.signing_keys[0].subject}");
+        currentDomain = registrationData.signing_keys[0].subject.Replace("/CN=", "");
+      } 
+      else
+      {
+        // Fallback to apis list method
+        currentDomain = await GetCurrentDomain();
+      }
     }
 
     Displayer.DisplayVerbose($@"Current domain: {currentDomain}");
@@ -225,6 +257,8 @@ public class CliWrapper
   private async Task<string> GetCurrentDomain()
   {
     string currentDomain = "";
+    
+    // This method is only called for CLI versions below 1.17.0
     string registrationDataListText = await RunCommand("auth0", "apis list -n 1 --json");
 
     try
@@ -247,6 +281,7 @@ public class CliWrapper
     {
       Displayer.DisplayError(ex.Message);
     }
+    
     return currentDomain;
   }
 }

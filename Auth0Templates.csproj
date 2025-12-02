@@ -33,10 +33,11 @@
 
     <Target Name="AddCliWrapper" AfterTargets="BeforeBuild">
       <ItemGroup>
-        <CliWrapperFiles Include="cli-wrapper\bin\Release\netstandard2.0\publish\cli-wrapper.*;"/>
+        <CliWrapperFiles Include="cli-wrapper\bin\Release\net7.0\publish\cli-wrapper.*;"/>
       </ItemGroup>
 
-      <Exec Command="dotnet publish cli-wrapper/cli-wrapper.csproj -c Release -p:UseAppHost=false" />
+      <!-- <Exec Command="dotnet publish cli-wrapper/cli-wrapper.csproj -c Release -p:UseAppHost=false" /> -->
+      <Exec Command="dotnet publish cli-wrapper/cli-wrapper.csproj -c Release" />
 
       <Copy SourceFiles="@(CliWrapperFiles)" DestinationFolder="templates\Auth0.BlazorServer\registration" SkipUnchangedFiles="false" />
       <Copy SourceFiles="@(CliWrapperFiles)" DestinationFolder="templates\Auth0.BlazorWebAssembly\version8\Client\registration" SkipUnchangedFiles="false" />
