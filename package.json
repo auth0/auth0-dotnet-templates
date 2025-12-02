@@ -3,7 +3,7 @@
   "private": true,
   "version": "1.0.0", 
   "scripts": {
-    "create": "dotnet pack -o ./output",
+    "create": "dotnet clean && dotnet pack -o ./output",
     "uninstall": "dotnet new uninstall Auth0.Templates",
     "install": "dotnet new install ./output/Auth0.Templates.*.nupkg",
     "pack-install": "npm run uninstall && npm run create && npm run install"

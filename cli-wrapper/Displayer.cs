@@ -14,17 +14,17 @@ public static class Displayer
 
   public static void DisplayRegistrationData(RegistrationData registrationData)
   {
-    if (registrationData.signing_keys != null && registrationData.signing_keys.Length > 0 && registrationData.signing_keys[0].subject != null)
+    if (registrationData.signing_keys is { Length: > 0 } && !string.IsNullOrEmpty(registrationData.signing_keys[0].subject))
     {
-      Console.WriteLine($@"Auth0 domain: {registrationData.signing_keys[0].subject.Replace("/CN=", "")}");
+      Console.WriteLine($"Auth0 domain: {registrationData.signing_keys[0].subject.Replace("/CN=", "")}");
     }
-    if (registrationData.client_id != null)
+    if (!string.IsNullOrEmpty(registrationData.client_id))
     {
-      Console.WriteLine($@"Client ID: {registrationData.client_id}");
+      Console.WriteLine($"Client ID: {registrationData.client_id}");
     }
-    if (registrationData.identifier != null)
+    if (!string.IsNullOrEmpty(registrationData.identifier))
     {
-      Console.WriteLine($@"Audience: {registrationData.identifier}");
+      Console.WriteLine($"Audience: {registrationData.identifier}");
     }
   }
 
