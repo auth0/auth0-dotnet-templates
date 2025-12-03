@@ -21,7 +21,7 @@
     <IncludeContentInPack>true</IncludeContentInPack>
     <IncludeBuildOutput>false</IncludeBuildOutput>
     <ContentTargetFolders>templates</ContentTargetFolders>
-    <NoWarn>$(NoWarn);NU5128</NoWarn>
+    <NoWarn>$(NoWarn);NU5128;NU5100;NU5119</NoWarn>
   </PropertyGroup>
 
   <ItemGroup>
@@ -31,7 +31,7 @@
     <Compile Remove="**\*" />
   </ItemGroup>
 
-    <Target Name="AddCliWrapper" AfterTargets="BeforeBuild">
+    <Target Name="AddCliWrapper" BeforeTargets="GenerateNuspec">
       <ItemGroup>
         <CliWrapperFiles Include="cli-wrapper\bin\Release\net7.0\publish\cli-wrapper.*;"/>
         <RegistrationFolders Include="templates\Auth0.BlazorServer\registration;
@@ -39,6 +39,7 @@
                                        templates\Auth0.BlazorWebAssembly\version8\Server\registration;
                                        templates\Auth0.BlazorWebAssembly\version9\Client\registration;
                                        templates\Auth0.BlazorWebAssembly\version9\Server\registration;
+                                       templates\Auth0.BlazorWebAssembly\version10\registration;
                                        templates\Auth0.Mvc\version8\registration;
                                        templates\Auth0.Mvc\version9\registration;
                                        templates\Auth0.WebAPI\version8\registration;
@@ -56,13 +57,20 @@
       <Delete Files="@(RegistrationFolders->'%(Identity)\cli-wrapper.*')" />
 
       <!-- <Exec Command="dotnet publish cli-wrapper/cli-wrapper.csproj -c Release -p:UseAppHost=false" /> -->
-      <Exec Command="dotnet publish cli-wrapper/cli-wrapper.csproj -c Release" />
+      <Exec Command="dotnet publish cli-wrapper/cli-wrapper.csproj -c Release" ConsoleToMSBuild="true">
+        <Output TaskParameter="ConsoleOutput" PropertyName="PublishOutput" />
+      </Exec>
+      
+      <!-- Verify cli-wrapper files exist before copying -->
+      <Error Condition="!Exists('cli-wrapper\bin\Release\net7.0\publish\cli-wrapper.dll')" 
+             Text="CLI wrapper was not published successfully. Check the publish output." />
 
       <Copy SourceFiles="@(CliWrapperFiles)" DestinationFolder="templates\Auth0.BlazorServer\registration" SkipUnchangedFiles="false" />
       <Copy SourceFiles="@(CliWrapperFiles)" DestinationFolder="templates\Auth0.BlazorWebAssembly\version8\Client\registration" SkipUnchangedFiles="false" />
       <Copy SourceFiles="@(CliWrapperFiles)" DestinationFolder="templates\Auth0.BlazorWebAssembly\version8\Server\registration" SkipUnchangedFiles="false" />
       <Copy SourceFiles="@(CliWrapperFiles)" DestinationFolder="templates\Auth0.BlazorWebAssembly\version9\Client\registration" SkipUnchangedFiles="false" />
       <Copy SourceFiles="@(CliWrapperFiles)" DestinationFolder="templates\Auth0.BlazorWebAssembly\version9\Server\registration" SkipUnchangedFiles="false" />
+      <Copy SourceFiles="@(CliWrapperFiles)" DestinationFolder="templates\Auth0.BlazorWebAssembly\version10\registration" SkipUnchangedFiles="false" />
       <Copy SourceFiles="@(CliWrapperFiles)" DestinationFolder="templates\Auth0.Mvc\version8\registration" SkipUnchangedFiles="false" />
       <Copy SourceFiles="@(CliWrapperFiles)" DestinationFolder="templates\Auth0.Mvc\version9\registration" SkipUnchangedFiles="false" />
       <Copy SourceFiles="@(CliWrapperFiles)" DestinationFolder="templates\Auth0.WebAPI\version8\registration" SkipUnchangedFiles="false" />
@@ -74,6 +82,8 @@
       <Copy SourceFiles="@(CliWrapperFiles)" DestinationFolder="templates\Auth0.BlazorWebApp\version10\Auth0BlazorWebApp\registration" SkipUnchangedFiles="false" />
       <Copy SourceFiles="@(CliWrapperFiles)" DestinationFolder="templates\Auth0.Maui\version8\registration" SkipUnchangedFiles="false" />
       <Copy SourceFiles="@(CliWrapperFiles)" DestinationFolder="templates\Auth0.Maui\version9\registration" SkipUnchangedFiles="false" />
+      
+      <Message Text="CLI wrapper files copied to all registration folders successfully." Importance="high" />
     </Target>
 
 </Project>
