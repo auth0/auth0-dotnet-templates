@@ -42,6 +42,7 @@
                                        templates\Auth0.BlazorWebAssembly\version10\registration;
                                        templates\Auth0.Mvc\version8\registration;
                                        templates\Auth0.Mvc\version9\registration;
+                                       templates\Auth0.Mvc\version10\registration;
                                        templates\Auth0.WebAPI\version8\registration;
                                        templates\Auth0.WebAPI\version9\registration;
                                        templates\Auth0.WebAPI\version10\registration;
@@ -75,6 +76,7 @@
       <Copy SourceFiles="@(CliWrapperFiles)" DestinationFolder="templates\Auth0.BlazorWebAssembly\version10\registration" SkipUnchangedFiles="false" />
       <Copy SourceFiles="@(CliWrapperFiles)" DestinationFolder="templates\Auth0.Mvc\version8\registration" SkipUnchangedFiles="false" />
       <Copy SourceFiles="@(CliWrapperFiles)" DestinationFolder="templates\Auth0.Mvc\version9\registration" SkipUnchangedFiles="false" />
+      <Copy SourceFiles="@(CliWrapperFiles)" DestinationFolder="templates\Auth0.Mvc\version10\registration" SkipUnchangedFiles="false" />
       <Copy SourceFiles="@(CliWrapperFiles)" DestinationFolder="templates\Auth0.WebAPI\version8\registration" SkipUnchangedFiles="false" />
       <Copy SourceFiles="@(CliWrapperFiles)" DestinationFolder="templates\Auth0.WebAPI\version9\registration" SkipUnchangedFiles="false" />
       <Copy SourceFiles="@(CliWrapperFiles)" DestinationFolder="templates\Auth0.WebAPI\version10\registration" SkipUnchangedFiles="false" />
