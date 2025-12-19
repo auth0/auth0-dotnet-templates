@@ -38,20 +38,19 @@
       "datatype": "choice",
       "choices": [
         {
+          "choice": "net10.0",
+          "description": "Target .NET 10"
+        },
+        {
           "choice": "net9.0",
           "description": "Target .NET 9"
         },
         {
           "choice": "net8.0",
           "description": "Target .NET 8"
-        },
-        {
-          "choice": "net7.0",
-          "description": "Target .NET 7"
         }
       ],
-      "defaultValue": "net9.0",
-      "replaces": "net7.0"
+      "defaultValue": "net10.0"
     },
     "autoregister": {
       "type": "computed",
@@ -159,6 +158,16 @@
     {
       "condition": "(Framework == \"net9.0\")",
       "source": "./version9/",
+      "modifiers": [
+        {
+          "condition": "(!autoregister)",
+          "exclude": [ "registration/**/*" ]
+        }
+      ]
+    },
+    {
+      "condition": "(Framework == \"net10.0\")",
+      "source": "./version10/",
       "modifiers": [
         {
           "condition": "(!autoregister)",
