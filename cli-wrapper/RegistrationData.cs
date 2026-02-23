@@ -4,6 +4,7 @@ public class RegistrationData
 {
     public string name { get; set; } = string.Empty;
     public string client_id { get; set; } = string.Empty;
+    public string client_secret { get; set; } = string.Empty;
     public string identifier { get; set; } = string.Empty;
     public SigningKeys[] signing_keys { get; set; } = Array.Empty<SigningKeys>();
 

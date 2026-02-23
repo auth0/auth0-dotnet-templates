@@ -1,0 +1,12 @@
+[
+  {
+    "name": "test-tenant.auth0.com",
+    "region": "us",
+    "active": true
+  },
+  {
+    "name": "other-tenant.auth0.com",
+    "region": "eu",
+    "active": false
+  }
+]

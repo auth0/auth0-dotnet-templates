@@ -9,9 +9,16 @@ public class CliWrapper
 {
   private ConfigData configData = new();
   private Version? cliVersion;
+  private readonly IProcessExecutor processExecutor;
 
-  public CliWrapper()
+  public CliWrapper() : this(new ProcessExecutor())
   {
+  }
+
+  public CliWrapper(IProcessExecutor processExecutor)
+  {
+    this.processExecutor = processExecutor;
+    
     string templateConfigurationFilePath = Path.Combine(AppContext.BaseDirectory, "config.json");
     string text = File.ReadAllText(templateConfigurationFilePath);
 
@@ -24,7 +31,7 @@ public class CliWrapper
   {
     try
     {
-      string cmdOutput = await RunCommand("auth0", "--version");
+      string cmdOutput = await processExecutor.RunCommandAsync("auth0", "--version");
       string currentCliVersionString = cmdOutput.Split(' ')[2];
       cliVersion = new Version(currentCliVersionString);
 
@@ -48,12 +55,12 @@ public class CliWrapper
     {
       if (configData.AppType.ToLower() == "api")
       {
-        registrationOutputText = await RunCommand("auth0", $"apis create --name {configData.AppName} --identifier {CreateAudience(configData.AppName)} --no-input --json");
+        registrationOutputText = await processExecutor.RunCommandAsync("auth0", $"apis create --name {configData.AppName} --identifier {CreateAudience(configData.AppName)} --no-input --json");
         Console.WriteLine("API registered!");
       }
       else
       {
-        registrationOutputText = await RunCommand("auth0", $"apps create --name {configData.AppName} --description \"{configData.AppDescription}\" --type {configData.AppType} --callbacks \"{configData.Callbacks}\" --logout-urls \"{configData.LogoutUrls}\" --no-input --reveal-secrets --json");
+        registrationOutputText = await processExecutor.RunCommandAsync("auth0", $"apps create --name {configData.AppName} --description \"{configData.AppDescription}\" --type {configData.AppType} --callbacks \"{configData.Callbacks}\" --logout-urls \"{configData.LogoutUrls}\" --no-input --reveal-secrets --json");
         Console.WriteLine("Application registered!");
       }
       
@@ -133,61 +140,20 @@ public class CliWrapper
         batFile.WriteLine($"RMDIR /S /Q {registrationFolderPath}");
         batFile.Close();
 
-        RunCommandAndForget(delScriptName, "");
+        processExecutor.RunCommandAndForget(delScriptName, "");
       }
     });
   }
 
-  private async Task<string> RunCommand(string command, string args)
-  {
-    ProcessStartInfo startInfo = new()
-    {
-      FileName = command,
-      Arguments = args,
-      CreateNoWindow = true,
-      RedirectStandardOutput = true,
-      RedirectStandardError = true,
-    };
-
-    Displayer.DisplayVerbose($"About to run command: {command} {args}");
-
-    using var proc = Process.Start(startInfo) ?? throw new InvalidOperationException("Failed to start process");
-    string output = await proc.StandardOutput.ReadToEndAsync();
-    string errorText = await proc.StandardError.ReadToEndAsync();
-    await proc.WaitForExitAsync();
-
-    if (!string.IsNullOrEmpty(errorText) && errorText.Contains("error"))
-    {
-      throw new InvalidOperationException(errorText);
-    }
-
-    Displayer.DisplayCommandOutput(output);
-
-    return output;
-  }
-
-  private void RunCommandAndForget(string command, string args)
-  {
-    ProcessStartInfo startInfo = new()
-    {
-      FileName = command,
-      Arguments = args,
-      CreateNoWindow = true,
-      RedirectStandardOutput = true,
-      RedirectStandardError = true,
-    };
-
-    Displayer.DisplayVerbose($"About to launch command: {command} {args}");
-
-    Process.Start(startInfo);
-  }
-
-  private string CreateAudience(string appName)
+  internal string CreateAudience(string appName)
   {
     Displayer.DisplayVerbose($"Application name to transform into audience: {appName}");
 
     Regex rgx = new("[^a-zA-Z0-9 -]");
     appName = rgx.Replace(appName, "-");
+    
+    // Replace spaces and multiple consecutive dashes with single dash
+    appName = Regex.Replace(appName, @"[\s-]+", "-");
 
     var audience = $"https://{appName.ToLower()}.com";
 
@@ -203,7 +169,7 @@ public class CliWrapper
     // Use new tenant list command for CLI version 1.17.0 and above
     if (cliVersion is not null && cliVersion.CompareTo(new Version("1.17.0")) >= 0)
     {
-      string tenantListText = await RunCommand("auth0", "tenants list --json");
+      string tenantListText = await processExecutor.RunCommandAsync("auth0", "tenants list --json");
 
       try
       {
@@ -253,7 +219,7 @@ public class CliWrapper
     string currentDomain = "";
     
     // This method is only called for CLI versions below 1.17.0
-    string registrationDataListText = await RunCommand("auth0", "apis list -n 1 --json");
+    string registrationDataListText = await processExecutor.RunCommandAsync("auth0", "apis list -n 1 --json");
 
     try
     {
