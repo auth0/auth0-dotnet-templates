@@ -56,6 +56,7 @@ public class TemplateStructureTests
     [InlineData("Auth0.MinimalWebAPI/version10")]
     [InlineData("Auth0.Maui/version8")]
     [InlineData("Auth0.Maui/version9")]
+    [InlineData("Auth0.Maui/version10")]
     public void Template_HasRegistrationConfigFile(string templatePath)
     {
         // Arrange
@@ -81,6 +82,7 @@ public class TemplateStructureTests
     [InlineData("Auth0.MinimalWebAPI/version10")]
     [InlineData("Auth0.Maui/version8")]
     [InlineData("Auth0.Maui/version9")]
+    [InlineData("Auth0.Maui/version10")]
     public void Template_RegistrationConfig_IsValidJson(string templatePath)
     {
         // Arrange
@@ -110,6 +112,7 @@ public class TemplateStructureTests
     [InlineData("Auth0.MinimalWebAPI/version10")]
     [InlineData("Auth0.Maui/version8")]
     [InlineData("Auth0.Maui/version9")]
+    [InlineData("Auth0.Maui/version10")]
     public void Template_RegistrationConfig_HasRequiredProperties(string templatePath)
     {
         // Arrange
@@ -137,6 +140,9 @@ public class TemplateStructureTests
     [InlineData("Auth0.Mvc/version9", "regular")]
     [InlineData("Auth0.Mvc/version10", "regular")]
     [InlineData("Auth0.BlazorServer", "regular")]
+    [InlineData("Auth0.Maui/version8", "native")]
+    [InlineData("Auth0.Maui/version9", "native")]
+    [InlineData("Auth0.Maui/version10", "native")]
     public void Template_RegistrationConfig_HasCorrectAppType(string templatePath, string expectedAppType)
     {
         // Arrange
@@ -190,6 +196,23 @@ public class TemplateStructureTests
         config.LogoutUrls.Should().NotBeEmpty($"Web templates should have LogoutUrls: {templatePath}");
     }
 
+    [Theory]
+    [InlineData("Auth0.Maui/version8")]
+    [InlineData("Auth0.Maui/version9")]
+    [InlineData("Auth0.Maui/version10")]
+    public void MauiTemplate_HasCallbacksAndLogoutUrls(string templatePath)
+    {
+        // Arrange
+        var configPath = Path.Combine(_templatesPath, templatePath, "registration", "config.json");
+        var jsonContent = File.ReadAllText(configPath);
+        var config = JsonSerializer.Deserialize<ConfigData>(jsonContent);
+
+        // Assert
+        config.Should().NotBeNull();
+        config!.Callbacks.Should().NotBeEmpty($"MAUI templates should have Callbacks: {templatePath}");
+        config.LogoutUrls.Should().NotBeEmpty($"MAUI templates should have LogoutUrls: {templatePath}");
+    }
+
     [Fact]
     public void AllTemplates_HaveCliWrapperBinaries()
     {
@@ -233,7 +256,8 @@ public class TemplateStructureTests
             Path.Combine(_templatesPath, "Auth0.MinimalWebAPI", "version9"),
             Path.Combine(_templatesPath, "Auth0.MinimalWebAPI", "version10"),
             Path.Combine(_templatesPath, "Auth0.Maui", "version8"),
-            Path.Combine(_templatesPath, "Auth0.Maui", "version9")
+            Path.Combine(_templatesPath, "Auth0.Maui", "version9"),
+            Path.Combine(_templatesPath, "Auth0.Maui", "version10")
         };
     }
 }
