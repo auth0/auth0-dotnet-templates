@@ -53,7 +53,8 @@
                                        templates\Auth0.BlazorWebApp\version9\Auth0BlazorWebApp\registration;
                                        templates\Auth0.BlazorWebApp\version10\Auth0BlazorWebApp\registration;
                                        templates\Auth0.Maui\version8\registration;
-                                       templates\Auth0.Maui\version9\registration"/>
+                                       templates\Auth0.Maui\version9\registration;
+                                       templates\Auth0.Maui\version10\registration"/>
       </ItemGroup>
 
       <!-- Clean old cli-wrapper files from destination folders -->
@@ -88,6 +89,7 @@
       <Copy SourceFiles="@(CliWrapperFiles)" DestinationFolder="templates\Auth0.BlazorWebApp\version10\Auth0BlazorWebApp\registration" SkipUnchangedFiles="false" />
       <Copy SourceFiles="@(CliWrapperFiles)" DestinationFolder="templates\Auth0.Maui\version8\registration" SkipUnchangedFiles="false" />
       <Copy SourceFiles="@(CliWrapperFiles)" DestinationFolder="templates\Auth0.Maui\version9\registration" SkipUnchangedFiles="false" />
+      <Copy SourceFiles="@(CliWrapperFiles)" DestinationFolder="templates\Auth0.Maui\version10\registration" SkipUnchangedFiles="false" />
       
       <Message Text="CLI wrapper files copied to all registration folders successfully." Importance="high" />
     </Target>
