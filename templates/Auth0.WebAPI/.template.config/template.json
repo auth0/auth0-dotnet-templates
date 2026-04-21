@@ -245,8 +245,7 @@
             "condition": "(!autoregister)",
             "exclude": [ "registration/**/*" ]
         }
-      ],
-      "copyOnly": [ "registration/**/*" ]
+      ]
     },
     {
       "condition": "(!controllers) && (Framework == \"net10.0\")",
@@ -260,8 +259,7 @@
             "condition": "(!autoregister)",
             "exclude": [ "registration/**/*" ]
         }
-      ],
-      "copyOnly": [ "registration/**/*" ]
+      ]
     }
   ],
   "postActions": [{

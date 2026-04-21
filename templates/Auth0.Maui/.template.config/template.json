@@ -86,8 +86,7 @@
           "condition": "(!autoregister)",
           "exclude": [ "registration/**/*" ]
         }
-      ],
-      "copyOnly": [ "registration/**/*" ]
+      ]
     }
   ],
   "postActions": [{
