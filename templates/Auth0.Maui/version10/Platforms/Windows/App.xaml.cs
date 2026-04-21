@@ -5,21 +5,25 @@
 
 namespace Auth0Maui.WinUI
 {
+  /// <summary>
+  /// Provides application-specific behavior to supplement the default Application class.
+  /// </summary>
+  public partial class App : MauiWinUIApplication
+  {
     /// <summary>
-    /// Provides application-specific behavior to supplement the default Application class.
+    /// Initializes the singleton application object.  This is the first line of authored code
+    /// executed, and as such is the logical equivalent of main() or WinMain().
     /// </summary>
-    public partial class App : MauiWinUIApplication
+    public App()
     {
-        /// <summary>
-        /// Initializes the singleton application object.  This is the first line of authored code
-        /// executed, and as such is the logical equivalent of main() or WinMain().
-        /// </summary>
-        public App()
-        {
-            this.InitializeComponent();
-        }
-
-        protected override MauiApp CreateMauiApp() => MauiProgram.CreateMauiApp();
+#if WINDOWS
+      if (Auth0.OidcClient.Platforms.Windows.Activator.Default.CheckRedirectionActivation())
+        return;
+#endif
+      this.InitializeComponent();
     }
+
+    protected override MauiApp CreateMauiApp() => MauiProgram.CreateMauiApp();
+  }
 
 }

@@ -7,15 +7,14 @@
         <VerticalStackLayout
             Padding="30,0"
             Spacing="25">
-
+          
             <Image Source="auth0_dotnet_ebook.png">
 		        <Image.GestureRecognizers>
 			        <TapGestureRecognizer Tapped="OnAuth0BookClicked"/>
 		        </Image.GestureRecognizers>
             </Image>
-
-            <StackLayout
-                x:Name="LoginView">
+          
+            <StackLayout x:Name="LoginView">
                 <Button 
                     x:Name="LoginBtn"
                     Text="Log In"
@@ -23,10 +22,14 @@
                     Clicked="OnLoginClicked"
                     HorizontalOptions="Center" />
             </StackLayout>
+          
+            <StackLayout x:Name="HomeView" IsVisible="false">
+                <Image
+                    Source="dotnet_bot.png"
+                    HeightRequest="185"
+                    Aspect="AspectFit"
+                    SemanticProperties.Description="dot net bot in a submarine number ten" />
 
-            <StackLayout
-                x:Name="HomeView"
-                IsVisible="false">
                 <Label
                     Text="Hello, World!"
                     Style="{StaticResource Headline}"
@@ -38,20 +41,22 @@
                     SemanticProperties.HeadingLevel="Level2"
                     SemanticProperties.Description="Welcome to dot net Multi platform App U I" />
 
-                <Button
+                 <Button
                     x:Name="CounterBtn"
                     Text="Click me" 
                     SemanticProperties.Hint="Counts the number of times you click"
                     Clicked="OnCounterClicked"
                     HorizontalOptions="Fill" />
 
-                <Image
+                    <!-- User Profile Picture -->
+                    <Image
                     x:Name="UserPictureImg"
                     SemanticProperties.Description="User's picture"
                     HeightRequest="200"
                     HorizontalOptions="Center" />
 
-                <Label 
+                    <!-- User Name Display -->
+                    <Label 
                     x:Name="UsernameLbl"
                     Text=""
                     SemanticProperties.HeadingLevel="Level2"
@@ -59,15 +64,15 @@
                     FontSize="18"
                     HorizontalOptions="Center" />
 
-                <Button 
+                    <!-- Logout Button -->
+                    <Button 
                     x:Name="LogoutBtn"
                     Text="Log Out"
                     SemanticProperties.Hint="Click to log out"
                     Clicked="OnLogoutClicked"
                     HorizontalOptions="Center" />
-
-            </StackLayout>
-        </VerticalStackLayout>
+      </StackLayout>
+    </VerticalStackLayout>
     </ScrollView>
 
 </ContentPage>
