@@ -157,6 +157,88 @@ public class ConfigUpdateIntegrationTests : IDisposable
     }
 
     [Fact]
+    public async Task UpdateConfigFiles_ReplacesClientSecret_WhenClientSecretIsProvided()
+    {
+        // Arrange
+        var appSettingsPath = Path.Combine(_tempDirectory, "appsettings.json");
+        var originalContent = @"{
+  ""Auth0"": {
+    ""Domain"": ""yourdomain.auth0.com"",
+    ""ClientId"": ""your-client-id"",
+    ""ClientSecret"": ""your-client-secret""
+  }
+}";
+        File.WriteAllText(appSettingsPath, originalContent);
+
+        var mockExecutor = new Mock<IProcessExecutor>();
+        mockExecutor
+            .Setup(e => e.RunCommandAsync("auth0", "--version"))
+            .ReturnsAsync("auth0 version 1.20.0 abc123");
+
+        mockExecutor
+            .Setup(e => e.RunCommandAsync("auth0", "tenants list --json"))
+            .ReturnsAsync(@"[{""name"": ""test-tenant.auth0.com"", ""active"": true}]");
+
+        var wrapper = CreateTestWrapper(mockExecutor.Object, new[] { appSettingsPath });
+
+        var registrationData = new RegistrationData
+        {
+            client_id = "actual-client-id-123",
+            client_secret = "actual-client-secret-xyz",
+            signing_keys = Array.Empty<SigningKeys>()
+        };
+
+        await wrapper.IsAuth0CliInstalled();
+
+        // Act
+        await wrapper.UpdateConfigFiles(registrationData);
+
+        // Assert
+        var updatedContent = await File.ReadAllTextAsync(appSettingsPath);
+        updatedContent.Should().NotContain("your-client-secret");
+        updatedContent.Should().Contain("actual-client-secret-xyz");
+    }
+
+    [Fact]
+    public async Task UpdateConfigFiles_DoesNotReplaceClientSecretPlaceholder_WhenClientSecretIsEmpty()
+    {
+        // Arrange
+        var appSettingsPath = Path.Combine(_tempDirectory, "appsettings.json");
+        var originalContent = @"{
+  ""Auth0"": {
+    ""ClientSecret"": ""your-client-secret""
+  }
+}";
+        File.WriteAllText(appSettingsPath, originalContent);
+
+        var mockExecutor = new Mock<IProcessExecutor>();
+        mockExecutor
+            .Setup(e => e.RunCommandAsync("auth0", "--version"))
+            .ReturnsAsync("auth0 version 1.20.0 abc123");
+
+        mockExecutor
+            .Setup(e => e.RunCommandAsync("auth0", "tenants list --json"))
+            .ReturnsAsync(@"[{""name"": ""test-tenant.auth0.com"", ""active"": true}]");
+
+        var wrapper = CreateTestWrapper(mockExecutor.Object, new[] { appSettingsPath });
+
+        var registrationData = new RegistrationData
+        {
+            client_secret = "",
+            signing_keys = Array.Empty<SigningKeys>()
+        };
+
+        await wrapper.IsAuth0CliInstalled();
+
+        // Act
+        await wrapper.UpdateConfigFiles(registrationData);
+
+        // Assert
+        var updatedContent = await File.ReadAllTextAsync(appSettingsPath);
+        updatedContent.Should().Contain("your-client-secret");
+    }
+
+    [Fact]
     public async Task UpdateConfigFiles_WithModernCli_UsesTenantListForDomain()
     {
         // Arrange

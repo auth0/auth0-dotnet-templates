@@ -1,0 +1,232 @@
+{
+  "$schema": "http://json.schemastore.org/template",
+  "author": "Auth0",
+  "classifications": [ "Web", "SPA", "BFF", "Auth0", "React" ],
+  "groupIdentity": "Auth0.NET.BackendForFrontend",
+  "identity": "Auth0.NET.BackendForFrontend.CSharp",
+  "name": "Auth0 Backend for Frontend",
+  "shortName": "auth0bff",
+  "description": "A Backend for Frontend (BFF) pattern solution with Auth0 cookie-based authentication. Includes: an ASP.NET Core BFF server that handles login/logout/user-info endpoints and proxies API calls, a React (Vite) SPA, and a protected ASP.NET Core Web API secured with JWT Bearer.",
+  "sourceName": "Auth0BackendForFrontend",
+  "defaultName": "BffApplication1",
+  "preferNameDirectory": true,
+  "tags": {
+    "language": "C#",
+    "type": "solution"
+  },
+  "symbols": {
+    "nameLower": {
+      "type": "derived",
+      "valueSource": "name",
+      "valueTransform": "lowerCase",
+      "replaces": "auth0backendforfrontend",
+      "fileRename": "auth0backendforfrontend"
+    },
+    "domain": {
+      "type": "parameter",
+      "datatype": "string",
+      "description": "Your Auth0 domain.",
+      "defaultValue": "yourdomain.auth0.com",
+      "replaces": "{DOMAIN}"
+    },
+    "clientId": {
+      "type": "parameter",
+      "datatype": "string",
+      "description": "Your Auth0 client id.",
+      "defaultValue": "your-client-id",
+      "replaces": "{CLIENT_ID}"
+    },
+    "clientSecret": {
+      "type": "parameter",
+      "datatype": "string",
+      "description": "Your Auth0 client secret.",
+      "defaultValue": "your-client-secret",
+      "replaces": "{CLIENT_SECRET}"
+    },
+    "audience": {
+      "type": "parameter",
+      "datatype": "string",
+      "description": "Your API identifier (Audience).",
+      "defaultValue": "https://your-api-id.com",
+      "replaces": "{AUDIENCE}"
+    },
+    "Framework": {
+      "type": "parameter",
+      "description": "The target framework for the ASP.NET Core projects.",
+      "datatype": "choice",
+      "displayName": "Framework",
+      "choices": [
+        {
+          "choice": "net10.0",
+          "displayName": ".NET 10.0",
+          "description": "Target .NET 10.0"
+        },
+        {
+          "choice": "net9.0",
+          "displayName": ".NET 9.0",
+          "description": "Target .NET 9.0"
+        }
+      ],
+      "defaultValue": "net10.0",
+      "replaces": "net10.0"
+    },
+
+    // Port generation for the BFF Server
+    "kestrelHttpPort": {
+      "type": "parameter",
+      "datatype": "integer",
+      "description": "Port number to use for the HTTP endpoint of the BFF Server."
+    },
+    "kestrelHttpPortGenerated": {
+      "type": "generated",
+      "generator": "port",
+      "parameters": {
+        "low": 5000,
+        "high": 5300
+      }
+    },
+    "kestrelHttpPortReplacer": {
+      "type": "generated",
+      "generator": "coalesce",
+      "parameters": {
+        "sourceVariableName": "kestrelHttpPort",
+        "fallbackVariableName": "kestrelHttpPortGenerated"
+      },
+      "replaces": "5000"
+    },
+    "kestrelHttpsPort": {
+      "type": "parameter",
+      "datatype": "integer",
+      "description": "Port number to use for the HTTPS endpoint of the BFF Server."
+    },
+    "kestrelHttpsPortGenerated": {
+      "type": "generated",
+      "generator": "port",
+      "parameters": {
+        "low": 7000,
+        "high": 7300
+      }
+    },
+    "kestrelHttpsPortReplacer": {
+      "type": "generated",
+      "generator": "coalesce",
+      "parameters": {
+        "sourceVariableName": "kestrelHttpsPort",
+        "fallbackVariableName": "kestrelHttpsPortGenerated"
+      },
+      "replaces": "5001"
+    },
+
+    // Port generation for the Weather Forecast API
+    "apiHttpPort": {
+      "type": "parameter",
+      "datatype": "integer",
+      "description": "Port number to use for the HTTP endpoint of the Weather Forecast API."
+    },
+    "apiHttpPortGenerated": {
+      "type": "generated",
+      "generator": "port",
+      "parameters": {
+        "low": 5301,
+        "high": 5600
+      }
+    },
+    "apiHttpPortReplacer": {
+      "type": "generated",
+      "generator": "coalesce",
+      "parameters": {
+        "sourceVariableName": "apiHttpPort",
+        "fallbackVariableName": "apiHttpPortGenerated"
+      },
+      "replaces": "5153"
+    },
+    "apiHttpsPort": {
+      "type": "parameter",
+      "datatype": "integer",
+      "description": "Port number to use for the HTTPS endpoint of the Weather Forecast API."
+    },
+    "apiHttpsPortGenerated": {
+      "type": "generated",
+      "generator": "port",
+      "parameters": {
+        "low": 7301,
+        "high": 7600
+      }
+    },
+    "apiHttpsPortReplacer": {
+      "type": "generated",
+      "generator": "coalesce",
+      "parameters": {
+        "sourceVariableName": "apiHttpsPort",
+        "fallbackVariableName": "apiHttpsPortGenerated"
+      },
+      "replaces": "7158"
+    },
+
+    // Port for the React SPA dev server proxy
+    "spaProxyPort": {
+      "type": "parameter",
+      "datatype": "integer",
+      "description": "Port number to use for the React SPA dev server proxy."
+    },
+    "spaProxyPortGenerated": {
+      "type": "generated",
+      "generator": "port",
+      "parameters": {
+        "low": 54000,
+        "high": 54999
+      }
+    },
+    "spaProxyPortReplacer": {
+      "type": "generated",
+      "generator": "coalesce",
+      "parameters": {
+        "sourceVariableName": "spaProxyPort",
+        "fallbackVariableName": "spaProxyPortGenerated"
+      },
+      "replaces": "54575"
+    },
+    "autoregister": {
+      "type": "computed",
+      "value": "(domain == \"yourdomain.auth0.com\" && clientId == \"your-client-id\")"
+    }
+  },
+  "sources": [
+     {
+      "condition": "(Framework == \"net10.0\") || (Framework == \"net9.0\")",
+      "source": "./version10/",
+      "modifiers": [
+        {
+          "condition": "(!autoregister)",
+          "exclude": [ "Auth0BackendForFrontend.Server/registration/**/*", "WeatherForecastAPI/registration/**/*" ]
+        }
+      ]
+    }
+  ],
+  "postActions": [{
+    "condition": "(OS != \"Windows_NT\")",
+    "description": "Make scripts executable",
+    "manualInstructions": [{
+      "text": "Run 'chmod +x register-with-auth0.cmd'"
+    }],
+    "actionId": "cb9a6cf3-4f5c-4860-b9d2-03a574959774",
+    "args": {
+      "+x": "register-with-auth0.cmd"
+    },
+    "continueOnError": true
+  },
+  {
+    "actionId": "3A7C4B45-1F5D-4A30-959A-51B88E82B5D2",
+    "condition": "(autoregister)",
+    "args": {
+      "executable": "register-with-auth0.cmd",
+      "redirectStandardOutput": false,
+      "redirectStandardError": false
+    },
+    "manualInstructions": [{
+       "text": "To register your app with Auth0, run './register-with-auth0.cmd'"
+    }],
+    "continueOnError": false,
+    "description ": "Register your application with Auth0"
+  }]
+}
