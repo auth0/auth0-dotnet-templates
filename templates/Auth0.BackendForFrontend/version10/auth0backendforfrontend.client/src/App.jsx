@@ -64,6 +64,9 @@ function App() {
               <div className="action-card">
                 <p className="action-text">Get started by signing in to your account</p>
                 <LoginButton />
+                <div>
+                    <a href="https://a0.to/dotnet-templates/bff"><img src="src/assets/auth0-dotnet-ebook.png" alt=".NET Identity with Auth0"/></a>
+                </div>
               </div>
             )}
         </div>
