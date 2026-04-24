@@ -255,6 +255,45 @@ public class TemplateInstantiationTests : IDisposable
         );
     }
 
+    [Theory]
+    [InlineData("auth0bff", "net9.0")]
+    [InlineData("auth0bff", "net10.0")]
+    public async Task BffTemplate_Instantiates(string templateName, string framework)
+    {
+        // Arrange
+        var frameworkVersion = framework.Replace(".", "");
+        var projectName = $"TestBffApp{frameworkVersion}";
+        var projectPath = Path.Combine(_tempDirectory, projectName);
+
+        // Act
+        var instantiateResult = RunDotnetCommand(
+            $"new {templateName} -n {projectName} -o \"{projectPath}\" --framework {framework} --domain test.auth0.com --client-id test-client-id --client-secret test-client-secret --audience https://test-api.com"
+        );
+
+        // Assert - verify instantiation succeeded
+        instantiateResult.Should().Be(0, "Template instantiation should succeed");
+        Directory.Exists(projectPath).Should().BeTrue();
+
+        // BFF creates a solution with the server project in a subdirectory
+        var serverProjectPath = Path.Combine(projectPath, $"{projectName}.Server");
+        Directory.Exists(serverProjectPath).Should().BeTrue("BFF server project directory should exist");
+
+        var appSettingsPath = Path.Combine(serverProjectPath, "appsettings.json");
+        File.Exists(appSettingsPath).Should().BeTrue("Server appsettings.json should exist");
+        var appSettings = await File.ReadAllTextAsync(appSettingsPath);
+        appSettings.Should().Contain("test.auth0.com");
+        appSettings.Should().Contain("test-client-id");
+
+        // Verify the React client project was created
+        var clientProjectPath = Path.Combine(projectPath, $"{projectName.ToLowerInvariant()}.client");
+        Directory.Exists(clientProjectPath).Should().BeTrue("React client project directory should exist");
+
+        // Verify the registration script is present
+        File.Exists(Path.Combine(projectPath, "register-with-auth0.cmd")).Should().BeTrue(
+            "Registration script should be present"
+        );
+    }
+
     private bool IsTemplateInstalled(string templateName)
     {
         var startInfo = new ProcessStartInfo

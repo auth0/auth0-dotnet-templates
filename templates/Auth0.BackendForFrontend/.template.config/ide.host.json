@@ -1,0 +1,34 @@
+{
+  "$schema": "http://json.schemastore.org/ide.host",
+  "icon": "auth0.png",
+  "symbolInfo": [
+    {
+      "id": "domain",
+      "name": {
+        "text": "Auth0 Domain"
+      },
+      "isVisible": "true"
+    },
+    {
+      "id": "clientId",
+      "name": {
+        "text": "Auth0 Client Id"
+      },
+      "isVisible": "true"
+    },
+    {
+      "id": "clientSecret",
+      "name": {
+        "text": "Auth0 Client Secret"
+      },
+      "isVisible": "true"
+    },
+    {
+      "id": "audience",
+      "name": {
+        "text": "Auth0 API Audience"
+      },
+      "isVisible": "true"
+    }
+  ]
+}

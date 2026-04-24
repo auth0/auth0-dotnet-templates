@@ -107,6 +107,12 @@ public class CliWrapper
       {
         text = text.Replace("your-client-id", registrationData.client_id);
       }
+
+      if (!string.IsNullOrEmpty(registrationData.client_secret))
+      {
+        text = text.Replace("your-client-secret", registrationData.client_secret);
+      }
+
       if (!string.IsNullOrEmpty(registrationData.identifier))
       {
         text = text.Replace("https://your-api-id.com", registrationData.identifier);
