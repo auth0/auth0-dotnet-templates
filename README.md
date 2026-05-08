@@ -28,6 +28,7 @@ Currently, the following .NET templates are implemented:
 
 - [Auth0 MVC Application](docs/auth0webapp.md)
 - [Auth0 Web API Application](docs/auth0webapi.md)
+- [Auth0 Backend for Frontend Application](docs/auth0bff.md)
 - [Auth0 Blazor Web App](docs/auth0blazor.md)
 - [Auth0 Blazor Server Application](docs/auth0blazorserver.md)
 - [Auth0 Blazor WebAssembly Application](docs/auth0blazorwasm.md)
@@ -83,6 +84,7 @@ To provide feedback or report a bug, please [raise an issue on our issue tracker
 ### Vulnerability Reporting
 
 Please do not report security vulnerabilities on the public GitHub issue tracker. The [Responsible Disclosure Program](https://auth0.com/responsible-disclosure-policy) details the procedure for disclosing security issues.
+
 
 ---
 

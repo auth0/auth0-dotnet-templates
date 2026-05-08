@@ -1,58 +1,66 @@
-﻿using System.Diagnostics;
+﻿using System;
+using System.Diagnostics;
+using System.IO;
 using System.Text.Json;
 using System.Text.RegularExpressions;
+using System.Threading.Tasks;
 
 public class CliWrapper
 {
-  ConfigData configData = new ConfigData();
+  private ConfigData configData = new();
+  private Version? cliVersion;
+  private readonly IProcessExecutor processExecutor;
 
-  public CliWrapper()
+  public CliWrapper() : this(new ProcessExecutor())
   {
-    string templateConfigurationFilePath = $@"{Path.Combine(System.AppContext.BaseDirectory, "config.json")}";
+  }
+
+  public CliWrapper(IProcessExecutor processExecutor)
+  {
+    this.processExecutor = processExecutor;
+    
+    string templateConfigurationFilePath = Path.Combine(AppContext.BaseDirectory, "config.json");
     string text = File.ReadAllText(templateConfigurationFilePath);
 
-    configData = JsonSerializer.Deserialize<ConfigData>(text);
+    configData = JsonSerializer.Deserialize<ConfigData>(text) ?? new();
 
     Displayer.Verbose = configData.Verbose;
   }
 
   public async Task<bool> IsAuth0CliInstalled()
   {
-    bool result = false;
-
     try
     {
-      string cmdOutput = await RunCommand("auth0", "--version");
-      string currentCliVersionString = cmdOutput.Split(" ")[2];
-      Version currentCliVersion = new Version(currentCliVersionString);
+      string cmdOutput = await processExecutor.RunCommandAsync("auth0", "--version");
+      string currentCliVersionString = cmdOutput.Split(' ')[2];
+      cliVersion = new Version(currentCliVersionString);
 
-      Displayer.DisplayVerbose($@"Auth0 CLI version: {currentCliVersionString}");
+      Displayer.DisplayVerbose($"Auth0 CLI version: {currentCliVersionString}");
 
-      result = currentCliVersion.CompareTo(new Version("1.0.1")) >= 0;
+      return cliVersion.CompareTo(new Version("1.0.1")) >= 0;
     }
     catch (Exception ex)
     {
       Displayer.DisplayErrorVerbose(ex.Message);
+      return false;
     }
-
-    return result;
   }
 
   public async Task<RegistrationData> Register()
   {
-    var registrationData = new RegistrationData("", "", "", new SigningKeys[] {new SigningKeys("")});
+    var registrationData = new RegistrationData("", "", "", new[] { new SigningKeys("") });
     var registrationOutputText = "";
 
     try
     {
       if (configData.AppType.ToLower() == "api")
       {
-        registrationOutputText = await RunCommand("auth0", $"apis create --name {configData.AppName} --identifier {CreateAudience(configData.AppName)} --no-input --json");
+        registrationOutputText = await processExecutor.RunCommandAsync("auth0", $"apis create --name {configData.AppName} --identifier {CreateAudience(configData.AppName)} --no-input --json");
         Console.WriteLine("API registered!");
       }
       else
       {
-        registrationOutputText = await RunCommand("auth0", $"apps create --name {configData.AppName} --description \"{configData.AppDescription}\" --type {configData.AppType} --callbacks \"{configData.Callbacks}\" --logout-urls \"{configData.LogoutUrls}\" --no-input --reveal-secrets --json");
+        registrationOutputText = await processExecutor.RunCommandAsync("auth0", $"apps create --name {configData.AppName} --description \"{configData.AppDescription}\" --type {configData.AppType} --callbacks \"{configData.Callbacks}\" --logout-urls \"{configData.LogoutUrls}\" --no-input --reveal-secrets --json");
         Console.WriteLine("Application registered!");
       }
       
@@ -63,15 +71,15 @@ public class CliWrapper
 
     try
     {
-      registrationData = JsonSerializer.Deserialize<RegistrationData>(registrationOutputText)!;
+      registrationData = JsonSerializer.Deserialize<RegistrationData>(registrationOutputText) ?? registrationData;
     }
     catch (Exception ex)
     {
       Console.WriteLine("ERROR: ************");
-      Console.WriteLine($@"{ex.Message}");
+      Console.WriteLine($"{ex.Message}");
       Console.WriteLine();
       Console.WriteLine("Registration output: -------");
-      Console.WriteLine($@"{registrationOutputText}");
+      Console.WriteLine($"{registrationOutputText}");
       Console.WriteLine("*******************");
     }
 
@@ -82,9 +90,9 @@ public class CliWrapper
   {
     foreach (var settingsFile in configData.AppSettingsFiles)
     {
-      Displayer.DisplayVerbose($@"Reading settings from {settingsFile}");
+      Displayer.DisplayVerbose($"Reading settings from {settingsFile}");
 
-      string text = File.ReadAllText($@"{settingsFile}");
+      string text = await File.ReadAllTextAsync(settingsFile);
 
       Displayer.DisplayAppSettings(text);
 
@@ -99,6 +107,12 @@ public class CliWrapper
       {
         text = text.Replace("your-client-id", registrationData.client_id);
       }
+
+      if (!string.IsNullOrEmpty(registrationData.client_secret))
+      {
+        text = text.Replace("your-client-secret", registrationData.client_secret);
+      }
+
       if (!string.IsNullOrEmpty(registrationData.identifier))
       {
         text = text.Replace("https://your-api-id.com", registrationData.identifier);
@@ -106,90 +120,50 @@ public class CliWrapper
 
       Displayer.DisplayNewAppSettings(text);
 
-      File.WriteAllText($@"{settingsFile}", text);
+      await File.WriteAllTextAsync(settingsFile, text);
     }
   }
 
-  public async Task RemoveRegistrationFolder()
+  public Task RemoveRegistrationFolder()
   {
-    string registrationFolderPath = $@"{Path.Combine(System.AppContext.BaseDirectory)}";
+    return Task.Run(() => {
+      string registrationFolderPath = AppContext.BaseDirectory;
 
-    Displayer.DisplayVerbose($@"About to remove the folder {registrationFolderPath}");
+      Displayer.DisplayVerbose($"About to remove the folder {registrationFolderPath}");
 
-    if (Environment.OSVersion.Platform == PlatformID.Unix ||
-          Environment.OSVersion.Platform == PlatformID.MacOSX)
-    {
-      Directory.Delete(registrationFolderPath, true);
-    } else
-    {
-      // Hack to bypass executable lock in Windows (https://andreasrohner.at/posts/Programming/C%23/A-platform-independent-way-for-a-C%23-program-to-update-itself/)
-      var delScriptName = Path.Combine(registrationFolderPath, "selfdel.bat");
+      if (OperatingSystem.IsLinux() || OperatingSystem.IsMacOS())
+      {
+        Directory.Delete(registrationFolderPath, true);
+      } 
+      else if (OperatingSystem.IsWindows())
+      {
+        // Hack to bypass executable lock in Windows (https://andreasrohner.at/posts/Programming/C%23/A-platform-independent-way-for-a-C%23-program-to-update-itself/)
+        var delScriptName = Path.Combine(registrationFolderPath, "selfdel.bat");
 
-      using (var batFile = new StreamWriter (delScriptName)) {
-        batFile.WriteLine ("@ECHO OFF");
-        batFile.WriteLine ("TIMEOUT /t 5 /nobreak > NUL");
-        batFile.WriteLine ($@"RMDIR /S /Q {registrationFolderPath}");
+        using var batFile = new StreamWriter(delScriptName);
+        batFile.WriteLine("@ECHO OFF");
+        batFile.WriteLine("TIMEOUT /t 5 /nobreak > NUL");
+        batFile.WriteLine($"RMDIR /S /Q {registrationFolderPath}");
+        batFile.Close();
+
+        processExecutor.RunCommandAndForget(delScriptName, "");
       }
-
-      RunCommandAndForget(delScriptName, "");
-    }
+    });
   }
 
-  private async Task<string> RunCommand(string command, string args)
+  internal string CreateAudience(string appName)
   {
-    ProcessStartInfo startInfo = new()
-    {
-      FileName = command,
-      Arguments = args,
-      CreateNoWindow = true,
-      RedirectStandardOutput = true,
-      RedirectStandardError = true,
-    };
+    Displayer.DisplayVerbose($"Application name to transform into audience: {appName}");
 
-    Displayer.DisplayVerbose($@"About to run command: {command} {args}");
-
-    var proc = Process.Start(startInfo);
-    ArgumentNullException.ThrowIfNull(proc);
-    string output = proc.StandardOutput.ReadToEnd();
-    string errorText = proc.StandardError.ReadToEnd();
-    await proc.WaitForExitAsync();
-
-    if (!string.IsNullOrEmpty(errorText) && errorText.Contains("error"))
-    {
-      throw new Exception(errorText);
-    }
-
-    Displayer.DisplayCommandOutput(output);
-
-    return output;
-  }
-
-  private void RunCommandAndForget(string command, string args)
-  {
-    ProcessStartInfo startInfo = new()
-    {
-      FileName = command,
-      Arguments = args,
-      CreateNoWindow = true,
-      RedirectStandardOutput = true,
-      RedirectStandardError = true,
-    };
-
-    Displayer.DisplayVerbose($@"About to launch command: {command} {args}");
-
-    var proc = Process.Start(startInfo);
-  }
-
-  private string CreateAudience(string appName)
-  {
-    Displayer.DisplayVerbose($@"Application name to tranform into audience: {appName}");
-
-    Regex rgx = new Regex("[^a-zA-Z0-9 -]");
+    Regex rgx = new("[^a-zA-Z0-9 -]");
     appName = rgx.Replace(appName, "-");
+    
+    // Replace spaces and multiple consecutive dashes with single dash
+    appName = Regex.Replace(appName, @"[\s-]+", "-");
 
-    var audience = $@"https://{appName.ToLower()}.com";
+    var audience = $"https://{appName.ToLower()}.com";
 
-    Displayer.DisplayVerbose($@"Resulting audience: {audience}");
+    Displayer.DisplayVerbose($"Resulting audience: {audience}");
 
     return audience;
   }
@@ -198,16 +172,50 @@ public class CliWrapper
   {
     string currentDomain = "";
 
-    if (registrationData.signing_keys != null && registrationData.signing_keys.Length > 0 && !string.IsNullOrEmpty(registrationData.signing_keys[0].subject))
+    // Use new tenant list command for CLI version 1.17.0 and above
+    if (cliVersion is not null && cliVersion.CompareTo(new Version("1.17.0")) >= 0)
     {
-      Displayer.DisplayVerbose($@"Certificate subject: {registrationData.signing_keys[0].subject}");
-      currentDomain = registrationData.signing_keys[0].subject.Replace("/CN=", "");
-    } else
+      string tenantListText = await processExecutor.RunCommandAsync("auth0", "tenants list --json");
+
+      try
+      {
+        var tenantList = JsonSerializer.Deserialize<TenantData[]>(tenantListText);
+
+        if (tenantList is not null)
+        {
+          Displayer.DisplayVerbose($"Found {tenantList.Length} tenants.");
+
+          // Find the active tenant
+          var activeTenant = Array.Find(tenantList, tenant => tenant.active);
+          
+          if (activeTenant is not null && !string.IsNullOrEmpty(activeTenant.name))
+          {
+            Displayer.DisplayVerbose($"Active tenant: {activeTenant.name}");
+            currentDomain = activeTenant.name;
+          }
+        }
+      }
+      catch (Exception ex)
+      {
+        Displayer.DisplayError(ex.Message);
+      }
+    }
+    else
     {
-      currentDomain = await GetCurrentDomain();
+      // For older CLI versions, try to get domain from registration data first
+      if (registrationData.signing_keys is not null && registrationData.signing_keys.Length > 0 && !string.IsNullOrEmpty(registrationData.signing_keys[0].subject))
+      {
+        Displayer.DisplayVerbose($"Certificate subject: {registrationData.signing_keys[0].subject}");
+        currentDomain = registrationData.signing_keys[0].subject.Replace("/CN=", "");
+      } 
+      else
+      {
+        // Fallback to apis list method
+        currentDomain = await GetCurrentDomain();
+      }
     }
 
-    Displayer.DisplayVerbose($@"Current domain: {currentDomain}");
+    Displayer.DisplayVerbose($"Current domain: {currentDomain}");
 
     return currentDomain;
   }
@@ -215,21 +223,26 @@ public class CliWrapper
   private async Task<string> GetCurrentDomain()
   {
     string currentDomain = "";
-    string registrationDataListText = await RunCommand("auth0", "apis list -n 1 --json");
+    
+    // This method is only called for CLI versions below 1.17.0
+    string registrationDataListText = await processExecutor.RunCommandAsync("auth0", "apis list -n 1 --json");
 
     try
     {
-      var registrationDataList = JsonSerializer.Deserialize<RegistrationData[]>(registrationDataListText)!;
+      var registrationDataList = JsonSerializer.Deserialize<RegistrationData[]>(registrationDataListText);
 
-      Displayer.DisplayVerbose($@"Found {registrationDataList.Length} registered APIs.");
-
-      if (registrationDataList.Length > 0)
+      if (registrationDataList is not null)
       {
-        var registrationData = registrationDataList[0];
-        if (!string.IsNullOrEmpty(registrationData.identifier))
+        Displayer.DisplayVerbose($"Found {registrationDataList.Length} registered APIs.");
+
+        if (registrationDataList.Length > 0)
         {
-          Displayer.DisplayVerbose($@"System API identifier: {registrationData.identifier}");
-          currentDomain = new Uri(registrationData.identifier).Host;
+          var registrationData = registrationDataList[0];
+          if (!string.IsNullOrEmpty(registrationData.identifier))
+          {
+            Displayer.DisplayVerbose($"System API identifier: {registrationData.identifier}");
+            currentDomain = new Uri(registrationData.identifier).Host;
+          }
         }
       }
     }
@@ -237,6 +250,7 @@ public class CliWrapper
     {
       Displayer.DisplayError(ex.Message);
     }
+    
     return currentDomain;
   }
 }

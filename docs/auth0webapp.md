@@ -1,6 +1,6 @@
 ## Auth0 MVC Application
 
-For more information about creating and securing an ASP.NET MVC application with Auth0, check out the [Auth0 ASP.NET MVC Quickstart](https://auth0.com/docs/quickstart/webapp/aspnet-core/01-login).
+For more information about creating and securing an ASP.NET MVC application with Auth0, check out the [Auth0 ASP.NET MVC Quickstart](https://auth0.com/docs/quickstart/webapp/aspnet-core).
 
 #### Using the .NET CLI
 
@@ -45,7 +45,7 @@ In addition to the usual options for the `dotnet new` command, the following tem
 - `--client-id`<br>
   The client id associated with your application. The default value is `your-client-id`.
 - `-f` or `--framework`<br>
-  Defines the target framework to use for the .NET project. Currently, the only possible value is `net7.0`, which is also the default value.
+  Defines the target framework to use for the .NET project. The possible values are `net8.0`, `net9.0`, and `net10.0`. The default value is `net10.0`.
 
 Example:
 
