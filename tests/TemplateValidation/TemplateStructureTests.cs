@@ -27,6 +27,7 @@ public class TemplateStructureTests
     [InlineData("Auth0.WebAPI")]
     [InlineData("Auth0.Maui")]
     [InlineData("Auth0.BackendForFrontend")]
+    [InlineData("Auth0.Console")]
     public void Template_HasTemplateConfigFile(string templatePath)
     {
         // Arrange
@@ -59,6 +60,7 @@ public class TemplateStructureTests
     [InlineData("Auth0.Maui/version9")]
     [InlineData("Auth0.Maui/version10")]
     [InlineData("Auth0.BackendForFrontend/version10/Auth0BackendForFrontend.Server")]
+    [InlineData("Auth0.Console/version10")]
     public void Template_HasRegistrationConfigFile(string templatePath)
     {
         // Arrange
@@ -86,6 +88,7 @@ public class TemplateStructureTests
     [InlineData("Auth0.Maui/version9")]
     [InlineData("Auth0.Maui/version10")]
     [InlineData("Auth0.BackendForFrontend/version10/Auth0BackendForFrontend.Server")]
+    [InlineData("Auth0.Console/version10")]
     public void Template_RegistrationConfig_IsValidJson(string templatePath)
     {
         // Arrange
@@ -117,6 +120,7 @@ public class TemplateStructureTests
     [InlineData("Auth0.Maui/version9")]
     [InlineData("Auth0.Maui/version10")]
     [InlineData("Auth0.BackendForFrontend/version10/Auth0BackendForFrontend.Server")]
+    [InlineData("Auth0.Console/version10")]
     public void Template_RegistrationConfig_HasRequiredProperties(string templatePath)
     {
         // Arrange
@@ -148,6 +152,7 @@ public class TemplateStructureTests
     [InlineData("Auth0.Maui/version8", "native")]
     [InlineData("Auth0.Maui/version9", "native")]
     [InlineData("Auth0.Maui/version10", "native")]
+    [InlineData("Auth0.Console/version10", "native")]
     public void Template_RegistrationConfig_HasCorrectAppType(string templatePath, string expectedAppType)
     {
         // Arrange
@@ -264,7 +269,8 @@ public class TemplateStructureTests
             Path.Combine(_templatesPath, "Auth0.Maui", "version8"),
             Path.Combine(_templatesPath, "Auth0.Maui", "version9"),
             Path.Combine(_templatesPath, "Auth0.Maui", "version10"),
-            Path.Combine(_templatesPath, "Auth0.BackendForFrontend", "version10", "Auth0BackendForFrontend.Server")
+            Path.Combine(_templatesPath, "Auth0.BackendForFrontend", "version10", "Auth0BackendForFrontend.Server"),
+            Path.Combine(_templatesPath, "Auth0.Console", "version10")
         };
     }
 }
