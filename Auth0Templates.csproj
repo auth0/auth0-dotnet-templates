@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <PackageType>Template</PackageType>
-    <PackageVersion>2.4.0</PackageVersion>
+    <PackageVersion>2.5.0</PackageVersion>
     <PackageId>Auth0.Templates</PackageId>
     <Title>Auth0 Templates for .NET</Title>
     <Authors>Auth0</Authors>
@@ -56,7 +56,8 @@
                                        templates\Auth0.Maui\version9\registration;
                                        templates\Auth0.Maui\version10\registration;
                                        templates\Auth0.BackendForFrontend\version10\Auth0BackendForFrontend.Server\registration;
-                                       templates\Auth0.BackendForFrontend\version10\WeatherForecastAPI\registration"/>
+                                       templates\Auth0.BackendForFrontend\version10\WeatherForecastAPI\registration;
+                                       templates\Auth0.Console\version10\registration"/>
       </ItemGroup>
 
       <!-- Clean old cli-wrapper files from destination folders -->
@@ -94,6 +95,7 @@
       <Copy SourceFiles="@(CliWrapperFiles)" DestinationFolder="templates\Auth0.Maui\version10\registration" SkipUnchangedFiles="false" />
       <Copy SourceFiles="@(CliWrapperFiles)" DestinationFolder="templates\Auth0.BackendForFrontend\version10\Auth0BackendForFrontend.Server\registration" SkipUnchangedFiles="false" />
       <Copy SourceFiles="@(CliWrapperFiles)" DestinationFolder="templates\Auth0.BackendForFrontend\version10\WeatherForecastAPI\registration" SkipUnchangedFiles="false" />
+      <Copy SourceFiles="@(CliWrapperFiles)" DestinationFolder="templates\Auth0.Console\version10\registration" SkipUnchangedFiles="false" />
       
       <Message Text="CLI wrapper files copied to all registration folders successfully." Importance="high" />
     </Target>
