@@ -107,11 +107,11 @@ Console.WriteLine($"\nAPI response status: {(int)response.StatusCode} {response.
 */
 ```
 
-**IMPORTANT**: Warn the user about enabling the Device Code grant on the Auth0 dashboard and provide a link to the documentation.
+**IMPORTANT**: Warn the user about enabling the Device Code grant on the Auth0 dashboard and provide a link to the [documentation](https://auth0.com/docs/get-started/applications/update-grant-types).
 
 ### 6. Run the App
 
-Use the following comman to run the app:
+Use the following command to run the app:
 
 ```bash
 dotnet run
