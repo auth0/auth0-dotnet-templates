@@ -23,11 +23,10 @@ Input: the scratch project from **scaffold-dotnet-project** and the project type
 
 ## New project type
 1. Find the closest existing template in `templates/` and read its newest `Program.cs`, `.csproj` and settings file.
-2. Pick the Auth0 mechanism: sign-in via `Auth0.AspNetCore.Authentication` (server apps), `Auth0.OidcClient.*` (native apps), `Auth0.AuthenticationApi` (device flow, headless), or JWT bearer validation (APIs).
+2. Pick the Auth0 mechanism: sign-in via `Auth0.AspNetCore.Authentication` (server apps), `Auth0.OidcClient.*` (native apps), `Auth0.AuthenticationApi` (device flow, headless), or `Auth0.AspNetCore.Authentication.Api` (APIs, instead of `Microsoft.AspNetCore.Authentication.JwtBearer`).
 3. Check the current Auth0 docs for that SDK for the minimal configuration; link to them from the docs page later.
 4. Put placeholders where the closest existing template puts them (settings file if the type has one, otherwise source).
 
 ## Gotchas
-- Server apps read `Auth0:Domain` and `Auth0:ClientId` from `appsettings.json`; APIs use the `Authentication:Schemes:Bearer` section; Blazor WebAssembly binds the `Auth0` section with `Authority`.
-- The Web API `ValidIssuer` in existing templates is `{DOMAIN}`; keep the same shape unless the framework requires a trailing slash.
+- Server apps read `Auth0:Domain` and `Auth0:ClientId` from `appsettings.json`; APIs read `Auth0:Domain` and `Auth0:Audience`; Blazor WebAssembly binds the `Auth0` section with `Authority`.
 - Web API templates use `#if (!removeOpenAPI)` template conditionals around OpenAPI/Swagger code; preserve them when copying patterns.

@@ -3,7 +3,7 @@
 Never guess versions and never copy them from an older `versionN` folder.
 
 1. Microsoft packages (`Microsoft.AspNetCore.*`, `Microsoft.Maui.Controls`, `Microsoft.Extensions.*`): use the version the scaffolded project already references, or the latest stable `N.x.y` for the target framework.
-2. Auth0 packages (`Auth0.AspNetCore.Authentication`, `Auth0.OidcClient.MAUI`, `Auth0.AuthenticationApi`): use the latest stable version that supports the target framework.
+2. Auth0 packages (`Auth0.AspNetCore.Authentication`, `Auth0.AspNetCore.Authentication.Api`, `Auth0.OidcClient.MAUI`, `Auth0.AuthenticationApi`): use the latest stable version that supports the target framework.
 3. Add packages without `--version`; the SDK then resolves the latest stable release for the project's framework:
 
    ```bash
