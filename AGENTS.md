@@ -71,8 +71,18 @@ Test naming convention: `Method_Does_WhenCondition`. Use FluentAssertions (`.Sho
 When adding support for a new .NET version (e.g., version11):
 
 1. Create `templates/<TemplateName>/version11/` with the project files and a `registration/` subfolder
-2. Add the new registration path to the `<RegistrationFolders>` list in `Auth0Templates.csproj`
-3. Add template validation test cases in `tests/TemplateValidation/TemplateStructureTests.cs`
+2. In `templates/<TemplateName>/.template.config/template.json`, add the new `Framework` choice and a `sources` entry for `./version11/`
+3. Add the new registration path to the `<RegistrationFolders>` list in `Auth0Templates.csproj`, plus a matching `<Copy>` line
+4. Add template validation test cases in `tests/TemplateValidation/TemplateStructureTests.cs` and `TemplateInstantiationTests.cs`
+5. Update the page in `docs/` for the template
+
+# AI skills
+
+Skills in `.agents/skills/` automate template work:
+
+- `add-template-dotnet-version`: add a new .NET version to every existing template
+- `add-auth0-template`: create a new template for a project type and .NET version
+- Building blocks used by both: `scaffold-dotnet-project`, `integrate-auth0`, `add-auth0-assets`, `convert-to-template`, `configure-auth0-registration`, `wire-template-into-repo`, `update-template-docs`, `verify-template-wiring`
 
 # Documentation
 
