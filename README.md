@@ -33,6 +33,7 @@ Currently, the following .NET templates are implemented:
 - [Auth0 Blazor Server Application](docs/auth0blazorserver.md)
 - [Auth0 Blazor WebAssembly Application](docs/auth0blazorwasm.md)
 - [Auth0 MAUI Application](docs/auth0maui.md)
+- [Auth0 .NET Console Application](docs/auth0console.md)
 
 ## Installing from source code
 

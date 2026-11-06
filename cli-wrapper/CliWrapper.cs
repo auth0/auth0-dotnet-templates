@@ -60,7 +60,8 @@ public class CliWrapper
       }
       else
       {
-        registrationOutputText = await processExecutor.RunCommandAsync("auth0", $"apps create --name {configData.AppName} --description \"{configData.AppDescription}\" --type {configData.AppType} --callbacks \"{configData.Callbacks}\" --logout-urls \"{configData.LogoutUrls}\" --no-input --reveal-secrets --json");
+        var grantsOption = string.IsNullOrEmpty(configData.GrantTypes) ? "" : $" --grants {configData.GrantTypes}";
+        registrationOutputText = await processExecutor.RunCommandAsync("auth0", $"apps create --name {configData.AppName} --description \"{configData.AppDescription}\" --type {configData.AppType} --callbacks \"{configData.Callbacks}\" --logout-urls \"{configData.LogoutUrls}\"{grantsOption} --no-input --reveal-secrets --json");
         Console.WriteLine("Application registered!");
       }
       

@@ -1,0 +1,96 @@
+{
+  "$schema": "http://json.schemastore.org/template",
+  "author": "Auth0",
+  "classifications": [ "Console", "Auth0" ],
+  "groupIdentity": "Auth0.NET.Console",
+  "identity": "Auth0.NET.Console.CSharp",
+  "name": "Auth0 .NET Console App",
+  "description": "A project template for creating a .NET console application integrated with Auth0 authentication and authorization services via the Device Authorization Flow.",
+  "shortName": "auth0console",
+  "sourceName": "Auth0Console",
+  "defaultName": "ConsoleApplication1",
+  "preferNameDirectory": true,
+  "tags": {
+    "language": "C#",
+    "type": "project"
+  },
+  "guids": [
+    "F96B7B3C-7C7D-4789-A25F-1604A35F8453"
+  ],
+  "symbols": {
+    "domain": {
+      "type": "parameter",
+      "datatype": "string",
+      "description": "Your Auth0 domain.",
+      "defaultValue": "yourdomain.auth0.com",
+      "replaces": "{DOMAIN}"
+    },
+    "clientId": {
+      "type": "parameter",
+      "datatype": "string",
+      "description": "Your Auth0 client id.",
+      "defaultValue": "your-client-id",
+      "replaces": "{CLIENT_ID}"
+    },
+    "Framework": {
+      "type": "parameter",
+      "description": "The target framework for the project.",
+      "datatype": "choice",
+      "choices": [
+        {
+          "choice": "net10.0",
+          "description": "Target .NET 10"
+        }
+      ],
+      "defaultValue": "net10.0"
+    },
+    "autoregister": {
+      "type": "computed",
+      "value": "(domain == \"yourdomain.auth0.com\" && clientId == \"your-client-id\")"
+    }
+  },
+  "sources": [
+    {
+      "condition": "(Framework == \"net10.0\")",
+      "source": "./version10/",
+      "modifiers": [
+        {
+          "condition": "(!autoregister)",
+          "exclude": [ "registration/**/*" ]
+        }
+      ]
+    }
+  ],
+  "postActions": [
+    {
+      "condition": "(OS != \"Windows_NT\")",
+      "description": "Make scripts executable",
+      "manualInstructions": [
+        {
+          "text": "Run 'chmod +x register-with-auth0.cmd'"
+        }
+      ],
+      "actionId": "cb9a6cf3-4f5c-4860-b9d2-03a574959774",
+      "args": {
+        "+x": "register-with-auth0.cmd"
+      },
+      "continueOnError": true
+    },
+    {
+      "actionId": "3A7C4B45-1F5D-4A30-959A-51B88E82B5D2",
+      "condition": "(autoregister)",
+      "args": {
+        "executable": "register-with-auth0.cmd",
+        "redirectStandardOutput": false,
+        "redirectStandardError": false
+      },
+      "manualInstructions": [
+        {
+          "text": "To register your app with Auth0, run './register-with-auth0.cmd'"
+        }
+      ],
+      "continueOnError": false,
+      "description ": "Register your application with Auth0"
+    }
+  ]
+}

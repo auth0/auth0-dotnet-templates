@@ -21,6 +21,7 @@ In order to enable a template to automatic registration via the CLI Wrapper, app
     "AppType": "regular",
     "Callbacks": "https://localhost:5001/callback",
     "LogoutUrls": "https://localhost:5001/",
+    "GrantTypes": "",
     "AppSettingsFiles": ["./appsettings.json"],
     "RegistrationScriptFile": "../register-with-auth0.cmd",
     "Verbose": false
@@ -33,6 +34,7 @@ In order to enable a template to automatic registration via the CLI Wrapper, app
   - `AppDescription` is the application description that will be stored in the Auth0 dashboard
   - `AppType` must contain the specific application type for the current project (see [type flag](https://auth0.github.io/auth0-cli/auth0_apps_create.html#flags) required by the `auth0 apps create` command of the Auth0 CLI). Its value is `api` for API templates.
   - `Callbacks` and `LogoutUrls` must use the same ports as in the templates (see `Properties/launchSettings.json`). Set these properties to empty strings for API templates.
+  - `GrantTypes` is an optional comma-separated list of grant types to enable for the application (see [grants flag](https://auth0.github.io/auth0-cli/auth0_apps_create.html#flags) of the `auth0 apps create` command). When provided and not empty, the CLI Wrapper appends `--grants <value>` to the registration command. Leave it empty (or omit the key) to use the Auth0 CLI defaults.
   - `AppSettingsFiles` must point to the project's configuration files to update after registration
   - `RegistrationScriptFile` is the relative path of the script `register-with-auth0.cmd` with respect to the `registration` folder . This path is used during the registration folder removal. Make sure it matches the actual file location.
   - `Verbose` is a boolean setting that enables a verbose onscreen log for diagnostic purposes.

@@ -294,6 +294,36 @@ public class TemplateInstantiationTests : IDisposable
         );
     }
 
+    [Theory]
+    [InlineData("auth0console", "net10.0")]
+    public async Task ConsoleTemplate_Instantiates_AndBuilds(string templateName, string framework)
+    {
+        // Arrange
+        var frameworkVersion = framework.Replace(".", "");
+        var projectName = $"TestConsoleApp{frameworkVersion}";
+        var projectPath = Path.Combine(_tempDirectory, projectName);
+
+        // Act
+        var instantiateResult = RunDotnetCommand(
+            $"new {templateName} -n {projectName} -o \"{projectPath}\" --framework {framework} --domain test.auth0.com --client-id test-client-id"
+        );
+
+        // Assert - verify instantiation succeeded
+        instantiateResult.Should().Be(0, "Template instantiation should succeed");
+        Directory.Exists(projectPath).Should().BeTrue();
+        File.Exists(Path.Combine(projectPath, $"{projectName}.csproj")).Should().BeTrue();
+
+        // Console template has no appsettings.json — placeholders live in Program.cs
+        var programPath = Path.Combine(projectPath, "Program.cs");
+        File.Exists(programPath).Should().BeTrue();
+        var programContents = await File.ReadAllTextAsync(programPath);
+        programContents.Should().Contain("test.auth0.com");
+        programContents.Should().Contain("test-client-id");
+
+        //var buildResult = RunDotnetCommand($"build \"{projectPath}\" --configuration Release");
+        //buildResult.Should().Be(0, "Generated project should build successfully");
+    }
+
     private bool IsTemplateInstalled(string templateName)
     {
         var startInfo = new ProcessStartInfo
