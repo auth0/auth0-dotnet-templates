@@ -1,18 +1,10 @@
 using Microsoft.AspNetCore.ResponseCompression;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Auth0.AspNetCore.Authentication.Api;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
-    .AddJwtBearer(JwtBearerDefaults.AuthenticationScheme, c =>
-    {
-        c.Authority = $"https://{builder.Configuration["Auth0:Domain"]}";
-        c.TokenValidationParameters = new Microsoft.IdentityModel.Tokens.TokenValidationParameters
-        {
-            ValidAudience = builder.Configuration["Auth0:Audience"],
-            ValidIssuer = $"https://{builder.Configuration["Auth0:Domain"]}"
-        };
-    });
+builder.Services.AddAuth0ApiAuthentication(builder.Configuration.GetSection("Auth0"));
+builder.Services.AddAuthorization();
 
 // Add services to the container.
 
