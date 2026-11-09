@@ -40,6 +40,5 @@ Checklist:
 ## Gotchas
 - Do not copy `registration/cli-wrapper.*` binaries into the version folder; they are generated at pack time and gitignored.
 - `Auth0.MinimalWebAPI` has no `.template.config`; its sources are consumed by `Auth0.WebAPI/.template.config/template.json`.
-- The version 8 `sources` condition also matches `net7.0`. That is a leftover; do not copy the pattern into new entries.
 - `Auth0.Mvc/version9/Auth0Mvc.csproj` has a malformed `PackageReference` (missing quote). Do not use it as a model; report it to the user.
 - A trailing `description ` key (with a space) exists in the second postAction of existing templates. It is harmless; copy the file rather than retyping it.
