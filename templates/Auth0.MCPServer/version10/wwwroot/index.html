@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>Auth0 MCP Server</title>
+    <style>
+        body { font-family: Arial, Helvetica, sans-serif; max-width: 760px; margin: 2rem auto; padding: 0 1rem; line-height: 1.5; }
+        code { background: #f0f0f0; padding: 0 4px; border-radius: 3px; }
+        .center { text-align: center; }
+    </style>
+</head>
+<body>
+    <div class="center">
+        <h2>Your MCP server is running</h2>
+        <p>Connect your MCP client to the <code>/mcp</code> endpoint.</p>
+        <p><a href=".well-known/oauth-protected-resource" target="_blank">Protected Resource Metadata</a></p>
+        <div>
+            <a href="https://a0.to/dotnet-templates/mcp-server"><img src="images/auth0-dotnet-ebook.png" alt=".NET Identity with Auth0"></a>
+        </div>
+    </div>
+
+    <h3>Complete your MCP server configuration</h3>
+    <p>Your MCP server is registered with Auth0, but you still need to complete the configuration in the <a href="https://manage.auth0.com/#/apis" target="_blank">Auth0 Dashboard</a>:
+    <ul>
+        <li>Set the <em>JWT Profile</em> to <em>RFC 9068</em>(see <a href="https://auth0.com/docs/get-started/apis/configure-access-token-profile" target="_blank">here</a>).</li>
+        <li>Enable <em>RBAC</em> and <em>Add Permissions in the Access Token</em>.</li>
+        <li>Add the permissions <code>tool:getsystemstate</code> and <code>tool:setsystemstate</code>, and assign them to your users (see <a href="https://auth0.com/docs/get-started/apis/enable-role-based-access-control-for-apis" target="_blank">here</a>).</li>
+        <li>Set the user access policy in <em>Application Access</em> to <em>Allow</em> (see <a href="https://auth0.com/docs/get-started/apis/api-access-policies-for-applications#configure-api-application-access-policy" target="_blank">here</a>).</li>
+    </ul>
+
+    <h3>Configure your Auth0 tenant</h3>
+    <p>Enable the <em>Resource Parameter Compatibility Profile</em> (see <a href="https://auth0.com/docs/get-started/tenant-settings#settings-advanced" target="_blank">here</a>) in <a href="https://manage.auth0.com/#/tenant/advanced" target="_blank"><em>Settings &gt; Advanced</em></a> of your tenant, and choose how MCP clients register with Auth0:</p>
+    <ul>
+        <li>
+            <strong>Client ID Metadata Document (CIMD)</strong>: the client ID is an HTTPS URL pointing to a metadata document published by the client.
+            It is recommended for production because it is more secure and scalable.
+            <a href="https://auth0.com/docs/get-started/auth0-overview/create-applications/register-applications-with-cimd">Learn more about CIMD</a>.
+        </li>
+        <li>
+            <strong>Dynamic Client Registration (DCR)</strong>: clients register themselves at runtime.
+            Enable it in <a href="https://manage.auth0.com/#/tenant/advanced" target="_blank"><em>Settings &gt; Advanced</em></a> and <a href="https://auth0.com/docs/authenticate/identity-providers/promote-connections-to-domain-level">promote your connections to domain level</a>.
+            It applies to the whole tenant and lets anyone create applications in it.
+            <a href="https://auth0.com/docs/get-started/applications/dynamic-client-registration">Learn more about DCR</a>.
+        </li>
+    </ul>
+    <p><small><strong>Note</strong>: The HTTP launch profile used by default in the MCP server project is for the development environment only.</small></p>
+</body>
+</html>

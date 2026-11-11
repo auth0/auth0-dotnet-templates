@@ -7,6 +7,7 @@ Read this to map a template to its base `dotnet new` command, Auth0 package and 
 | Auth0.Mvc | auth0webapp | `mvc` | Auth0.AspNetCore.Authentication 1.7.0 | regular | `appsettings.json` |
 | Auth0.WebAPI (controllers) | auth0webapi | `webapi --use-controllers` | Auth0.AspNetCore.Authentication.Api | api | `appsettings.json` (`Auth0:Domain` = `{DOMAIN}`, `Auth0:Audience` = `{AUDIENCE}`) |
 | Auth0.MinimalWebAPI | (source for auth0webapi, default) | `webapi` | Auth0.AspNetCore.Authentication.Api | api | `appsettings.json` |
+| Auth0.MCPServer | auth0mcpserver | `mcpserver -t remote` (needs `Microsoft.McpServer.ProjectTemplates`) | Auth0.AspNetCore.Authentication.Api + ModelContextProtocol.AspNetCore | api | `appsettings.json` (`Auth0:Domain`, `Auth0:Audience`) |
 | Auth0.BlazorWebApp | auth0blazor | `blazor --interactivity Auto` (server + `.Client`) | Auth0.AspNetCore.Authentication 1.7.0 | regular | `appsettings.json` |
 | Auth0.BlazorWebAssembly | auth0blazorwasm | `blazorwasm` (.NET 8/9 hosted layout: Client/Server/Shared; .NET 10: single project) | `Microsoft.AspNetCore.Components.WebAssembly.Authentication` (OIDC) | spa | `wwwroot/appsettings.json` (`Auth0:Authority` = `https://{DOMAIN}`, `Auth0:ClientId`) |
 | Auth0.Maui | auth0maui | `maui` | Auth0.OidcClient.MAUI 1.4.0 | native | `MauiProgram.cs` |

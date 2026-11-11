@@ -6,6 +6,7 @@ Image source: `templates/Auth0.Mvc/version10/wwwroot/images/auth0-dotnet-ebook.p
 |---|---|---|---|
 | MVC (`Auth0.Mvc`) | `mvc` | `wwwroot/images/auth0-dotnet-ebook.png` | `Views/Home/Index.cshtml` |
 | Web API / minimal API (`Auth0.WebAPI`, `Auth0.MinimalWebAPI`) | `webapi` | `wwwroot/images/auth0-dotnet-ebook.png` | `wwwroot/index.html` and `SwaggerExtensions.cs` (`Contact.Url`) |
+| MCP server (`Auth0.MCPServer`) | `mcp-server` | `wwwroot/images/auth0-dotnet-ebook.png` | `wwwroot/index.html` |
 | Blazor Web App (`Auth0BlazorWebApp`) | `blazor-webapp` | `Auth0BlazorWebApp/wwwroot/images/auth0-dotnet-ebook.png` | `Components/Pages/Home.razor` |
 | Blazor WebAssembly | `blazor-wasm` | `wwwroot/images/auth0-dotnet-ebook.png` (`Client/wwwroot/images/` for the .NET 8/9 hosted layout) | `Pages/Home.razor` and the `NotAuthorized` block of `App.razor` |
 | Blazor Server (discontinued) | `blazor-server` | `wwwroot/images/` | `App.razor`; do not extend |

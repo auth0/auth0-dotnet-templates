@@ -28,6 +28,7 @@ public class TemplateStructureTests
     [InlineData("Auth0.Maui")]
     [InlineData("Auth0.BackendForFrontend")]
     [InlineData("Auth0.Console")]
+    [InlineData("Auth0.MCPServer")]
     public void Template_HasTemplateConfigFile(string templatePath)
     {
         // Arrange
@@ -56,6 +57,7 @@ public class TemplateStructureTests
     [InlineData("Auth0.MinimalWebAPI/version8")]
     [InlineData("Auth0.MinimalWebAPI/version9")]
     [InlineData("Auth0.MinimalWebAPI/version10")]
+    [InlineData("Auth0.MCPServer/version10")]
     [InlineData("Auth0.Maui/version8")]
     [InlineData("Auth0.Maui/version9")]
     [InlineData("Auth0.Maui/version10")]
@@ -84,6 +86,7 @@ public class TemplateStructureTests
     [InlineData("Auth0.MinimalWebAPI/version8")]
     [InlineData("Auth0.MinimalWebAPI/version9")]
     [InlineData("Auth0.MinimalWebAPI/version10")]
+    [InlineData("Auth0.MCPServer/version10")]
     [InlineData("Auth0.Maui/version8")]
     [InlineData("Auth0.Maui/version9")]
     [InlineData("Auth0.Maui/version10")]
@@ -116,6 +119,7 @@ public class TemplateStructureTests
     [InlineData("Auth0.MinimalWebAPI/version8")]
     [InlineData("Auth0.MinimalWebAPI/version9")]
     [InlineData("Auth0.MinimalWebAPI/version10")]
+    [InlineData("Auth0.MCPServer/version10")]
     [InlineData("Auth0.Maui/version8")]
     [InlineData("Auth0.Maui/version9")]
     [InlineData("Auth0.Maui/version10")]
@@ -144,6 +148,7 @@ public class TemplateStructureTests
     [InlineData("Auth0.MinimalWebAPI/version8", "api")]
     [InlineData("Auth0.MinimalWebAPI/version9", "api")]
     [InlineData("Auth0.MinimalWebAPI/version10", "api")]
+    [InlineData("Auth0.MCPServer/version10", "api")]
     [InlineData("Auth0.Mvc/version8", "regular")]
     [InlineData("Auth0.Mvc/version9", "regular")]
     [InlineData("Auth0.Mvc/version10", "regular")]
@@ -172,6 +177,7 @@ public class TemplateStructureTests
     [InlineData("Auth0.MinimalWebAPI/version8")]
     [InlineData("Auth0.MinimalWebAPI/version9")]
     [InlineData("Auth0.MinimalWebAPI/version10")]
+    [InlineData("Auth0.MCPServer/version10")]
     public void ApiTemplate_HasEmptyCallbacksAndLogoutUrls(string templatePath)
     {
         // Arrange
@@ -266,6 +272,7 @@ public class TemplateStructureTests
             Path.Combine(_templatesPath, "Auth0.MinimalWebAPI", "version8"),
             Path.Combine(_templatesPath, "Auth0.MinimalWebAPI", "version9"),
             Path.Combine(_templatesPath, "Auth0.MinimalWebAPI", "version10"),
+            Path.Combine(_templatesPath, "Auth0.MCPServer", "version10"),
             Path.Combine(_templatesPath, "Auth0.Maui", "version8"),
             Path.Combine(_templatesPath, "Auth0.Maui", "version9"),
             Path.Combine(_templatesPath, "Auth0.Maui", "version10"),

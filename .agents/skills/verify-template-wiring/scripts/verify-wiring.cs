@@ -168,6 +168,7 @@ var expectedSlugs = new Dictionary<string, string[]>
     ["Auth0.Mvc"] = ["mvc"],
     ["Auth0.WebAPI"] = ["webapi"],
     ["Auth0.MinimalWebAPI"] = ["webapi"],
+    ["Auth0.MCPServer"] = ["mcp-server"],
     ["Auth0.BlazorWebApp"] = ["blazor-webapp"],
     ["Auth0.BlazorWebAssembly"] = ["blazor-wasm"],
     ["Auth0.BlazorServer"] = ["blazor-server"],
