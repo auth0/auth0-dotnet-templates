@@ -255,6 +255,30 @@ namespace Unit
             );
         }
 
+        [Theory]
+        [InlineData("http://localhost:5000/", "--identifier http://localhost:5000/ ")]
+        [InlineData("", "--identifier https://testapp.com ")]
+        public async Task Register_UsesExpectedApiIdentifier_WhenAudienceIsConfigured(string audience, string expectedArgument)
+        {
+            // Arrange
+            var mockExecutor = new Mock<IProcessExecutor>();
+            mockExecutor
+                .Setup(e => e.RunCommandAsync("auth0", It.IsAny<string>()))
+                .ReturnsAsync("{}");
+
+            var wrapper = CreateCliWrapperWithMockConfig(mockExecutor.Object, appType: "api", audience: audience);
+
+            // Act
+            await wrapper.Register();
+
+            // Assert
+            mockExecutor.Verify(
+                e => e.RunCommandAsync("auth0", It.Is<string>(s =>
+                    s.Contains("apis create") && s.Contains(expectedArgument))),
+                Times.Once
+            );
+        }
+
         /// <summary>
         /// Helper method to create a CliWrapper with a mock config file.
         /// This is needed because CliWrapper constructor reads config.json from AppContext.BaseDirectory.
@@ -262,7 +286,8 @@ namespace Unit
         private CliWrapper CreateCliWrapperWithMockConfig(
             IProcessExecutor executor,
             string appType = "regular",
-            string grantTypes = "")
+            string grantTypes = "",
+            string audience = "")
         {
             var configJson = $@"{{
             ""AppName"": ""TestApp"",
@@ -271,6 +296,7 @@ namespace Unit
             ""Callbacks"": ""https://localhost:5001/callback"",
             ""LogoutUrls"": ""https://localhost:5001/"",
             ""GrantTypes"": ""{grantTypes}"",
+            ""Audience"": ""{audience}"",
             ""AppSettingsFiles"": [],
             ""RegistrationScriptFile"": ""register.cmd"",
             ""Verbose"": false

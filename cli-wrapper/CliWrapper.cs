@@ -55,7 +55,7 @@ public class CliWrapper
     {
       if (configData.AppType.ToLower() == "api")
       {
-        registrationOutputText = await processExecutor.RunCommandAsync("auth0", $"apis create --name {configData.AppName} --identifier {CreateAudience(configData.AppName)} --no-input --json");
+        registrationOutputText = await processExecutor.RunCommandAsync("auth0", $"apis create --name {configData.AppName} --identifier {(string.IsNullOrEmpty(configData.Audience) ? CreateAudience(configData.AppName) : configData.Audience)} --no-input --json");
         Console.WriteLine("API registered!");
       }
       else

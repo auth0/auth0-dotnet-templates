@@ -49,6 +49,7 @@
                                        templates\Auth0.MinimalWebAPI\version8\registration;
                                        templates\Auth0.MinimalWebAPI\version9\registration;
                                        templates\Auth0.MinimalWebAPI\version10\registration;
+                                       templates\Auth0.MCPServer\version10\registration;
                                        templates\Auth0.BlazorWebApp\version8\Auth0BlazorWebApp\registration;
                                        templates\Auth0.BlazorWebApp\version9\Auth0BlazorWebApp\registration;
                                        templates\Auth0.BlazorWebApp\version10\Auth0BlazorWebApp\registration;
@@ -87,6 +88,7 @@
       <Copy SourceFiles="@(CliWrapperFiles)" DestinationFolder="templates\Auth0.MinimalWebAPI\version8\registration" SkipUnchangedFiles="false" />
       <Copy SourceFiles="@(CliWrapperFiles)" DestinationFolder="templates\Auth0.MinimalWebAPI\version9\registration" SkipUnchangedFiles="false" />
       <Copy SourceFiles="@(CliWrapperFiles)" DestinationFolder="templates\Auth0.MinimalWebAPI\version10\registration" SkipUnchangedFiles="false" />
+      <Copy SourceFiles="@(CliWrapperFiles)" DestinationFolder="templates\Auth0.MCPServer\version10\registration" SkipUnchangedFiles="false" />
       <Copy SourceFiles="@(CliWrapperFiles)" DestinationFolder="templates\Auth0.BlazorWebApp\version8\Auth0BlazorWebApp\registration" SkipUnchangedFiles="false" />
       <Copy SourceFiles="@(CliWrapperFiles)" DestinationFolder="templates\Auth0.BlazorWebApp\version9\Auth0BlazorWebApp\registration" SkipUnchangedFiles="false" />
       <Copy SourceFiles="@(CliWrapperFiles)" DestinationFolder="templates\Auth0.BlazorWebApp\version10\Auth0BlazorWebApp\registration" SkipUnchangedFiles="false" />

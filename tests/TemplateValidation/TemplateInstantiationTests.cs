@@ -324,6 +324,32 @@ public class TemplateInstantiationTests : IDisposable
         //buildResult.Should().Be(0, "Generated project should build successfully");
     }
 
+    [Theory]
+    [InlineData("auth0mcpserver", "net10.0")]
+    public async Task McpServerTemplate_Instantiates_WithAuth0Settings(string templateName, string framework)
+    {
+        // Arrange
+        var frameworkVersion = framework.Replace(".", "");
+        var projectName = $"TestMcpServer{frameworkVersion}";
+        var projectPath = Path.Combine(_tempDirectory, projectName);
+
+        // Act
+        var instantiateResult = RunDotnetCommand(
+            $"new {templateName} -n {projectName} -o \"{projectPath}\" --framework {framework} --domain test.auth0.com --audience https://test-mcp.example.com"
+        );
+
+        // Assert
+        instantiateResult.Should().Be(0, "Template instantiation should succeed");
+        File.Exists(Path.Combine(projectPath, $"{projectName}.csproj")).Should().BeTrue();
+        File.Exists(Path.Combine(projectPath, "configure-auth0-api.cmd")).Should().BeTrue();
+
+        var settingsPath = Path.Combine(projectPath, "appsettings.json");
+        File.Exists(settingsPath).Should().BeTrue();
+        var settings = await File.ReadAllTextAsync(settingsPath);
+        settings.Should().Contain("test.auth0.com");
+        settings.Should().Contain("https://test-mcp.example.com");
+    }
+
     private bool IsTemplateInstalled(string templateName)
     {
         var startInfo = new ProcessStartInfo
