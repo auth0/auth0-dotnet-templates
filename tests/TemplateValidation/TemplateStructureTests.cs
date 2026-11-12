@@ -67,6 +67,7 @@ public class TemplateStructureTests
     [InlineData("Auth0.Maui/version8")]
     [InlineData("Auth0.Maui/version9")]
     [InlineData("Auth0.Maui/version10")]
+    [InlineData("Auth0.Maui/version11")]
     [InlineData("Auth0.BackendForFrontend/version10/Auth0BackendForFrontend.Server")]
     [InlineData("Auth0.BackendForFrontend/version11/Auth0BackendForFrontend.Server")]
     [InlineData("Auth0.Console/version10")]
@@ -103,6 +104,7 @@ public class TemplateStructureTests
     [InlineData("Auth0.Maui/version8")]
     [InlineData("Auth0.Maui/version9")]
     [InlineData("Auth0.Maui/version10")]
+    [InlineData("Auth0.Maui/version11")]
     [InlineData("Auth0.BackendForFrontend/version10/Auth0BackendForFrontend.Server")]
     [InlineData("Auth0.BackendForFrontend/version11/Auth0BackendForFrontend.Server")]
     [InlineData("Auth0.Console/version10")]
@@ -143,6 +145,7 @@ public class TemplateStructureTests
     [InlineData("Auth0.Maui/version8")]
     [InlineData("Auth0.Maui/version9")]
     [InlineData("Auth0.Maui/version10")]
+    [InlineData("Auth0.Maui/version11")]
     [InlineData("Auth0.BackendForFrontend/version10/Auth0BackendForFrontend.Server")]
     [InlineData("Auth0.BackendForFrontend/version11/Auth0BackendForFrontend.Server")]
     [InlineData("Auth0.Console/version10")]
@@ -184,6 +187,7 @@ public class TemplateStructureTests
     [InlineData("Auth0.Maui/version8", "native")]
     [InlineData("Auth0.Maui/version9", "native")]
     [InlineData("Auth0.Maui/version10", "native")]
+    [InlineData("Auth0.Maui/version11", "native")]
     [InlineData("Auth0.Console/version10", "native")]
     [InlineData("Auth0.Console/version11", "native")]
     public void Template_RegistrationConfig_HasCorrectAppType(string templatePath, string expectedAppType)
@@ -251,6 +255,7 @@ public class TemplateStructureTests
     [InlineData("Auth0.Maui/version8")]
     [InlineData("Auth0.Maui/version9")]
     [InlineData("Auth0.Maui/version10")]
+    [InlineData("Auth0.Maui/version11")]
     public void MauiTemplate_HasCallbacksAndLogoutUrls(string templatePath)
     {
         // Arrange
@@ -316,6 +321,7 @@ public class TemplateStructureTests
             Path.Combine(_templatesPath, "Auth0.Maui", "version8"),
             Path.Combine(_templatesPath, "Auth0.Maui", "version9"),
             Path.Combine(_templatesPath, "Auth0.Maui", "version10"),
+            Path.Combine(_templatesPath, "Auth0.Maui", "version11"),
             Path.Combine(_templatesPath, "Auth0.BackendForFrontend", "version10", "Auth0BackendForFrontend.Server"),
             Path.Combine(_templatesPath, "Auth0.BackendForFrontend", "version11", "Auth0BackendForFrontend.Server"),
             Path.Combine(_templatesPath, "Auth0.Console", "version10"),

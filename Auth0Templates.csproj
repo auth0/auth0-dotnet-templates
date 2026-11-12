@@ -62,6 +62,7 @@
                                        templates\Auth0.Maui\version8\registration;
                                        templates\Auth0.Maui\version9\registration;
                                        templates\Auth0.Maui\version10\registration;
+                                       templates\Auth0.Maui\version11\registration;
                                        templates\Auth0.BackendForFrontend\version10\Auth0BackendForFrontend.Server\registration;
                                        templates\Auth0.BackendForFrontend\version11\Auth0BackendForFrontend.Server\registration;
                                        templates\Auth0.BackendForFrontend\version10\WeatherForecastAPI\registration;
@@ -110,6 +111,7 @@
       <Copy SourceFiles="@(CliWrapperFiles)" DestinationFolder="templates\Auth0.Maui\version8\registration" SkipUnchangedFiles="false" />
       <Copy SourceFiles="@(CliWrapperFiles)" DestinationFolder="templates\Auth0.Maui\version9\registration" SkipUnchangedFiles="false" />
       <Copy SourceFiles="@(CliWrapperFiles)" DestinationFolder="templates\Auth0.Maui\version10\registration" SkipUnchangedFiles="false" />
+      <Copy SourceFiles="@(CliWrapperFiles)" DestinationFolder="templates\Auth0.Maui\version11\registration" SkipUnchangedFiles="false" />
       <Copy SourceFiles="@(CliWrapperFiles)" DestinationFolder="templates\Auth0.BackendForFrontend\version10\Auth0BackendForFrontend.Server\registration" SkipUnchangedFiles="false" />
       <Copy SourceFiles="@(CliWrapperFiles)" DestinationFolder="templates\Auth0.BackendForFrontend\version11\Auth0BackendForFrontend.Server\registration" SkipUnchangedFiles="false" />
       <Copy SourceFiles="@(CliWrapperFiles)" DestinationFolder="templates\Auth0.BackendForFrontend\version10\WeatherForecastAPI\registration" SkipUnchangedFiles="false" />
