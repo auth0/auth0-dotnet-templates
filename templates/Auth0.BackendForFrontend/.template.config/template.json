@@ -57,6 +57,11 @@
       "displayName": "Framework",
       "choices": [
         {
+          "choice": "net11.0",
+          "displayName": ".NET 11.0",
+          "description": "Target .NET 11.0"
+        },
+        {
           "choice": "net10.0",
           "displayName": ".NET 10.0",
           "description": "Target .NET 10.0"
@@ -67,8 +72,15 @@
           "description": "Target .NET 9.0"
         }
       ],
-      "defaultValue": "net10.0",
+      "defaultValue": "net11.0",
       "replaces": "net10.0"
+    },
+    // The version11 sources contain the literal net11.0, replaced with the chosen framework
+    "FrameworkReplacer11": {
+      "type": "derived",
+      "valueSource": "Framework",
+      "valueTransform": "identity",
+      "replaces": "net11.0"
     },
 
     // Port generation for the BFF Server
@@ -195,6 +207,16 @@
      {
       "condition": "(Framework == \"net10.0\") || (Framework == \"net9.0\")",
       "source": "./version10/",
+      "modifiers": [
+        {
+          "condition": "(!autoregister)",
+          "exclude": [ "Auth0BackendForFrontend.Server/registration/**/*", "WeatherForecastAPI/registration/**/*" ]
+        }
+      ]
+    },
+    {
+      "condition": "(Framework == \"net11.0\")",
+      "source": "./version11/",
       "modifiers": [
         {
           "condition": "(!autoregister)",

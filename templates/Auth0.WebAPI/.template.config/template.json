@@ -38,6 +38,10 @@
       "datatype": "choice",
       "choices": [
         {
+          "choice": "net11.0",
+          "description": "Target .NET 11"
+        },
+        {
           "choice": "net10.0",
           "description": "Target .NET 10"
         },
@@ -50,7 +54,7 @@
           "description": "Target .NET 8"
         }
       ],
-      "defaultValue": "net10.0"
+      "defaultValue": "net11.0"
     },
     "DisableOpenAPI": {
       "type": "parameter",
@@ -244,8 +248,36 @@
       ]
     },
     {
+      "condition": "(controllers) && (Framework == \"net11.0\")",
+      "source": "./version11",
+      "modifiers": [
+          {
+              "condition": "(removeOpenAPI)",
+              "exclude": [ "SwaggerExtensions.cs" ]
+          },
+          {
+            "condition": "(!autoregister)",
+            "exclude": [ "registration/**/*" ]
+        }
+      ]
+    },
+    {
       "condition": "(!controllers) && (Framework == \"net10.0\")",
       "source": "../Auth0.MinimalWebAPI/version10/",
+      "modifiers": [
+          {
+              "condition": "(removeOpenAPI)",
+              "exclude": [ "SwaggerExtensions.cs" ]
+          },
+          {
+            "condition": "(!autoregister)",
+            "exclude": [ "registration/**/*" ]
+        }
+      ]
+    },
+    {
+      "condition": "(!controllers) && (Framework == \"net11.0\")",
+      "source": "../Auth0.MinimalWebAPI/version11/",
       "modifiers": [
           {
               "condition": "(removeOpenAPI)",
