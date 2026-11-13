@@ -1,6 +1,6 @@
 # What This Repository Is
 
-A NuGet template pack (`Auth0.Templates`) that provides `dotnet new` templates for .NET applications pre-configured with Auth0 authentication. Templates support .NET 8, 9, and 10.
+A NuGet template pack (`Auth0.Templates`) that provides `dotnet new` templates for .NET applications pre-configured with Auth0 authentication. Templates support .NET 8, 9, 10, and 11.
 
 # Commands
 

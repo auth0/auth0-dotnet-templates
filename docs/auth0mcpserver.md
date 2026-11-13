@@ -45,7 +45,7 @@ In addition to the usual options for the `dotnet new` command, the following tem
 - `--audience`<br>
   The API identifier (audience) as defined in your Auth0 dashboard. It must be the URL of your MCP server (for example, `http://localhost:5000/`). The default value is `https://your-api-id.com`
 - `-f` or `--framework`<br>
-  Defines the target framework to use for the .NET project. The only supported value is `net10.0`.
+  Defines the target framework to use for the .NET project. The possible values are `net10.0` and `net11.0`. The default value is `net11.0`.
 
 Example:
 

@@ -45,7 +45,7 @@ In addition to the usual options for the `dotnet new` command, the following tem
 - `--client-id`<br>
   The client id associated with your application. The default value is `your-client-id`.
 - `-f` or `--framework`<br>
-  Defines the target framework to use for the .NET project. The possible values are `net8.0`, `net9.0`, and `net10.0`. The default value is `net10.0`.
+  Defines the target framework to use for the .NET project. The possible values are `net8.0`, `net9.0`, `net10.0`, and `net11.0`. The default value is `net11.0`.
 
 Example:
 

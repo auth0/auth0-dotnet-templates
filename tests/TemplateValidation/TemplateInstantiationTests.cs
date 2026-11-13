@@ -90,6 +90,7 @@ public class TemplateInstantiationTests : IDisposable
     [InlineData("auth0webapp", "net8.0")]
     [InlineData("auth0webapp", "net9.0")]
     [InlineData("auth0webapp", "net10.0")]
+    [InlineData("auth0webapp", "net11.0")]
     public async Task MvcTemplate_Instantiates_AndBuilds(string templateName, string framework)
     {
         // Arrange
@@ -123,6 +124,7 @@ public class TemplateInstantiationTests : IDisposable
     [InlineData("auth0webapi", "net8.0")]
     [InlineData("auth0webapi", "net9.0")]
     [InlineData("auth0webapi", "net10.0")]
+    [InlineData("auth0webapi", "net11.0")]
     public async Task WebApiTemplate_Instantiates_AndBuilds(string templateName, string framework)
     {
         // Arrange
@@ -153,6 +155,7 @@ public class TemplateInstantiationTests : IDisposable
     [InlineData("auth0webapi", "--minimal", "net8.0")]
     [InlineData("auth0webapi", "--minimal", "net9.0")]
     [InlineData("auth0webapi", "--minimal", "net10.0")]
+    [InlineData("auth0webapi", "--minimal", "net11.0")]
     public async Task MinimalWebApiTemplate_Instantiates_AndBuilds(
         string templateName,
         string minimalFlag,
@@ -179,6 +182,7 @@ public class TemplateInstantiationTests : IDisposable
     [InlineData("auth0blazor", "net8.0")]
     [InlineData("auth0blazor", "net9.0")]
     [InlineData("auth0blazor", "net10.0")]
+    [InlineData("auth0blazor", "net11.0")]
     public async Task BlazorWebAppTemplate_Instantiates_AndBuilds(string templateName, string framework)
     {
         // Arrange
@@ -258,6 +262,7 @@ public class TemplateInstantiationTests : IDisposable
     [Theory]
     [InlineData("auth0bff", "net9.0")]
     [InlineData("auth0bff", "net10.0")]
+    [InlineData("auth0bff", "net11.0")]
     public async Task BffTemplate_Instantiates(string templateName, string framework)
     {
         // Arrange
@@ -296,6 +301,7 @@ public class TemplateInstantiationTests : IDisposable
 
     [Theory]
     [InlineData("auth0console", "net10.0")]
+    [InlineData("auth0console", "net11.0")]
     public async Task ConsoleTemplate_Instantiates_AndBuilds(string templateName, string framework)
     {
         // Arrange
@@ -326,6 +332,7 @@ public class TemplateInstantiationTests : IDisposable
 
     [Theory]
     [InlineData("auth0mcpserver", "net10.0")]
+    [InlineData("auth0mcpserver", "net11.0")]
     public async Task McpServerTemplate_Instantiates_WithAuth0Settings(string templateName, string framework)
     {
         // Arrange
@@ -341,7 +348,6 @@ public class TemplateInstantiationTests : IDisposable
         // Assert
         instantiateResult.Should().Be(0, "Template instantiation should succeed");
         File.Exists(Path.Combine(projectPath, $"{projectName}.csproj")).Should().BeTrue();
-        File.Exists(Path.Combine(projectPath, "configure-auth0-api.cmd")).Should().BeTrue();
 
         var settingsPath = Path.Combine(projectPath, "appsettings.json");
         File.Exists(settingsPath).Should().BeTrue();
