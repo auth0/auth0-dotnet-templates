@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <PackageType>Template</PackageType>
-    <PackageVersion>2.4.0</PackageVersion>
+    <PackageVersion>2.5.0</PackageVersion>
     <PackageId>Auth0.Templates</PackageId>
     <Title>Auth0 Templates for .NET</Title>
     <Authors>Auth0</Authors>
@@ -40,23 +40,35 @@
                                        templates\Auth0.BlazorWebAssembly\version9\Client\registration;
                                        templates\Auth0.BlazorWebAssembly\version9\Server\registration;
                                        templates\Auth0.BlazorWebAssembly\version10\registration;
+                                       templates\Auth0.BlazorWebAssembly\version11\registration;
                                        templates\Auth0.Mvc\version8\registration;
                                        templates\Auth0.Mvc\version9\registration;
                                        templates\Auth0.Mvc\version10\registration;
+                                       templates\Auth0.Mvc\version11\registration;
                                        templates\Auth0.WebAPI\version8\registration;
                                        templates\Auth0.WebAPI\version9\registration;
                                        templates\Auth0.WebAPI\version10\registration;
+                                       templates\Auth0.WebAPI\version11\registration;
                                        templates\Auth0.MinimalWebAPI\version8\registration;
                                        templates\Auth0.MinimalWebAPI\version9\registration;
                                        templates\Auth0.MinimalWebAPI\version10\registration;
+                                       templates\Auth0.MinimalWebAPI\version11\registration;
+                                       templates\Auth0.MCPServer\version10\registration;
+                                       templates\Auth0.MCPServer\version11\registration;
                                        templates\Auth0.BlazorWebApp\version8\Auth0BlazorWebApp\registration;
                                        templates\Auth0.BlazorWebApp\version9\Auth0BlazorWebApp\registration;
                                        templates\Auth0.BlazorWebApp\version10\Auth0BlazorWebApp\registration;
+                                       templates\Auth0.BlazorWebApp\version11\Auth0BlazorWebApp\registration;
                                        templates\Auth0.Maui\version8\registration;
                                        templates\Auth0.Maui\version9\registration;
                                        templates\Auth0.Maui\version10\registration;
+                                       templates\Auth0.Maui\version11\registration;
                                        templates\Auth0.BackendForFrontend\version10\Auth0BackendForFrontend.Server\registration;
-                                       templates\Auth0.BackendForFrontend\version10\WeatherForecastAPI\registration"/>
+                                       templates\Auth0.BackendForFrontend\version11\Auth0BackendForFrontend.Server\registration;
+                                       templates\Auth0.BackendForFrontend\version10\WeatherForecastAPI\registration;
+                                       templates\Auth0.BackendForFrontend\version11\WeatherForecastAPI\registration;
+                                       templates\Auth0.Console\version10\registration;
+                                       templates\Auth0.Console\version11\registration"/>
       </ItemGroup>
 
       <!-- Clean old cli-wrapper files from destination folders -->
@@ -77,23 +89,35 @@
       <Copy SourceFiles="@(CliWrapperFiles)" DestinationFolder="templates\Auth0.BlazorWebAssembly\version9\Client\registration" SkipUnchangedFiles="false" />
       <Copy SourceFiles="@(CliWrapperFiles)" DestinationFolder="templates\Auth0.BlazorWebAssembly\version9\Server\registration" SkipUnchangedFiles="false" />
       <Copy SourceFiles="@(CliWrapperFiles)" DestinationFolder="templates\Auth0.BlazorWebAssembly\version10\registration" SkipUnchangedFiles="false" />
+      <Copy SourceFiles="@(CliWrapperFiles)" DestinationFolder="templates\Auth0.BlazorWebAssembly\version11\registration" SkipUnchangedFiles="false" />
       <Copy SourceFiles="@(CliWrapperFiles)" DestinationFolder="templates\Auth0.Mvc\version8\registration" SkipUnchangedFiles="false" />
       <Copy SourceFiles="@(CliWrapperFiles)" DestinationFolder="templates\Auth0.Mvc\version9\registration" SkipUnchangedFiles="false" />
       <Copy SourceFiles="@(CliWrapperFiles)" DestinationFolder="templates\Auth0.Mvc\version10\registration" SkipUnchangedFiles="false" />
+      <Copy SourceFiles="@(CliWrapperFiles)" DestinationFolder="templates\Auth0.Mvc\version11\registration" SkipUnchangedFiles="false" />
       <Copy SourceFiles="@(CliWrapperFiles)" DestinationFolder="templates\Auth0.WebAPI\version8\registration" SkipUnchangedFiles="false" />
       <Copy SourceFiles="@(CliWrapperFiles)" DestinationFolder="templates\Auth0.WebAPI\version9\registration" SkipUnchangedFiles="false" />
       <Copy SourceFiles="@(CliWrapperFiles)" DestinationFolder="templates\Auth0.WebAPI\version10\registration" SkipUnchangedFiles="false" />
+      <Copy SourceFiles="@(CliWrapperFiles)" DestinationFolder="templates\Auth0.WebAPI\version11\registration" SkipUnchangedFiles="false" />
       <Copy SourceFiles="@(CliWrapperFiles)" DestinationFolder="templates\Auth0.MinimalWebAPI\version8\registration" SkipUnchangedFiles="false" />
       <Copy SourceFiles="@(CliWrapperFiles)" DestinationFolder="templates\Auth0.MinimalWebAPI\version9\registration" SkipUnchangedFiles="false" />
       <Copy SourceFiles="@(CliWrapperFiles)" DestinationFolder="templates\Auth0.MinimalWebAPI\version10\registration" SkipUnchangedFiles="false" />
+      <Copy SourceFiles="@(CliWrapperFiles)" DestinationFolder="templates\Auth0.MinimalWebAPI\version11\registration" SkipUnchangedFiles="false" />
+      <Copy SourceFiles="@(CliWrapperFiles)" DestinationFolder="templates\Auth0.MCPServer\version10\registration" SkipUnchangedFiles="false" />
+      <Copy SourceFiles="@(CliWrapperFiles)" DestinationFolder="templates\Auth0.MCPServer\version11\registration" SkipUnchangedFiles="false" />
       <Copy SourceFiles="@(CliWrapperFiles)" DestinationFolder="templates\Auth0.BlazorWebApp\version8\Auth0BlazorWebApp\registration" SkipUnchangedFiles="false" />
       <Copy SourceFiles="@(CliWrapperFiles)" DestinationFolder="templates\Auth0.BlazorWebApp\version9\Auth0BlazorWebApp\registration" SkipUnchangedFiles="false" />
       <Copy SourceFiles="@(CliWrapperFiles)" DestinationFolder="templates\Auth0.BlazorWebApp\version10\Auth0BlazorWebApp\registration" SkipUnchangedFiles="false" />
+      <Copy SourceFiles="@(CliWrapperFiles)" DestinationFolder="templates\Auth0.BlazorWebApp\version11\Auth0BlazorWebApp\registration" SkipUnchangedFiles="false" />
       <Copy SourceFiles="@(CliWrapperFiles)" DestinationFolder="templates\Auth0.Maui\version8\registration" SkipUnchangedFiles="false" />
       <Copy SourceFiles="@(CliWrapperFiles)" DestinationFolder="templates\Auth0.Maui\version9\registration" SkipUnchangedFiles="false" />
       <Copy SourceFiles="@(CliWrapperFiles)" DestinationFolder="templates\Auth0.Maui\version10\registration" SkipUnchangedFiles="false" />
+      <Copy SourceFiles="@(CliWrapperFiles)" DestinationFolder="templates\Auth0.Maui\version11\registration" SkipUnchangedFiles="false" />
       <Copy SourceFiles="@(CliWrapperFiles)" DestinationFolder="templates\Auth0.BackendForFrontend\version10\Auth0BackendForFrontend.Server\registration" SkipUnchangedFiles="false" />
+      <Copy SourceFiles="@(CliWrapperFiles)" DestinationFolder="templates\Auth0.BackendForFrontend\version11\Auth0BackendForFrontend.Server\registration" SkipUnchangedFiles="false" />
       <Copy SourceFiles="@(CliWrapperFiles)" DestinationFolder="templates\Auth0.BackendForFrontend\version10\WeatherForecastAPI\registration" SkipUnchangedFiles="false" />
+      <Copy SourceFiles="@(CliWrapperFiles)" DestinationFolder="templates\Auth0.BackendForFrontend\version11\WeatherForecastAPI\registration" SkipUnchangedFiles="false" />
+      <Copy SourceFiles="@(CliWrapperFiles)" DestinationFolder="templates\Auth0.Console\version10\registration" SkipUnchangedFiles="false" />
+      <Copy SourceFiles="@(CliWrapperFiles)" DestinationFolder="templates\Auth0.Console\version11\registration" SkipUnchangedFiles="false" />
       
       <Message Text="CLI wrapper files copied to all registration folders successfully." Importance="high" />
     </Target>

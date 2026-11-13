@@ -1,0 +1,6 @@
+@Auth0BackendForFrontend.Server_HostAddress = http://localhost:5189
+
+GET {{Auth0BackendForFrontend.Server_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

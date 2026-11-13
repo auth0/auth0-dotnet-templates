@@ -47,6 +47,10 @@
       "datatype": "choice",
       "choices": [
         {
+          "choice": "net11.0",
+          "description": "Target .NET 11"
+        },
+        {
           "choice": "net10.0",
           "description": "Target .NET 10"
         },
@@ -57,13 +61,9 @@
         {
           "choice": "net8.0",
           "description": "Target .NET 8"
-        },
-        {
-          "choice": "net7.0",
-          "description": "Target .NET 7"
         }
       ],
-      "defaultValue": "net10.0"
+      "defaultValue": "net11.0"
     },
     "autoregister": {
       "type": "computed",
@@ -158,17 +158,17 @@
   },
   "primaryOutputs": [
     {
-      "condition": "(Framework == \"net10.0\")",
+      "condition": "(Framework == \"net10.0\") || (Framework == \"net11.0\")",
       "path": "Auth0BlazorWasm.csproj"
     },
     {
-      "condition": "(Framework != \"net10.0\")",
+      "condition": "(Framework == \"net8.0\") || (Framework == \"net9.0\")",
       "path": "Auth0BlazorWasm.sln"
     }
   ],
   "sources": [
     {
-      "condition": "(Framework == \"net8.0\") || (Framework == \"net7.0\")",
+      "condition": "(Framework == \"net8.0\")",
       "source": "./version8/",
       "modifiers": [
         {
@@ -190,6 +190,16 @@
     {
       "condition": "(Framework == \"net10.0\")",
       "source": "./version10/",
+      "modifiers": [
+        {
+          "condition": "(!autoregister)",
+          "exclude": [ "registration/**/*" ]
+        }
+      ]
+    },
+    {
+      "condition": "(Framework == \"net11.0\")",
+      "source": "./version11/",
       "modifiers": [
         {
           "condition": "(!autoregister)",

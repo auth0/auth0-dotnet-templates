@@ -1,0 +1,11 @@
+{
+  "AppName": "Auth0Console",
+  "AppDescription": ".NET console application created and registered via Auth0 Templates for .NET",
+  "AppType": "native",
+  "Callbacks": "",
+  "LogoutUrls": "",
+  "GrantTypes": "code,implicit,refresh-token,device-code",
+  "AppSettingsFiles": [ "./Program.cs" ],
+  "RegistrationScriptFile": "../register-with-auth0.cmd",
+  "Verbose": false
+}

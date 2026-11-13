@@ -180,13 +180,114 @@ namespace Unit
             result.client_id.Should().BeEmpty();
         }
 
+        [Fact]
+        public async Task Register_AddsGrantsOption_WhenGrantTypesIsProvided()
+        {
+            // Arrange
+            var mockExecutor = new Mock<IProcessExecutor>();
+            var expectedJson = @"{
+            ""client_id"": ""test-client-id"",
+            ""client_secret"": ""test-secret"",
+            ""name"": ""TestApp""
+        }";
+
+            mockExecutor
+                .Setup(e => e.RunCommandAsync("auth0", It.IsAny<string>()))
+                .ReturnsAsync((string cmd, string args) =>
+                {
+                    if (args.Contains("--version"))
+                        return "auth0 version 1.20.0 abc";
+                    if (args.Contains("apps create"))
+                        return expectedJson;
+                    return "";
+                });
+
+            var wrapper = CreateCliWrapperWithMockConfig(
+                mockExecutor.Object,
+                grantTypes: "code,refresh-token"
+            );
+
+            // Act
+            await wrapper.Register();
+
+            // Assert
+            mockExecutor.Verify(
+                e => e.RunCommandAsync("auth0", It.Is<string>(s =>
+                    s.Contains("apps create") &&
+                    s.Contains("--grants code,refresh-token"))),
+                Times.Once
+            );
+        }
+
+        [Fact]
+        public async Task Register_DoesNotAddGrantsOption_WhenGrantTypesIsEmpty()
+        {
+            // Arrange
+            var mockExecutor = new Mock<IProcessExecutor>();
+            var expectedJson = @"{
+            ""client_id"": ""test-client-id"",
+            ""client_secret"": ""test-secret"",
+            ""name"": ""TestApp""
+        }";
+
+            mockExecutor
+                .Setup(e => e.RunCommandAsync("auth0", It.IsAny<string>()))
+                .ReturnsAsync((string cmd, string args) =>
+                {
+                    if (args.Contains("--version"))
+                        return "auth0 version 1.20.0 abc";
+                    if (args.Contains("apps create"))
+                        return expectedJson;
+                    return "";
+                });
+
+            var wrapper = CreateCliWrapperWithMockConfig(mockExecutor.Object);
+
+            // Act
+            await wrapper.Register();
+
+            // Assert
+            mockExecutor.Verify(
+                e => e.RunCommandAsync("auth0", It.Is<string>(s =>
+                    s.Contains("apps create") &&
+                    !s.Contains("--grants"))),
+                Times.Once
+            );
+        }
+
+        [Theory]
+        [InlineData("http://localhost:5000/", "--identifier http://localhost:5000/ ")]
+        [InlineData("", "--identifier https://testapp.com ")]
+        public async Task Register_UsesExpectedApiIdentifier_WhenAudienceIsConfigured(string audience, string expectedArgument)
+        {
+            // Arrange
+            var mockExecutor = new Mock<IProcessExecutor>();
+            mockExecutor
+                .Setup(e => e.RunCommandAsync("auth0", It.IsAny<string>()))
+                .ReturnsAsync("{}");
+
+            var wrapper = CreateCliWrapperWithMockConfig(mockExecutor.Object, appType: "api", audience: audience);
+
+            // Act
+            await wrapper.Register();
+
+            // Assert
+            mockExecutor.Verify(
+                e => e.RunCommandAsync("auth0", It.Is<string>(s =>
+                    s.Contains("apis create") && s.Contains(expectedArgument))),
+                Times.Once
+            );
+        }
+
         /// <summary>
         /// Helper method to create a CliWrapper with a mock config file.
         /// This is needed because CliWrapper constructor reads config.json from AppContext.BaseDirectory.
         /// </summary>
         private CliWrapper CreateCliWrapperWithMockConfig(
             IProcessExecutor executor,
-            string appType = "regular")
+            string appType = "regular",
+            string grantTypes = "",
+            string audience = "")
         {
             var configJson = $@"{{
             ""AppName"": ""TestApp"",
@@ -194,6 +295,8 @@ namespace Unit
             ""AppType"": ""{appType}"",
             ""Callbacks"": ""https://localhost:5001/callback"",
             ""LogoutUrls"": ""https://localhost:5001/"",
+            ""GrantTypes"": ""{grantTypes}"",
+            ""Audience"": ""{audience}"",
             ""AppSettingsFiles"": [],
             ""RegistrationScriptFile"": ""register.cmd"",
             ""Verbose"": false
