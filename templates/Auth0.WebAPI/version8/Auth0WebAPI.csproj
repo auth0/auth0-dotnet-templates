@@ -1,7 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
-    <TargetFramework>net7.0</TargetFramework>
+    <TargetFramework>net8.0</TargetFramework>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
     <InvariantGlobalization Condition="'$(Framework)' == 'net8.0'">true</InvariantGlobalization>
@@ -9,9 +9,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="7.0.13" Condition="'$(Framework)' == 'net7.0'"/>
-    <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="8.0.0" Condition="'$(Framework)' == 'net8.0'"/>
-    <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="7.0.13"  Condition="'$(removeOpenAPI)' == 'False'" Condition="'$(Framework)' == 'net7.0'"/>
+    <PackageReference Include="Auth0.AspNetCore.Authentication.Api" Version="1.0.1" />
     <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="8.0.0"  Condition="'$(removeOpenAPI)' == 'False'" Condition="'$(Framework)' == 'net8.0'"/>
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.5.0"  Condition="'$(removeOpenAPI)' == 'False'"/>
   </ItemGroup>

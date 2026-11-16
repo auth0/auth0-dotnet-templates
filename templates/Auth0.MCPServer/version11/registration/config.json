@@ -1,0 +1,11 @@
+{
+  "AppName": "Auth0MCPServer",
+  "AppDescription": "ASP.NET Core MCP server application created and registered via Auth0 Templates for .NET",
+  "AppType": "api",
+  "Callbacks": "",
+  "LogoutUrls": "",
+  "Audience": "http://localhost:5000/",
+  "AppSettingsFiles": ["./appsettings.json"],
+  "RegistrationScriptFile": "../register-with-auth0.cmd",
+  "Verbose": false
+}

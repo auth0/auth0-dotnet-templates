@@ -3,7 +3,7 @@
   "AppDescription": "Blazor WebAssembly application created and registered via Auth0 Templates for .NET",
   "AppType": "spa",
   "Callbacks": "https://localhost:5001/authentication/login-callback",
-  "LogoutUrls": "https://localhost:5001",
+  "LogoutUrls": "https://localhost:5001/authentication/logout-callback",
   "AppSettingsFiles": ["./wwwroot/appsettings.json"],
   "RegistrationScriptFile": "../register-with-auth0.cmd",
   "Verbose": false

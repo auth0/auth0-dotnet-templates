@@ -1,0 +1,10 @@
+{
+  "AppName": "Auth0BackendForFrontend",
+  "AppDescription": "Backend for Frontend application created and registered via Auth0 Templates for .NET",
+  "AppType": "regular",
+  "Callbacks": "https://localhost:54575/callback",
+  "LogoutUrls": "https://localhost:54575/",
+  "AppSettingsFiles": ["./Auth0BackendForFrontend.Server/appsettings.json"],
+  "RegistrationScriptFile": "../../register-with-auth0.cmd",
+  "Verbose": false
+}

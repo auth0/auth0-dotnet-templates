@@ -1,0 +1,10 @@
+{
+  "AppName": "WeatherForecastAPI",
+  "AppDescription": "ASP.NET Core Web API created and registered via Auth0 Templates for .NET",
+  "AppType": "api",
+  "Callbacks": "",
+  "LogoutUrls": "",
+  "AppSettingsFiles": ["./Auth0BackendForFrontend.Server/appsettings.json", "./WeatherForecastAPI/appsettings.json"],
+  "RegistrationScriptFile": "../../register-with-auth0.cmd",
+  "Verbose": false
+}

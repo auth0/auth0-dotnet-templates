@@ -1,11 +1,12 @@
-using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Auth0.AspNetCore.Authentication.Api;
 #if (!removeOpenAPI)
 using Microsoft.OpenApi.Models;
 #endif
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Services.AddAuthentication().AddJwtBearer();
+builder.Services.AddAuth0ApiAuthentication(builder.Configuration.GetSection("Auth0"));
+builder.Services.AddAuthorization();
 
 builder.Services.AddControllers();
 #if (!removeOpenAPI)

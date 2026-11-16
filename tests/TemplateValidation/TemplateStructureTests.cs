@@ -27,6 +27,8 @@ public class TemplateStructureTests
     [InlineData("Auth0.WebAPI")]
     [InlineData("Auth0.Maui")]
     [InlineData("Auth0.BackendForFrontend")]
+    [InlineData("Auth0.Console")]
+    [InlineData("Auth0.MCPServer")]
     public void Template_HasTemplateConfigFile(string templatePath)
     {
         // Arrange
@@ -41,24 +43,35 @@ public class TemplateStructureTests
     [InlineData("Auth0.BlazorWebApp/version8/Auth0BlazorWebApp")]
     [InlineData("Auth0.BlazorWebApp/version9/Auth0BlazorWebApp")]
     [InlineData("Auth0.BlazorWebApp/version10/Auth0BlazorWebApp")]
+    [InlineData("Auth0.BlazorWebApp/version11/Auth0BlazorWebApp")]
     [InlineData("Auth0.BlazorWebAssembly/version8/Client")]
     [InlineData("Auth0.BlazorWebAssembly/version8/Server")]
     [InlineData("Auth0.BlazorWebAssembly/version9/Client")]
     [InlineData("Auth0.BlazorWebAssembly/version9/Server")]
     [InlineData("Auth0.BlazorWebAssembly/version10")]
+    [InlineData("Auth0.BlazorWebAssembly/version11")]
     [InlineData("Auth0.Mvc/version8")]
     [InlineData("Auth0.Mvc/version9")]
     [InlineData("Auth0.Mvc/version10")]
+    [InlineData("Auth0.Mvc/version11")]
     [InlineData("Auth0.WebAPI/version8")]
     [InlineData("Auth0.WebAPI/version9")]
     [InlineData("Auth0.WebAPI/version10")]
+    [InlineData("Auth0.WebAPI/version11")]
     [InlineData("Auth0.MinimalWebAPI/version8")]
     [InlineData("Auth0.MinimalWebAPI/version9")]
     [InlineData("Auth0.MinimalWebAPI/version10")]
+    [InlineData("Auth0.MinimalWebAPI/version11")]
+    [InlineData("Auth0.MCPServer/version10")]
+    [InlineData("Auth0.MCPServer/version11")]
     [InlineData("Auth0.Maui/version8")]
     [InlineData("Auth0.Maui/version9")]
     [InlineData("Auth0.Maui/version10")]
+    [InlineData("Auth0.Maui/version11")]
     [InlineData("Auth0.BackendForFrontend/version10/Auth0BackendForFrontend.Server")]
+    [InlineData("Auth0.BackendForFrontend/version11/Auth0BackendForFrontend.Server")]
+    [InlineData("Auth0.Console/version10")]
+    [InlineData("Auth0.Console/version11")]
     public void Template_HasRegistrationConfigFile(string templatePath)
     {
         // Arrange
@@ -73,19 +86,29 @@ public class TemplateStructureTests
     [InlineData("Auth0.BlazorWebApp/version8/Auth0BlazorWebApp")]
     [InlineData("Auth0.BlazorWebApp/version9/Auth0BlazorWebApp")]
     [InlineData("Auth0.BlazorWebApp/version10/Auth0BlazorWebApp")]
+    [InlineData("Auth0.BlazorWebApp/version11/Auth0BlazorWebApp")]
     [InlineData("Auth0.Mvc/version8")]
     [InlineData("Auth0.Mvc/version9")]
     [InlineData("Auth0.Mvc/version10")]
+    [InlineData("Auth0.Mvc/version11")]
     [InlineData("Auth0.WebAPI/version8")]
     [InlineData("Auth0.WebAPI/version9")]
     [InlineData("Auth0.WebAPI/version10")]
+    [InlineData("Auth0.WebAPI/version11")]
     [InlineData("Auth0.MinimalWebAPI/version8")]
     [InlineData("Auth0.MinimalWebAPI/version9")]
     [InlineData("Auth0.MinimalWebAPI/version10")]
+    [InlineData("Auth0.MinimalWebAPI/version11")]
+    [InlineData("Auth0.MCPServer/version10")]
+    [InlineData("Auth0.MCPServer/version11")]
     [InlineData("Auth0.Maui/version8")]
     [InlineData("Auth0.Maui/version9")]
     [InlineData("Auth0.Maui/version10")]
+    [InlineData("Auth0.Maui/version11")]
     [InlineData("Auth0.BackendForFrontend/version10/Auth0BackendForFrontend.Server")]
+    [InlineData("Auth0.BackendForFrontend/version11/Auth0BackendForFrontend.Server")]
+    [InlineData("Auth0.Console/version10")]
+    [InlineData("Auth0.Console/version11")]
     public void Template_RegistrationConfig_IsValidJson(string templatePath)
     {
         // Arrange
@@ -104,19 +127,29 @@ public class TemplateStructureTests
     [InlineData("Auth0.BlazorWebApp/version8/Auth0BlazorWebApp")]
     [InlineData("Auth0.BlazorWebApp/version9/Auth0BlazorWebApp")]
     [InlineData("Auth0.BlazorWebApp/version10/Auth0BlazorWebApp")]
+    [InlineData("Auth0.BlazorWebApp/version11/Auth0BlazorWebApp")]
     [InlineData("Auth0.Mvc/version8")]
     [InlineData("Auth0.Mvc/version9")]
     [InlineData("Auth0.Mvc/version10")]
+    [InlineData("Auth0.Mvc/version11")]
     [InlineData("Auth0.WebAPI/version8")]
     [InlineData("Auth0.WebAPI/version9")]
     [InlineData("Auth0.WebAPI/version10")]
+    [InlineData("Auth0.WebAPI/version11")]
     [InlineData("Auth0.MinimalWebAPI/version8")]
     [InlineData("Auth0.MinimalWebAPI/version9")]
     [InlineData("Auth0.MinimalWebAPI/version10")]
+    [InlineData("Auth0.MinimalWebAPI/version11")]
+    [InlineData("Auth0.MCPServer/version10")]
+    [InlineData("Auth0.MCPServer/version11")]
     [InlineData("Auth0.Maui/version8")]
     [InlineData("Auth0.Maui/version9")]
     [InlineData("Auth0.Maui/version10")]
+    [InlineData("Auth0.Maui/version11")]
     [InlineData("Auth0.BackendForFrontend/version10/Auth0BackendForFrontend.Server")]
+    [InlineData("Auth0.BackendForFrontend/version11/Auth0BackendForFrontend.Server")]
+    [InlineData("Auth0.Console/version10")]
+    [InlineData("Auth0.Console/version11")]
     public void Template_RegistrationConfig_HasRequiredProperties(string templatePath)
     {
         // Arrange
@@ -137,17 +170,26 @@ public class TemplateStructureTests
     [InlineData("Auth0.WebAPI/version8", "api")]
     [InlineData("Auth0.WebAPI/version9", "api")]
     [InlineData("Auth0.WebAPI/version10", "api")]
+    [InlineData("Auth0.WebAPI/version11", "api")]
     [InlineData("Auth0.MinimalWebAPI/version8", "api")]
     [InlineData("Auth0.MinimalWebAPI/version9", "api")]
     [InlineData("Auth0.MinimalWebAPI/version10", "api")]
+    [InlineData("Auth0.MinimalWebAPI/version11", "api")]
+    [InlineData("Auth0.MCPServer/version10", "api")]
+    [InlineData("Auth0.MCPServer/version11", "api")]
     [InlineData("Auth0.Mvc/version8", "regular")]
     [InlineData("Auth0.Mvc/version9", "regular")]
     [InlineData("Auth0.Mvc/version10", "regular")]
+    [InlineData("Auth0.Mvc/version11", "regular")]
     [InlineData("Auth0.BlazorServer", "regular")]
     [InlineData("Auth0.BackendForFrontend/version10/Auth0BackendForFrontend.Server", "regular")]
+    [InlineData("Auth0.BackendForFrontend/version11/Auth0BackendForFrontend.Server", "regular")]
     [InlineData("Auth0.Maui/version8", "native")]
     [InlineData("Auth0.Maui/version9", "native")]
     [InlineData("Auth0.Maui/version10", "native")]
+    [InlineData("Auth0.Maui/version11", "native")]
+    [InlineData("Auth0.Console/version10", "native")]
+    [InlineData("Auth0.Console/version11", "native")]
     public void Template_RegistrationConfig_HasCorrectAppType(string templatePath, string expectedAppType)
     {
         // Arrange
@@ -164,9 +206,13 @@ public class TemplateStructureTests
     [InlineData("Auth0.WebAPI/version8")]
     [InlineData("Auth0.WebAPI/version9")]
     [InlineData("Auth0.WebAPI/version10")]
+    [InlineData("Auth0.WebAPI/version11")]
     [InlineData("Auth0.MinimalWebAPI/version8")]
     [InlineData("Auth0.MinimalWebAPI/version9")]
     [InlineData("Auth0.MinimalWebAPI/version10")]
+    [InlineData("Auth0.MinimalWebAPI/version11")]
+    [InlineData("Auth0.MCPServer/version10")]
+    [InlineData("Auth0.MCPServer/version11")]
     public void ApiTemplate_HasEmptyCallbacksAndLogoutUrls(string templatePath)
     {
         // Arrange
@@ -184,11 +230,14 @@ public class TemplateStructureTests
     [InlineData("Auth0.Mvc/version8")]
     [InlineData("Auth0.Mvc/version9")]
     [InlineData("Auth0.Mvc/version10")]
+    [InlineData("Auth0.Mvc/version11")]
     [InlineData("Auth0.BlazorServer")]
     [InlineData("Auth0.BlazorWebApp/version8/Auth0BlazorWebApp")]
     [InlineData("Auth0.BlazorWebApp/version9/Auth0BlazorWebApp")]
     [InlineData("Auth0.BlazorWebApp/version10/Auth0BlazorWebApp")]
+    [InlineData("Auth0.BlazorWebApp/version11/Auth0BlazorWebApp")]
     [InlineData("Auth0.BackendForFrontend/version10/Auth0BackendForFrontend.Server")]
+    [InlineData("Auth0.BackendForFrontend/version11/Auth0BackendForFrontend.Server")]
     public void WebTemplate_HasCallbacksAndLogoutUrls(string templatePath)
     {
         // Arrange
@@ -206,6 +255,7 @@ public class TemplateStructureTests
     [InlineData("Auth0.Maui/version8")]
     [InlineData("Auth0.Maui/version9")]
     [InlineData("Auth0.Maui/version10")]
+    [InlineData("Auth0.Maui/version11")]
     public void MauiTemplate_HasCallbacksAndLogoutUrls(string templatePath)
     {
         // Arrange
@@ -247,24 +297,35 @@ public class TemplateStructureTests
             Path.Combine(_templatesPath, "Auth0.BlazorWebApp", "version8", "Auth0BlazorWebApp"),
             Path.Combine(_templatesPath, "Auth0.BlazorWebApp", "version9", "Auth0BlazorWebApp"),
             Path.Combine(_templatesPath, "Auth0.BlazorWebApp", "version10", "Auth0BlazorWebApp"),
+            Path.Combine(_templatesPath, "Auth0.BlazorWebApp", "version11", "Auth0BlazorWebApp"),
             Path.Combine(_templatesPath, "Auth0.BlazorWebAssembly", "version8", "Client"),
             Path.Combine(_templatesPath, "Auth0.BlazorWebAssembly", "version8", "Server"),
             Path.Combine(_templatesPath, "Auth0.BlazorWebAssembly", "version9", "Client"),
             Path.Combine(_templatesPath, "Auth0.BlazorWebAssembly", "version9", "Server"),
             Path.Combine(_templatesPath, "Auth0.BlazorWebAssembly", "version10"),
+            Path.Combine(_templatesPath, "Auth0.BlazorWebAssembly", "version11"),
             Path.Combine(_templatesPath, "Auth0.Mvc", "version8"),
             Path.Combine(_templatesPath, "Auth0.Mvc", "version9"),
             Path.Combine(_templatesPath, "Auth0.Mvc", "version10"),
+            Path.Combine(_templatesPath, "Auth0.Mvc", "version11"),
             Path.Combine(_templatesPath, "Auth0.WebAPI", "version8"),
             Path.Combine(_templatesPath, "Auth0.WebAPI", "version9"),
             Path.Combine(_templatesPath, "Auth0.WebAPI", "version10"),
+            Path.Combine(_templatesPath, "Auth0.WebAPI", "version11"),
             Path.Combine(_templatesPath, "Auth0.MinimalWebAPI", "version8"),
             Path.Combine(_templatesPath, "Auth0.MinimalWebAPI", "version9"),
             Path.Combine(_templatesPath, "Auth0.MinimalWebAPI", "version10"),
+            Path.Combine(_templatesPath, "Auth0.MinimalWebAPI", "version11"),
+            Path.Combine(_templatesPath, "Auth0.MCPServer", "version10"),
+            Path.Combine(_templatesPath, "Auth0.MCPServer", "version11"),
             Path.Combine(_templatesPath, "Auth0.Maui", "version8"),
             Path.Combine(_templatesPath, "Auth0.Maui", "version9"),
             Path.Combine(_templatesPath, "Auth0.Maui", "version10"),
-            Path.Combine(_templatesPath, "Auth0.BackendForFrontend", "version10", "Auth0BackendForFrontend.Server")
+            Path.Combine(_templatesPath, "Auth0.Maui", "version11"),
+            Path.Combine(_templatesPath, "Auth0.BackendForFrontend", "version10", "Auth0BackendForFrontend.Server"),
+            Path.Combine(_templatesPath, "Auth0.BackendForFrontend", "version11", "Auth0BackendForFrontend.Server"),
+            Path.Combine(_templatesPath, "Auth0.Console", "version10"),
+            Path.Combine(_templatesPath, "Auth0.Console", "version11")
         };
     }
 }
